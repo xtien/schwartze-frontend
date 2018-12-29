@@ -1,0 +1,81 @@
+.button__container {
+  margin-top: 200px;
+  text-align: center;
+}
+.button {
+  background-color:green;
+  border: none;
+  color: white;
+  font-size: 16px;
+  height: 40px;
+  width: 200px;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.letter {
+  margin-top: 100px;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 100px;
+  padding: 60px;
+  background: #e2e3e5;
+}
+.letter td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.list_of_letters{
+  margin-bottom: 60px;
+  padding-bottom: 30px;
+}
+
+.letter_image .img{
+  margin-bottom: 30px;
+}
+
+text {
+  width:400px;
+  padding: 10px;
+}
+
+textarea {
+  width: 800px;
+  height: 300px;
+}
+
+.photo img{
+  float: right;
+  padding: 10px;
+}
