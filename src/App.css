@@ -70,9 +70,9 @@ text {
   padding: 10px;
 }
 
-textarea {
+.textarea {
   width: 800px;
-  height: 300px;
+  height: 800px;
 }
 
 .photo img{

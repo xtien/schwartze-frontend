@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
+import EditPersonForm from './EditPersonForm'
 import {BrowserRouter as Router, Route, Link, Redirect} from "react-router-dom";
 
 class Person extends Component {
@@ -12,82 +13,94 @@ class Person extends Component {
         this.state = {
             resultCode: -1,
             data: {},
-            people: [{}],
             showEdit: false,
             person: {}
         }
 
         this.edit = this.edit.bind(this);
 
-        var array;
-        var intarray
+        var id;
 
         if (props.match.params.id != null) {
-            array = props.match.params.id.split(',');
-            intarray = array.map(Number)
+            id = props.match.params.id;
         }
 
         let postData = {
             requestCode: 0,
-            ids: intarray
+            id: id
         };
 
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json',
-             }
+            }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_people_details/',
+        axios.post('https://pengo.christine.nl:8443/get_person_details/',
             postData,
             axiosConfig
         )
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
-                    people: response.data.people
+                    person: response.data.person
                 })
             )
     }
 
     edit(event) {
 
-        var personId = event.target.value;
-        const data = this.state.people;
-        var i;
-        for (i = 0; i < data.length; i++) {
-            if (data[i].id == personId) {
-                this.setState({person: data[i]});
-                this.setState({showEdit: true})
-            }
-        }
+        this.setState({
+            showEdit: true,
+        });
     }
 
     render() {
 
-        const data = this.state.people;
-        const listItems = data.map((d) => <p key={d.id}>{d.first_name} {d.middle_name} {d.last_name}
-
-            <button onClick={this.edit} value={d.id}>
-                edit
-            </button>
-        </p>);
-
-        const listComments = data.map((d) => <p key={d.comment}>{d.comment} </p>);
+        const person = this.state.person;
 
         return (
             <div className='container'>
-                 <div className='list_of_letters'>
-                    {listItems}
-                </div>
-                <div className='list_of_letters'>
-                    {listComments}
-                </div>
-                <div>
-                    {this.state.showEdit ?
-                        <CommentForm personId={this.state.person.id} text={this.state.person.comment}/> : null}
-                </div>
-
+                {this.state.showEdit ? null : (
+                    <div className="letter text-black-50">
+                        <div>
+                            <p>
+                                {person.first_name} {person.last_name}
+                            </p>
+                            <p>{person.comment}</p>
+                            <p>{person.links}</p>
+                        </div>
+                        <div>
+                            {this.state.showEdit ?
+                                <CommentForm personId={this.state.person.id} text={this.state.person.comment}/> : null}
+                        </div>
+                        <div>
+                            {this.state.showEdit ? null : (
+                                <div>
+                                    <div>
+                                        <button
+                                            className="btn btn-outline-success mybutton"
+                                            onClick={this.edit}
+                                            value={this.state.id}
+                                        >
+                                            edit
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+                {this.state.showEdit ? (
+                    <EditPersonForm
+                        comment={this.state.person.comment}
+                        links={this.state.person.links}
+                        id={this.state.person.id}
+                        first_name={this.state.person.first_name}
+                        last_name={this.state.person.last_name}
+                    />
+                ) : null
+                }
             </div>
         )
     }
@@ -136,7 +149,7 @@ class CommentForm extends React.Component {
                 this.setState({
                     resultCode: response.data.resultCode,
                     editDone: true
-                 })
+                })
             )
 
     }
@@ -144,7 +157,7 @@ class CommentForm extends React.Component {
     render() {
 
         if (this.state.editDone === true) {
-             return <Redirect to={'/get_letters/'} />
+            return <Redirect to={'/get_letters/'}/>
         }
 
         return (

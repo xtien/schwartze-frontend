@@ -60,8 +60,8 @@ class Letters extends Component {
                     names.push(sender.first_name + ' ' + sender.last_name);
                     cell_ids.push(sender.id);
                 });
-                const name_content = names.join(', ');
-                const id_content = cell_ids;
+                const name_content = names[0];
+                const id_content = cell_ids[0];
                 const linkto = '/get_person_details/' + id_content;
                 let result = <Link to={linkto}>{name_content}</Link>
                 return result;
