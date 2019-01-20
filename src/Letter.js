@@ -75,8 +75,7 @@ class Letter extends Component {
         const images = this.state.imageData;
         const remarks = this.state.letter.comment;
         const letterNumber = this.state.letter.number;
-        const listItems = images.map((d) => parse("data:image/jpeg;base64, %s", d))
-            .map((d) => (<div className='letter_image'><img width="1000" src={d}/></div>));
+        const listItems = images.map((d) => (<div className='letter_image'><img width="1000" src={d}/></div>));
         const senders = this.state.senders;
         const recipients = this.state.recipients;
         const senderList = senders.map((s) => <span>{s.first_name} {s.last_name}  </span>);
@@ -84,7 +83,7 @@ class Letter extends Component {
 
         return (
             <div className='container'>
-                 <div>
+                <div>
                     {remarks}
                 </div>
                 <div>

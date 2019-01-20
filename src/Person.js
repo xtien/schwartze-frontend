@@ -35,8 +35,7 @@ class Person extends Component {
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
+             }
         };
 
         axios.post('https://pengo.christine.nl:8443/get_people_details/',

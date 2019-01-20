@@ -7,6 +7,7 @@ import Person from './Person'
 import Letters from './Letters'
 import Letter from './Letter'
 import Landing from './Landing'
+import Location from './Location'
 
 class App extends Component {
 
@@ -29,6 +30,7 @@ class App extends Component {
                     <div>
                         <Route exact path="/" component={Landing}/>
                         <Route path="/get_letters/" component={Letters}/>
+                        <Route path="/get_location/:id" component={Location}/>
                         <Route path="/get_person_details/:id" component={Person}/>
                         <Route path="/get_letter_details/:number" component={Letter}/>
                     </div>

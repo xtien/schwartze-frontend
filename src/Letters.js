@@ -22,7 +22,6 @@ class Letters extends Component {
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
             }
         };
 
@@ -71,12 +70,15 @@ class Letters extends Component {
             Header: 'location',
             id: 'sender_location',
             accessor: data => {
-                let names = [];
+                let locations = [];
                 _.map(data.sender_location, location => {
-                    names.push(location.name);
+                    const locationName = location.name;
+                    locations.push(locationName);
                 });
-                const name_content = names.join(', ');
-                return name_content;
+                const location_content = locations.join(', ');
+                const linkTo = '/get_location/' + location_content;
+                let result = <Link to={linkTo}>{location_content}</Link>
+                return result;
             },
         }, {
             Header: 'recipient ',
@@ -98,12 +100,17 @@ class Letters extends Component {
             Header: 'location',
             id: 'recipient_location',
             accessor: data => {
-                let names = [];
+                let locations = [];
+                let cell_ids = [];
                 _.map(data.recipient_location, location => {
-                    names.push(location.name);
+                    locations.push(location.name);
+                    cell_ids.push(location.id);
                 });
-                const name_content = names.join(', ');
-                return name_content;
+                const location_content = locations.join(', ');
+                const id_content = cell_ids;
+                const linkTo = '/get_location/' + id_content;
+                let result = <Link to={linkTo}>{location_content}</Link>
+                return result;
             },
         }, {
             Header: 'remarks',
