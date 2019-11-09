@@ -8,6 +8,7 @@ import Letters from './Letters'
 import Letter from './Letter'
 import Landing from './Landing'
 import Location from './Location'
+import PersonToLetters from './PersonToLetters'
 
 class App extends Component {
 
@@ -33,6 +34,7 @@ class App extends Component {
                         <Route path="/get_location/:id" component={Location}/>
                         <Route path="/get_person_details/:id" component={Person}/>
                         <Route path="/get_letter_details/:number" component={Letter}/>
+                        <Route path="/get_person_letters:id" component={PersonToLetters}/>
                     </div>
                 </div>
             </Router>

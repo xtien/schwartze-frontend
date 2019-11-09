@@ -69,6 +69,10 @@ class Person extends Component {
                             </p>
                             <p>{person.comment}</p>
                             <p>{person.links}</p>
+                            <p><Link to={`/get_person_from_letters/${person.id}`}> Letters from {person.first_name} </Link>
+                            </p>
+                            <p><Link to={`/get_person_to_letters/${person.id}`}> Letters to {person.first_name} </Link>
+                            </p>
                         </div>
                         <div>
                             {this.state.showEdit ?
