@@ -4,10 +4,10 @@ import _ from "lodash";
 import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 
-class PersonToLetters extends Component {
+class PersonFromLetters extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         let id;
 
@@ -15,6 +15,10 @@ class PersonToLetters extends Component {
             resultCode: -1,
             data: ['a', 'b'],
             letters: [{}]
+        }
+
+        if (props.match.params.id != null) {
+            id = props.match.params.id;
         }
 
         let postData = {
@@ -28,7 +32,7 @@ class PersonToLetters extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_person_from_letters/',
+        axios.post('https://pengo.christine.nl:8443/get_letters_from_person/',
             postData,
             axiosConfig
         )
@@ -134,4 +138,4 @@ class PersonToLetters extends Component {
     }
 }
 
-export default PersonLetters
+export default PersonFromLetters
