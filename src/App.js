@@ -10,6 +10,7 @@ import Landing from './Landing'
 import Location from './Location'
 import PersonToLetters from './PersonToLetters'
 import PersonFromLetters from './PersonFromLetters'
+import {withRouter} from "react-router";
 
 class App extends Component {
 
@@ -27,13 +28,16 @@ class App extends Component {
                 <div className='container'>
                     <div className='jumbotron'>
                         <h1>Het nichtje van tante Therèse</h1>
-                        <p><Link to='/'>Home</Link> <Link to='/get_letters/'>Letters</Link></p>
+                        <nav className="navbar navbar-expand-lg navbar-light">
+                                <p className="navbar-nav"><Link to='/'>Home</Link></p>
+                                <p className="navbar-nav"><Link to='/get_letters/'>Brieven</Link></p>
+                        </nav>
                     </div>
                     <div>
                         <Route exact path="/" component={Landing}/>
                         <Route path="/get_letters/" component={Letters}/>
                         <Route path="/get_location/:id" component={Location}/>
-                        <Route path="/get_person_details/:id" component={Person}/>
+                        <Route exact path="/get_person_details/:id" component={withRouter(Person)}/>
                         <Route path="/get_letter_details/:number" component={Letter}/>
                         <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
                         <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>

@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import {Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 class EditPersonForm extends React.Component {
     constructor(props) {
@@ -44,31 +44,28 @@ class EditPersonForm extends React.Component {
 
         let axiosConfig = {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
             }
         };
 
-        axios
-            .post(
-                window.url + "/update_person_details/",
-                postData,
-                axiosConfig
-            )
+        axios.post('https://pengo.christine.nl:8443/update_person_details/',
+            postData,
+            axiosConfig
+        )
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
-                    person:response.data.person,
-                    redirect: true
+                    person: response.data.person,
+                    editDone: true
                 })
             );
     }
 
     render() {
 
-        if (this.state.redirect) {
-            this.state.redirect = false;
-            let linkTo = "/getLetters";
-            return <Redirect push to={linkTo}/>;
+        if (this.state.editDone === true) {
+             return <Link to={'/get_person_details/' + this.state.id}/>
         }
 
         return (
@@ -103,5 +100,6 @@ class EditPersonForm extends React.Component {
         );
     }
 }
+
 
 export default EditPersonForm;
