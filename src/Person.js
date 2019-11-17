@@ -47,6 +47,13 @@ class Person extends Component {
             )
     }
 
+    toggleEditDone = (person) => {
+        this.setState({
+            showEdit: false,
+            person: person
+        })
+    }
+
     edit(event) {
 
         this.setState({
@@ -64,19 +71,17 @@ class Person extends Component {
                     <div className="letter text-black-50">
                         <div>
                             <p>
-                                {person.first_name} {person.last_name}
+                                {person.first_name} {person.middle_name} {person.last_name}
                             </p>
                             <p>{person.comment}</p>
                             <p>{person.links}</p>
-                            <p><Link to={'/get_letters_from_person/${person.id}'}> Letters
-                                from {person.first_name} </Link>
+                            <p><Link to={'/get_letters_from_person/${person.id}'}> Brieven
+                                van {person.first_name} </Link>
                             </p>
-                            <p><Link to={'/get_letters_to_person/${person.id}'}> Letters to {person.first_name} </Link>
+                            <p><Link to={'/get_letters_to_person/${person.id}'}> Brieven aan {person.first_name} </Link>
                             </p>
-                        </div>
-                        <div>
-                            {this.state.showEdit ?
-                                <CommentForm personId={this.state.person.id} text={this.state.person.comment}/> : null}
+
+
                         </div>
                         <div>
                             {this.state.showEdit ? null : (
@@ -101,7 +106,9 @@ class Person extends Component {
                         links={this.state.person.links}
                         id={this.state.person.id}
                         first_name={this.state.person.first_name}
+                        middle_name={this.state.person.middle_name}
                         last_name={this.state.person.last_name}
+                        toggleEditDone={this.toggleEditDone}
                     />
                 ) : null
                 }
@@ -110,69 +117,6 @@ class Person extends Component {
     }
 }
 
-class CommentForm extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            personId: this.props.personId,
-            text: this.props.text,
-            resultCode: 0,
-            editDone: false
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({text: event.target.value});
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-
-        let postData = {
-            id: this.state.personId,
-            comment: this.state.text
-        };
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
-        axios.post('https://pengo.christine.nl:8443/update_person_details/',
-            postData,
-            axiosConfig
-        )
-            .then(response =>
-                this.setState({
-                    resultCode: response.data.resultCode,
-                    editDone: true
-                })
-            )
-
-    }
-
-    render() {
-
-        if (this.state.editDone === true) {
-            return <Redirect to={'/get_letters/'}/>
-        }
-
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    <textarea value={this.state.text} onChange={this.handleChange}/>
-                </label>
-                <input type="submit" value="Submit"/>
-            </form>
-        );
-    }
-}
 
 class EditPersonForm extends React.Component {
     constructor(props) {
@@ -181,6 +125,7 @@ class EditPersonForm extends React.Component {
         this.state = {
             id: this.props.id,
             first_name: this.props.first_name,
+            middle_name: this.props.middle_name,
             last_name: this.props.last_name,
             comment: this.props.comment,
             links: this.props.links,
@@ -188,6 +133,9 @@ class EditPersonForm extends React.Component {
             person: {}
         };
 
+        this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
+        this.handleMiddleNameChange = this.handleMiddleNameChange.bind(this);
+        this.handleLastNameChange = this.handleLastNameChange.bind(this);
         this.handleCommentChange = this.handleCommentChange.bind(this);
         this.handleLinksChange = this.handleLinksChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -195,6 +143,18 @@ class EditPersonForm extends React.Component {
 
     handleCommentChange(event) {
         this.setState({comment: event.target.value});
+    }
+
+    handleFirstNameChange(event) {
+        this.setState({first_name: event.target.value});
+    }
+
+    handleMiddleNameChange(event) {
+        this.setState({middle_name: event.target.value});
+    }
+
+    handleLastNameChange(event) {
+        this.setState({last_name: event.target.value});
     }
 
     handleLinksChange(event) {
@@ -208,6 +168,7 @@ class EditPersonForm extends React.Component {
             person: {
                 id: this.state.id,
                 first_name: this.state.first_name,
+                middle_name: this.state.middle_name,
                 last_name: this.state.last_name,
                 comment: this.state.comment,
                 links: this.state.links,
@@ -237,12 +198,43 @@ class EditPersonForm extends React.Component {
     render() {
 
         if (this.state.editDone === true) {
-            return <Redirect to={'/get_letters/'}/>
+            this.state.editDone = false;
+            this.props.toggleEditDone(this.state.person);
         }
 
         return (
             <form onSubmit={this.handleSubmit}>
                 <div><p>{this.state.person.first_name} {this.state.person.last_name}</p></div>
+                <div className="form-group">
+                    <label htmlFor="status">First name</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="first_name"
+                        value={this.state.first_name}
+                        onChange={this.handleFirstNameChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="status">Middle name</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="middle_name"
+                        value={this.state.middle_name}
+                        onChange={this.handleMiddleNameChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="status">Last name</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="last_name"
+                        value={this.state.last_name}
+                        onChange={this.handleLastNameChange}
+                    />
+                </div>
                 <div className="form-group">
                     <label htmlFor="status">Text</label>
                     <textarea

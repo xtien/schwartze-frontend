@@ -4,6 +4,8 @@ yarn.lock
 .cache
 .idea/
 
+*.pem
+
 # hprof files
 *.hprof
 
