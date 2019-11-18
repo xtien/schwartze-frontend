@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
+import './App.css'
 import axios from "axios";
-import {Link, Redirect} from "react-router-dom";
 import './css/bootstrap.css'
 
 class Letter extends Component {
@@ -59,6 +59,13 @@ class Letter extends Component {
             )
     }
 
+    toggleEditDone = (letter) => {
+        this.setState({
+            showEdit: false,
+            letter: letter
+        })
+    }
+
     edit(event) {
 
         var letterNumber = event.target.value;
@@ -83,17 +90,33 @@ class Letter extends Component {
 
         return (
             <div className='container'>
-                <div>
-                    {remarks}
-                </div>
-                <div>
-                    <button onClick={this.edit} value={letterNumber}>
-                        edit
-                    </button>
-                </div>
+                {this.state.showEdit ? null : (
+
+                    <div className='remark'>
+                        <div className='space'>
+                            {remarks}
+                        </div>
+                        <div>
+                            <button
+                                className="btn btn-outline-success mybutton"
+                                onClick={this.edit}
+                                value={letterNumber}>
+                                edit
+                            </button>
+                        </div>
+                    </div>
+                )}
                 <div>
                     {this.state.showEdit ?
-                        <CommentForm letterId={this.state.letter.id} text={this.state.letter.remarks}/> : null}
+                        <div className='remark'>
+                            <div>
+                                <CommentForm
+                                    letterId={this.state.letter.id}
+                                    text={this.state.letter.remarks}
+                                    toggleEditDone={this.toggleEditDone}
+                                />
+                            </div>
+                        </div> : null}
                 </div>
                 <div className='letter'>
                     <tr>
@@ -119,15 +142,6 @@ class Letter extends Component {
             </div>
         )
     }
-}
-
-function parse(str) {
-    var args = [].slice.call(arguments, 1),
-        i = 0;
-
-    return str.replace(/%s/g, function () {
-        return args[i++];
-    });
 }
 
 class CommentForm extends React.Component {
@@ -172,6 +186,7 @@ class CommentForm extends React.Component {
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
+                    letter: response.data.letter,
                     editDone: true
                 })
             )
@@ -181,15 +196,25 @@ class CommentForm extends React.Component {
     render() {
 
         if (this.state.editDone === true) {
-            return <Redirect to={'/get_letters/'}/>
+            this.state.editDone = false;
+            this.props.toggleEditDone(this.state.letter);
         }
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    <textarea value={this.state.text} onChange={this.handleChange}/>
-                </label>
-                <input type="submit" value="Submit"/>
+             <form onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                     <textarea
+                        type="text"
+                        id="text"
+                        value={this.state.text}
+                        className="form-control textarea"
+                        onChange={this.handleChange}/>
+                 </div>
+                <input
+                    type="submit"
+                    className="btn btn-outline-success mybutton"
+                    value="Submit"
+                />
             </form>
         );
     }

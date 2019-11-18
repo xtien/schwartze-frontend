@@ -56,9 +56,19 @@
   padding: 60px;
   background: #e2e3e5;
 }
+.remark {
+  margin-top: 100px;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 100px;
+}
 .letter td {
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.space {
+  margin-bottom: 60px;
 }
 
 .list_of_letters{
