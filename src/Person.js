@@ -18,6 +18,7 @@ class Person extends Component {
 
         this.edit = this.edit.bind(this);
         this.combine = this.combine.bind(this);
+        this.delete = this.delete.bind(this);
 
         var id;
 
@@ -72,12 +73,47 @@ class Person extends Component {
         )
     }
 
+    delete(event) {
+        event.preventDefault();
+
+        this.setState(
+            {
+                delete: true
+            }
+        )
+
+        let postData = {
+            requestCode: 0,
+            id: this.state.person.id
+        };
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        axios.post('https://pengo.christine.nl:8443/delete_person/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    deleted: true
+                })
+            )
+    }
+
     render() {
 
         const person = this.state.person;
 
         if (this.state.combine === true) {
             return <Redirect to={'/combine_person/' + person.id}/>
+        }
+
+        if (this.state.deleted === true) {
+            return <Redirect to={'/get_letters/'}/>
         }
 
         return (
@@ -135,6 +171,14 @@ class Person extends Component {
                             type="submit"
                             className="btn btn-outline-success mybutton"
                             value="Combineren"
+                        />
+
+                    </form>
+                    <form onSubmit={this.delete} className="mt-5">
+                        <input
+                            type="submit"
+                            className="btn btn-outline-danger mybutton"
+                            value="Verwijderen"
                         />
 
                     </form>

@@ -4,6 +4,9 @@ import 'react-table/react-table.css'
 import './css/bootstrap.css'
 import {BrowserRouter as Router, Link, Route} from "react-router-dom";
 import Person from './Person'
+import AddPerson from './AddPerson'
+import AddLetter from './AddLetter'
+import AddLocation from './AddLocation'
 import Letters from './Letters'
 import Letter from './Letter'
 import Landing from './Landing'
@@ -11,7 +14,6 @@ import Location from './Location'
 import PersonToLetters from './PersonToLetters'
 import PersonFromLetters from './PersonFromLetters'
 import CombinePerson from './CombinePerson'
-import {withRouter} from "react-router";
 
 class App extends Component {
 
