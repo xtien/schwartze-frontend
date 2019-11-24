@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 class Person extends Component {
 
@@ -17,6 +17,7 @@ class Person extends Component {
         }
 
         this.edit = this.edit.bind(this);
+        this.combine = this.combine.bind(this);
 
         var id;
 
@@ -61,58 +62,86 @@ class Person extends Component {
         });
     }
 
+    combine(event) {
+        event.preventDefault();
+
+        this.setState(
+            {
+                combine: true
+            }
+        )
+    }
+
     render() {
 
         const person = this.state.person;
 
+        if (this.state.combine === true) {
+            return <Redirect to={'/combine_person/' + person.id}/>
+        }
+
         return (
-            <div className='container'>
-                {this.state.showEdit ? null : (
-                    <div className="letter text-black-50">
-                        <div>
-                            <p>
-                                {person.first_name} {person.middle_name} {person.last_name}
-                            </p>
-                            <p>{person.comment}</p>
-                            <p>{person.links}</p>
-                            <p><Link to={'/get_letters_from_person/${person.id}'}> Brieven
-                                van {person.first_name} </Link>
-                            </p>
-                            <p><Link to={'/get_letters_to_person/${person.id}'}> Brieven aan {person.first_name} </Link>
-                            </p>
+            <div>
+                <div className='container'>
+                    {this.state.showEdit ? null : (
+                        <div className="letter text-black-50">
+                            <div>
+                                <p>
+                                    {person.id} {person.first_name} {person.middle_name} {person.last_name}
+                                </p>
+                                <p>{person.comment}</p>
+                                <p>{person.links}</p>
+                                <p><Link to={'/get_letters_from_person/${person.id}'}> Brieven
+                                    van {person.first_name} </Link>
+                                </p>
+                                <p><Link to={'/get_letters_to_person/${person.id}'}> Brieven
+                                    aan {person.first_name} </Link>
+                                </p>
 
 
-                        </div>
-                        <div>
-                            {this.state.showEdit ? null : (
-                                <div>
+                            </div>
+                            <div>
+                                {this.state.showEdit ? null : (
                                     <div>
-                                        <button
-                                            className="btn btn-outline-success mybutton"
-                                            onClick={this.edit}
-                                            value={this.state.id}
-                                        >
-                                            edit
-                                        </button>
+                                        <div>
+                                            <button
+                                                className="btn btn-outline-success mybutton"
+                                                onClick={this.edit}
+                                                value={this.state.id}
+                                            >
+                                                edit
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
-                    </div>
-                )}
-                {this.state.showEdit ? (
-                    <EditPersonForm
-                        comment={this.state.person.comment}
-                        links={this.state.person.links}
-                        id={this.state.person.id}
-                        first_name={this.state.person.first_name}
-                        middle_name={this.state.person.middle_name}
-                        last_name={this.state.person.last_name}
-                        toggleEditDone={this.toggleEditDone}
-                    />
-                ) : null
-                }
+                    )}
+                    {this.state.showEdit ? (
+                        <EditPersonForm
+                            comment={this.state.person.comment}
+                            links={this.state.person.links}
+                            id={this.state.person.id}
+                            first_name={this.state.person.first_name}
+                            middle_name={this.state.person.middle_name}
+                            last_name={this.state.person.last_name}
+                            toggleEditDone={this.toggleEditDone}
+                        />
+                    ) : null
+                    }
+
+                    <form onSubmit={this.combine}>
+                        <input
+                            type="submit"
+                            className="btn btn-outline-success mybutton"
+                            value="Combineren"
+                        />
+
+                    </form>
+
+                </div>
             </div>
+
         )
     }
 }
