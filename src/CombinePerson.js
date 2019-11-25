@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 class CombinePerson extends Component {
 
@@ -12,10 +12,14 @@ class CombinePerson extends Component {
         this.state = {
             resultCode: -1,
             data: {},
-            showEdit: false,
+            showConfirm: false,
             first_id: props.match.params.id,
             second_id: 0
         }
+
+        this.handleFirstPersonChange = this.handleFirstPersonChange.bind(this);
+        this.handleSecondPersonChange = this.handleSecondPersonChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleFirstPersonChange(event) {
@@ -30,8 +34,8 @@ class CombinePerson extends Component {
         event.preventDefault();
 
         let postData = {
-            person1: this.state.first_id,
-            person2: this.state.second_id
+            id1: this.state.first_id,
+            id2: this.state.second_id
         };
 
         let axiosConfig = {
@@ -50,7 +54,7 @@ class CombinePerson extends Component {
                     resultCode: response.data.resultCode,
                     person1: response.data.person1,
                     person2: response.data.person2,
-                    editDone: true
+                    showConfirm: true
                 })
             );
     }
@@ -58,30 +62,47 @@ class CombinePerson extends Component {
     render() {
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="form-group row">
-                    <label htmlFor="status" class="col-sm-2 col-form-label">Persoon nummer</label>
-                    <div className="col-sm-2"><input
-                        type="text"
-                        pattern="[0-9]*"
-                        className="form-control textarea"
-                        id="first_person"
-                        value={this.state.first_id}
-                        onChange={this.handleFirstPersonChange}
-                    /></div>
-                </div>
-                <div className="form-group row">
-                    <label htmlFor="status"class="col-sm-2 col-form-label">Te combineren met</label>
-                    <div className="col-sm-2"><input
-                        type="text"
-                        pattern="[0-9]*"
-                        className="form-control textarea"
-                        id="first_person"
-                        value={this.state.second_id}
-                        onChange={this.handleSecondPersonChange}
-                    /></div>
-                </div>
-            </form>
+            <div>
+                {
+                    this.state.showConfirm ? null : (
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="form-group row">
+                                <label htmlFor="status" class="col-sm-2 col-form-label">Persoon nummer</label>
+                                <div className="col-sm-2"><input
+                                    type="text"
+                                    pattern="[0-9]*"
+                                    className="form-control textarea"
+                                    id="first_person"
+                                    value={this.state.first_id}
+                                    onChange={this.handleFirstPersonChange}
+                                /></div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="status" class="col-sm-2 col-form-label">Te combineren met</label>
+                                <div className="col-sm-2"><input
+                                    type="text"
+                                    pattern="[0-9]*"
+                                    className="form-control textarea"
+                                    id="first_person"
+                                    value={this.state.second_id}
+                                    onChange={this.handleSecondPersonChange}
+                                /></div>
+                            </div>
+                            <input
+                                type="submit"
+                                className="btn btn-outline-success mybutton"
+                                value="Combineer"
+                            />
+                        </form>)
+                }
+                {
+                    this.state.showConfirm ? (
+                        <CombinePersonForm
+                            person1={this.state.person1}
+                            person2={this.state.person2}
+                        />
+                    ) : null}
+            </div>
         )
 
     }
@@ -96,11 +117,13 @@ class CombinePersonForm
         super(props);
 
         this.state = {
-            id1: this.props.id1,
-            id2: this.props.id2,
+            person1: this.props.person1,
+            person2: this.props.person2,
             redirect: false
         }
 
+        this.combine = this.combine.bind(this);
+        this.not = this.not.bind(this);
     }
 
     combine() {
@@ -138,7 +161,7 @@ class CombinePersonForm
 
         if (this.state.redirect) {
             return (
-                <Link to={"get_person/" + this.state.person1.id}/>
+                <Redirect to={"/get_person/" + this.state.person1.id}/>
             )
         }
 
@@ -146,31 +169,29 @@ class CombinePersonForm
         const person2 = this.state.person2
 
         return (
-            <form className="letter text-black-50">
-                <div>
-                    <p>
-                        {person1.id} {person1.first_name} {person1.middle_name} {person1.last_name}
-                    </p>
+            <form onSubmit={this.combine}>
+                <div className="letter text-black-50">
+                    <div>
+                        <p>
+                            {person1.id} {person1.first_name} {person1.middle_name} {person1.last_name}
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            {person2.id} {person2.first_name} {person2.middle_name} {person2.last_name}
+                        </p>
+                    </div>
                 </div>
-                <div>
-                    <p>
-                        {person2.id} {person2.first_name} {person2.middle_name} {person2.last_name}
-                    </p>
-                </div>
-
-                <div>
-                    <button
-                        className="btn btn-outline-success mybutton"
-                        onClick={this.combine}
-                        value="Combineren">
-                    </button>
-                    <button
-                        className="btn btn-outline-danger mybutton"
-                        onClick={this.not}
-                        value="Niet doen">
-                    </button>
-
-                </div>
+                <input
+                    className="btn btn-outline-success mybutton mt-5"
+                    onClick={this.combine}
+                    value="Combineren">
+                </input>
+                <input
+                    className="btn btn-outline-danger mybutton mt-5"
+                    onClick={this.not}
+                    value="Niet doen">
+                </input>
             </form>
 
         )
