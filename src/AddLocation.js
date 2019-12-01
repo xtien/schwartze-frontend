@@ -26,14 +26,14 @@ class AddLocation extends Component {
     }
 
     handleLocationNameChange(event) {
-        this.setState({first_name: event.target.value});
+        this.setState({location_name: event.target.value});
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
         let postData = {
-            person: {
+            location: {
                 location_name: this.state.location_name,
                 text: this.state.text,
                 last_name: this.state.last_name,
@@ -56,7 +56,7 @@ class AddLocation extends Component {
             .then(response =>
                 this.setState({
                     editDone: true,
-                    id: response.data.person.id
+                    id: response.data.location.id
                 })
             );
     }
@@ -77,7 +77,7 @@ class AddLocation extends Component {
                         type="text"
                         className="form-control textarea"
                         id="first_name"
-                        value={this.state.first_name}
+                        value={this.state.location_name}
                         onChange={this.handleLocationNameChange}
                     />
                 </div>

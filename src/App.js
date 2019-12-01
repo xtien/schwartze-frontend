@@ -51,6 +51,7 @@ class App extends Component {
                         <Route path="/get_letter_details/:number" component={Letter}/>
                         <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
                         <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
+                        <Route path="/get_text/:id" component={Text}/>
                     </div>
                 </div>
             </Router>

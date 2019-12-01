@@ -133,7 +133,16 @@ class Person extends Component {
                                 <p><Link to={'/get_letters_to_person/${person.id}'}> Brieven
                                     aan {person.first_name} </Link>
                                 </p>
-
+                                <div>
+                                    {this.state.person1.text != null ?
+                                        <div>
+                                            <p>
+                                                <Link to={'/get_text/${person.id'}>
+                                                    Meer
+                                                </Link>
+                                            </p>
+                                        </div> : null}
+                                </div>
 
                             </div>
                             <div>

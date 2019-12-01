@@ -99,7 +99,7 @@ class AddLetter extends Component {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="status">Locatie sfzender</label>
+                    <label htmlFor="status">Locatie afzender</label>
                     <textarea
                         type="text"
                         className="form-control textarea"
