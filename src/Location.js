@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
 import './css/bootstrap.css'
+import ReactTable from "react-table";
 
 class Location extends Component {
 
@@ -25,13 +26,13 @@ class Location extends Component {
         }
 
         let postData = {
-            id: intarray
+            id: this.state.location.id
         };
 
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json',
-             }
+            }
         };
 
         axios.post('https://pengo.christine.nl:8443/get_location/',
@@ -41,8 +42,10 @@ class Location extends Component {
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
-                    locationText: response.data.location.text,
-                    location: response.data.location,
+                    location_text: response.data.location.location_text,
+                    location_name: response.data.location.location_name,
+                    location_comment: response.data.location.location_comment,
+                    links: response.data.location.links
                 })
             )
     }
@@ -51,9 +54,34 @@ class Location extends Component {
 
         const location = this.state.location;
 
+        const columns = [{
+            id: 'link_name',
+            Header: '',
+            accessor: data => {
+                return data.link_name;
+            },
+            width: 50
+        }, {
+            id: 'link_url',
+            Header: '',
+            accessor: data => {
+                return data.link_url;
+            },
+            width: 600
+        }
+        ]
+
         return (
             <div className='container'>
-                {location}
+                <h3>{location.location_name}</h3>
+                <p>{location.comment}</p>
+                <p>{location.description}</p>
+
+                <ReactTable
+                    data={this.state.location.links}
+                    columns={columns}
+                />
+
             </div>
         )
     }

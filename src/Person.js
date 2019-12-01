@@ -3,6 +3,7 @@ import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
+import ReactTable from "react-table";
 
 class Person extends Component {
 
@@ -19,6 +20,7 @@ class Person extends Component {
         this.edit = this.edit.bind(this);
         this.combine = this.combine.bind(this);
         this.delete = this.delete.bind(this);
+        this.add_text = this.add_text.bind(this);
 
         var id;
 
@@ -104,6 +106,35 @@ class Person extends Component {
             )
     }
 
+    add_text(event) {
+        event.preventDefault();
+
+        this.setState(
+            {
+                add_text: true
+            }
+        )
+
+        let postData = {
+            id: this.state.person.id
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+        axios.post('https://pengo.christine.nl:8443/add_person_text/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    person: response.data.person
+                })
+            )
+
+    }
+
     render() {
 
         const person = this.state.person;
@@ -115,6 +146,23 @@ class Person extends Component {
         if (this.state.deleted === true) {
             return <Redirect to={'/get_letters/'}/>
         }
+
+        const columns = [{
+            id: 'link_name',
+            Header: '',
+            accessor: data => {
+                return data.link_name;
+            },
+            width: 50
+        }, {
+            id: 'link_url',
+            Header: '',
+            accessor: data => {
+                return data.link_url;
+            },
+            width: 600
+        }
+        ]
 
         return (
             <div>
@@ -133,11 +181,18 @@ class Person extends Component {
                                 <p><Link to={'/get_letters_to_person/${person.id}'}> Brieven
                                     aan {person.first_name} </Link>
                                 </p>
+
+                                <ReactTable
+                                    data={this.state.person.links}
+                                    columns={columns}
+                                />
+
+
                                 <div>
-                                    {this.state.person1.text != null ?
+                                    {this.state.person.text != null ?
                                         <div>
                                             <p>
-                                                <Link to={'/get_text/${person.id'}>
+                                                <Link to={'/get_person_text/${person.id'}>
                                                     Meer
                                                 </Link>
                                             </p>
@@ -188,6 +243,14 @@ class Person extends Component {
                             type="submit"
                             className="btn btn-outline-danger mybutton"
                             value="Verwijderen"
+                        />
+
+                    </form>
+                    <form onSubmit={this.add_text} className="mt-5">
+                        <input
+                            type="submit"
+                            className="btn btn-outline-success mybutton"
+                            value="Add text"
                         />
 
                     </form>
