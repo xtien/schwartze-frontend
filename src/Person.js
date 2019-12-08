@@ -3,7 +3,6 @@ import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
-import ReactTable from "react-table";
 
 class Person extends Component {
 
@@ -21,6 +20,8 @@ class Person extends Component {
         this.combine = this.combine.bind(this);
         this.delete = this.delete.bind(this);
         this.add_text = this.add_text.bind(this);
+        this.add_link = this.add_link.bind(this);
+        this.update_link = this.update_link.bind(this);
 
         var id;
 
@@ -58,10 +59,24 @@ class Person extends Component {
         })
     }
 
+    toggleLinkEditDone = (person) => {
+        this.setState({
+            showLinkEdit: false,
+            person: person
+        })
+    }
+
     edit(event) {
 
         this.setState({
             showEdit: true,
+        });
+    }
+
+    link(event) {
+
+        this.setState({
+            showLinkEdit: true,
         });
     }
 
@@ -135,6 +150,29 @@ class Person extends Component {
 
     }
 
+    update_link(event) {
+        event.preventDefault();
+
+        this.setState(
+            {
+                add_link: false
+            }
+        )
+    }
+
+    add_link(event) {
+        event.preventDefault();
+
+        this.setState(
+            {
+                showLinkEdit: true,
+                link_name: '',
+                link_url: '',
+                link_id: ''
+            }
+        )
+    }
+
     render() {
 
         const person = this.state.person;
@@ -147,22 +185,14 @@ class Person extends Component {
             return <Redirect to={'/get_letters/'}/>
         }
 
-        const columns = [{
-            id: 'link_name',
-            Header: '',
-            accessor: data => {
-                return data.link_name;
-            },
-            width: 50
-        }, {
-            id: 'link_url',
-            Header: '',
-            accessor: data => {
-                return data.link_url;
-            },
-            width: 600
+        var links = []
+        if (person.links != null) {
+            links = person.links.map(function (link, i) {
+                return (
+                    <div key={i}><a href={link.link_url}>{link.link_name}</a></div>
+                );
+            });
         }
-        ]
 
         return (
             <div>
@@ -174,18 +204,12 @@ class Person extends Component {
                                     {person.id} {person.first_name} {person.middle_name} {person.last_name}
                                 </p>
                                 <p>{person.comment}</p>
-                                <p>{person.links}</p>
                                 <p><Link to={'/get_letters_from_person/${person.id}'}> Brieven
                                     van {person.first_name} </Link>
                                 </p>
                                 <p><Link to={'/get_letters_to_person/${person.id}'}> Brieven
                                     aan {person.first_name} </Link>
                                 </p>
-
-                                <ReactTable
-                                    data={this.state.person.links}
-                                    columns={columns}
-                                />
 
 
                                 <div>
@@ -200,6 +224,7 @@ class Person extends Component {
                                 </div>
 
                             </div>
+
                             <div>
                                 {this.state.showEdit ? null : (
                                     <div>
@@ -215,6 +240,23 @@ class Person extends Component {
                                     </div>
                                 )}
                             </div>
+
+                            <div id='linkcontainer'>
+                                <div id='linkContainer'>
+                                    <h3 className='mt-5'>Links</h3>
+                                        {links}
+
+                                </div>
+                                <form onSubmit={this.add_link} className='mt-5'>
+                                    <input
+                                        type="submit"
+                                        className="btn btn-outline-success mybutton"
+                                        value="Link toevoegen"
+                                    />
+                                </form>
+
+                            </div>
+
                         </div>
                     )}
                     {this.state.showEdit ? (
@@ -229,6 +271,16 @@ class Person extends Component {
                         />
                     ) : null
                     }
+
+                    <div className="mt-5">
+                        {this.state.showLinkEdit ? (
+                            <EditLinkForm
+                                person_id={this.state.person.id}
+                                toggleLinkEditDone={this.togglelinkEditDone}
+                            />
+                        ) : null
+                        }
+                    </div>
 
                     <form onSubmit={this.combine}>
                         <input
@@ -398,6 +450,132 @@ class EditPersonForm extends React.Component {
                         id="links"
                         value={this.state.links}
                         onChange={this.handleLinksChange}
+                    />
+                </div>
+                <input
+                    type="submit"
+                    className="btn btn-outline-success mybutton"
+                    value="Submit"
+                />
+            </form>
+        );
+    }
+}
+
+class EditLinkForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            person: {},
+            person_id: this.props.person_id,
+            link_id: this.props.link_id,
+            link_name: this.props.link_name,
+            link_url: this.props.link_url,
+        };
+
+        this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleUrlChange = this.handleUrlChange.bind(this);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        let postData = {
+            person_id: this.state.person_id,
+            link_id: this.state.link_id,
+            link_name: this.state.link_name,
+            link_url: this.state.link_url,
+        };
+
+        let axiosConfig = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            }
+        };
+
+        axios.post('https://pengo.christine.nl:8443/edit_link/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    resultCode: response.data.resultCode,
+                    person: response.data.person,
+                    linkEditDone: true
+                })
+            );
+    }
+
+    handleLinkSubmit(event) {
+        event.preventDefault();
+
+        let postData = {
+            person_id: this.state.person_id,
+            link_id: this.state.link_id,
+            link_name: this.state.link_name,
+            link_url: this.state.link_url,
+        };
+
+        let axiosConfig = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            }
+        };
+
+        axios.post('https://pengo.christine.nl:8443/edit_link/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    resultCode: response.data.resultCode,
+                    person: response.data.person,
+                    linkEditDone: true
+                })
+            );
+    }
+
+    handleNameChange(event) {
+        this.setState({link_name: event.target.value});
+    }
+
+    handleUrlChange(event) {
+        this.setState({link_url: event.target.value});
+    }
+
+    render() {
+
+        if (this.state.linkEditDone === true) {
+            this.state.linkEditDone = false;
+            this.props.toggleLinkEditDone(this.state.person);
+        }
+
+        return (
+            <form onSubmit={this.handleLinkSubmit}>
+                <div className="form-group">
+                    <label htmlFor="status">Link naam</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="link_name"
+                        value={this.state.link_name}
+                        onChange={this.handleNameChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="status">Link url</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="link_url"
+                        value={this.state.link_url}
+                        onChange={this.handleUrlChange}
                     />
                 </div>
                 <input

@@ -71,12 +71,14 @@ class Letters extends Component {
             id: 'sender_location',
             accessor: data => {
                 let locations = [];
+                let ids = [];
                 _.map(data.sender_location, location => {
-                    const locationName = location.name;
-                    locations.push(locationName);
+                     locations.push(location.location_name);
+                     ids.push(location.id);
                 });
-                const location_content = locations.join(', ');
-                const linkTo = '/get_location/' + location_content;
+                const location_content = locations[0];
+                const id_content = ids[0];
+                const linkTo = '/get_location/' + id_content;
                 let result = <Link to={linkTo}>{location_content}</Link>
                 return result;
             },
@@ -101,13 +103,13 @@ class Letters extends Component {
             id: 'recipient_location',
             accessor: data => {
                 let locations = [];
-                let cell_ids = [];
+                let ids = [];
                 _.map(data.recipient_location, location => {
-                    locations.push(location.name);
-                    cell_ids.push(location.id);
+                    locations.push(location.location_name);
+                    ids.push(location.id);
                 });
-                const location_content = locations.join(', ');
-                const id_content = cell_ids;
+                const location_content = locations[0];
+                const id_content = ids[0];
                 const linkTo = '/get_location/' + id_content;
                 let result = <Link to={linkTo}>{location_content}</Link>
                 return result;
