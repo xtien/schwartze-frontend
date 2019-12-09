@@ -15,10 +15,14 @@ class Location extends Component {
             locationText: '',
             location: {},
             showLinkEdit: false,
+            link_id:'',
+            link_name: '',
+            link_url: '',
         }
 
         this.add_link = this.add_link.bind(this);
-        this.update_link = this.update_link.bind(this);
+        this.edit_link = this.edit_link.bind(this);
+        this.delete_link = this.delete_link.bind(this);
 
         var id;
 
@@ -55,16 +59,29 @@ class Location extends Component {
         })
     }
 
-    update_link(event) {
-        event.preventDefault();
+    delete_link(id) {
 
-        this.setState(
-            {
-                add_link: false
+        let postData = {
+            link_id: id
+        };
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
             }
-        )
-    }
+        };
 
+        axios.post('https://pengo.christine.nl:8443/delete_link/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    resultCode: response.data.resultCode,
+                    location: response.data.location
+                })
+            )
+    }
     add_link(event) {
         event.preventDefault();
 
@@ -78,15 +95,44 @@ class Location extends Component {
         )
     }
 
+    edit_link(id) {
+
+        const link = this.state.location.links.find(link => link.id = id);
+
+        this.setState(
+            {
+                showLinkEdit: true,
+                link_name: link.link_name,
+                link_url: link.link_url,
+                link_id: link.id
+            }
+        )
+    }
+
     render() {
 
         const location = this.state.location;
+        var edit_link = this.edit_link;
+        var delete_link = this.delete_link;
 
         var links = []
         if (location.links != null) {
             links = location.links.map(function (link, i) {
                 return (
-                    <div key={i}><a href={link.link_url}>{link.link_name}</a></div>
+                    <div key={i}><a href={link.link_url}>{link.link_name}</a>
+                        <button
+                            className="btn btn-outline-success mybutton ml-2 mt-2"
+                            onClick={edit_link.bind(this, link.id)}
+                        >
+                            Edit
+                        </button>
+                        <button
+                            className="btn btn-outline-danger mybutton ml-2 mt-2"
+                            onClick={delete_link.bind(this, link.id)}
+                        >
+                            Delete
+                        </button>
+                    </div>
                 );
             });
         }
@@ -116,6 +162,9 @@ class Location extends Component {
                 {this.state.showLinkEdit ? (
                     <EditLinkForm
                         location_id={this.state.location.id}
+                        link_id={this.state.link_id}
+                        link_name={this.state.link_name}
+                        link_url={this.state.link_url}
                         togglelinkEditDone={this.togglelinkEditDone}
                     />
                 ) : null
