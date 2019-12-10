@@ -13,6 +13,9 @@ class Person extends Component {
             resultCode: -1,
             data: {},
             showEdit: false,
+            showLinkEdit: false,
+            showTextEdit: false,
+            text_id: '',
             person: {}
         }
 
@@ -20,10 +23,11 @@ class Person extends Component {
         this.combine = this.combine.bind(this);
         this.delete = this.delete.bind(this);
         this.add_text = this.add_text.bind(this);
+        this.edit_text = this.edit_text.bind(this);
         this.add_link = this.add_link.bind(this);
         this.update_link = this.update_link.bind(this);
 
-        var id;
+        let id;
 
         if (props.match.params.id != null) {
             id = props.match.params.id;
@@ -90,6 +94,31 @@ class Person extends Component {
         )
     }
 
+    edit_text(event){
+        event.preventDefault();
+
+        let postData = {
+            requestCode: 0,
+            text: this.state.text
+        };
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        axios.post('https://pengo.christine.nl:8443/edit_text/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    showTextEdit: false
+                })
+            )
+    }
+
     delete(event) {
         event.preventDefault();
 
@@ -126,7 +155,7 @@ class Person extends Component {
 
         this.setState(
             {
-                add_text: true
+                showTextEdit: true
             }
         )
 
@@ -144,7 +173,8 @@ class Person extends Component {
         )
             .then(response =>
                 this.setState({
-                    person: response.data.person
+                    text: response.data.text,
+                    text_id: response.data.id
                 })
             )
 
@@ -171,6 +201,10 @@ class Person extends Component {
                 link_id: ''
             }
         )
+    }
+
+    handleTextChange(event) {
+        this.setState({text: event.target.value});
     }
 
     render() {
@@ -244,7 +278,7 @@ class Person extends Component {
                             <div id='linkcontainer'>
                                 <div id='linkContainer'>
                                     <h3 className='mt-5'>Links</h3>
-                                        {links}
+                                    {links}
 
                                 </div>
                                 <form onSubmit={this.add_link} className='mt-5'>
@@ -272,6 +306,21 @@ class Person extends Component {
                     ) : null
                     }
 
+                    {
+                        this.state.showLinkEdit ? (
+                            <form onSubmit=>{this.edit_text}
+                                <textarea
+                                    type="text"
+                                    className="form-control textarea"
+                                    id="text"
+                                    value={this.state.text}
+                                    onChange={this.handleTextChange}
+                                />
+
+                            </form>
+                        ) : null
+                    }
+
                     <div className="mt-5">
                         {this.state.showLinkEdit ? (
                             <EditLinkForm
@@ -281,32 +330,40 @@ class Person extends Component {
                         ) : null
                         }
                     </div>
+                    <table>
+                        <tr>
+                            <td>
 
-                    <form onSubmit={this.combine}>
-                        <input
-                            type="submit"
-                            className="btn btn-outline-success mybutton"
-                            value="Combineren"
-                        />
+                                <form onSubmit={this.combine} className="ml-5 mb-5">
+                                    <input
+                                        type="submit"
+                                        className="btn btn-outline-success mybutton"
+                                        value="Combineren"
+                                    />
+                                </form>
+                            </td>
+                            <td>
+                                <form onSubmit={this.delete} className="ml-5 mb-5">
+                                    <input
+                                        type="submit"
+                                        className="btn btn-outline-danger mybutton"
+                                        value="Verwijderen"
+                                    />
 
-                    </form>
-                    <form onSubmit={this.delete} className="mt-5">
-                        <input
-                            type="submit"
-                            className="btn btn-outline-danger mybutton"
-                            value="Verwijderen"
-                        />
+                                </form>
+                            </td>
+                            <td>
+                                <form onSubmit={this.add_text} className="ml-5 mb-5">
+                                    <input
+                                        type="submit"
+                                        className="btn btn-outline-success mybutton"
+                                        value="Add text"
+                                    />
 
-                    </form>
-                    <form onSubmit={this.add_text} className="mt-5">
-                        <input
-                            type="submit"
-                            className="btn btn-outline-success mybutton"
-                            value="Add text"
-                        />
-
-                    </form>
-
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
@@ -440,16 +497,6 @@ class EditPersonForm extends React.Component {
                         id="comments"
                         value={this.state.comment}
                         onChange={this.handleCommentChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="header">Links</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="links"
-                        value={this.state.links}
-                        onChange={this.handleLinksChange}
                     />
                 </div>
                 <input

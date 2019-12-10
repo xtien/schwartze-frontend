@@ -24,7 +24,7 @@ class Location extends Component {
         this.edit_link = this.edit_link.bind(this);
         this.delete_link = this.delete_link.bind(this);
 
-        var id;
+        let id;
 
         if (props.match.params.id != null) {
             id = props.match.params.id;
