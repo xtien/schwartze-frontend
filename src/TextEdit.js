@@ -9,9 +9,9 @@ class Text extends Component {
         super(props)
 
         this.state = {
-            person_id: props.match.params.person_id,
-            location_id: props.match.params.location_id,
-            id: props.match.params.id,
+            person_id : props.match.params.person_id,
+            location_id : props.match.params.location_id,
+            id : props.match.params.id,
             person: {},
             location: {},
             text: {}
@@ -43,11 +43,45 @@ class Text extends Component {
             )
     }
 
+    handleTextChange(event) {
+        this.setState({text_string: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        let postData = {
+            location_id: this.state.location.id,
+            person_id: this.state.person.id,
+            text_id: this.state.text_id,
+            text_string: this.state.text_string,
+        };
+
+        let axiosConfig = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
+            }
+        };
+
+        axios.post('https://pengo.christine.nl:8443/edit_link/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    resultCode: response.data.resultCode,
+                    location: response.data.location,
+                    editDone: true
+                })
+            );
+    }
+
     render() {
 
         const location = this.state.location;
         const person = this.state.person;
-        let text = location.text != null ? location.text : person.text;
+        let text = location.text !=null ? location.text : person.text;
 
         return (
             <div className='container'>
@@ -63,9 +97,19 @@ class Text extends Component {
                         : null
                     }
                 </div>
-                <div>
-                    {text.text_string}
-                </div>
+
+                <form onSubmit={this.handleSubmit}>
+                    <div className="form-group">
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="text_string"
+                            value={this.state.text_string}
+                            onChange={this.handleTextChange}
+                        />
+                    </div>
+                </form>
+
             </div>
         )
     }

@@ -21,6 +21,7 @@ class Location extends Component {
         }
 
         this.add_link = this.add_link.bind(this);
+        this.add_text = this.add_text.bind(this);
         this.edit_link = this.edit_link.bind(this);
         this.delete_link = this.delete_link.bind(this);
 
@@ -109,11 +110,69 @@ class Location extends Component {
         )
     }
 
+    add_text(event) {
+        event.preventDefault();
+
+        this.setState(
+            {
+                showTextEdit: true
+            }
+        )
+
+        let postData = {
+            location_id: this.state.location.id
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+        axios.post('https://pengo.christine.nl:8443/get_text/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    text: response.data.text,
+                    text_id: response.data.id,
+                    showTextEdit: true
+                })
+            )
+
+    }
+
+    edit_text(event){
+        event.preventDefault();
+
+        let postData = {
+            requestCode: 0,
+            id: this.state.text.id
+        };
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        axios.post('https://pengo.christine.nl:8443/edit_text/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    showTextEdit: false
+                })
+            )
+    }
+
     render() {
 
         const location = this.state.location;
         var edit_link = this.edit_link;
         var delete_link = this.delete_link;
+        const linkto = '/get_location_text/' + location.id;
+        const linktoedit = '/edit_location_text/' + location.id;
 
         var links = []
         if (location.links != null) {
@@ -144,6 +203,17 @@ class Location extends Component {
                 <p>{location.comment}</p>
                 <p>{location.description}</p>
 
+                <div>
+                    {this.state.location.text != null ?
+                        <div>
+                            <p>
+                                 <Link to={linkto}>
+                                    Meer
+                                </Link>
+                            </p>
+                        </div> : null}
+                </div>
+
                 <div id='linkcontainer'>
                     <div id='linkContainer'>
                         {links}
@@ -170,6 +240,11 @@ class Location extends Component {
                 ) : null
                 }
 
+                <div>
+                    <Link to={linktoedit}>
+                        Edit text
+                    </Link>
+                </div>
 
             </div>
         )

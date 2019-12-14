@@ -99,7 +99,7 @@ class Person extends Component {
 
         let postData = {
             requestCode: 0,
-            text: this.state.text
+            id: this.state.text.id
         };
 
         let axiosConfig = {
@@ -160,14 +160,14 @@ class Person extends Component {
         )
 
         let postData = {
-            id: this.state.person.id
+            person_id: this.state.person.id
         }
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json',
             }
         };
-        axios.post('https://pengo.christine.nl:8443/add_person_text/',
+        axios.post('https://pengo.christine.nl:8443/get_text/',
             postData,
             axiosConfig
         )
@@ -210,6 +210,8 @@ class Person extends Component {
     render() {
 
         const person = this.state.person;
+        const linkto = '/get_person_text/' + person.id;
+        const linktoedit = '/edit_person_text/' + location.id;
 
         if (this.state.combine === true) {
             return <Redirect to={'/combine_person/' + person.id}/>
@@ -250,7 +252,7 @@ class Person extends Component {
                                     {this.state.person.text != null ?
                                         <div>
                                             <p>
-                                                <Link to={'/get_person_text/${person.id'}>
+                                                <Link to={linkto}>
                                                     Meer
                                                 </Link>
                                             </p>
@@ -308,7 +310,7 @@ class Person extends Component {
 
                     {
                         this.state.showLinkEdit ? (
-                            <form onSubmit=>{this.edit_text}
+                            <form onSubmit={this.edit_text}>
                                 <textarea
                                     type="text"
                                     className="form-control textarea"
@@ -333,7 +335,6 @@ class Person extends Component {
                     <table>
                         <tr>
                             <td>
-
                                 <form onSubmit={this.combine} className="ml-5 mb-5">
                                     <input
                                         type="submit"
@@ -353,14 +354,12 @@ class Person extends Component {
                                 </form>
                             </td>
                             <td>
-                                <form onSubmit={this.add_text} className="ml-5 mb-5">
-                                    <input
-                                        type="submit"
-                                        className="btn btn-outline-success mybutton"
-                                        value="Add text"
-                                    />
+                                <div>
+                                    <Link to={linktoedit}>
+                                        Edit text
+                                    </Link>
+                                </div>
 
-                                </form>
                             </td>
                         </tr>
                     </table>
@@ -523,39 +522,8 @@ class EditLinkForm extends React.Component {
         };
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleUrlChange = this.handleUrlChange.bind(this);
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-
-        let postData = {
-            person_id: this.state.person_id,
-            link_id: this.state.link_id,
-            link_name: this.state.link_name,
-            link_url: this.state.link_url,
-        };
-
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
-        axios.post('https://pengo.christine.nl:8443/edit_link/',
-            postData,
-            axiosConfig
-        )
-            .then(response =>
-                this.setState({
-                    resultCode: response.data.resultCode,
-                    person: response.data.person,
-                    linkEditDone: true
-                })
-            );
     }
 
     handleLinkSubmit(event) {
