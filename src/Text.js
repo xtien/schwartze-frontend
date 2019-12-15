@@ -64,7 +64,12 @@ class Text extends Component {
                     }
                 </div>
                 <div>
-                    {text.text_string}
+                    {(text != null && text.text_string != null) ?
+                        <div>
+                            {text.text_string}
+                        </div>
+                        : null
+                    }
                 </div>
             </div>
         )

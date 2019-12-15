@@ -53,13 +53,9 @@ class App extends Component {
                         <Route path="/get_letter_details/:number" component={Letter}/>
                         <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
                         <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
-                        <Route path="/get_person_text/:person_id" component={Text}/>
-                        <Route path="/get_location_text/:location_id" component={Text}/>
                         <Route path="/get_text/:id" component={Text}/>
-                        <Route path="/edit_text/:id" component={TextEdit}/>
-                        <Route path="/edit_location_text/:location_id" component={TextEdit}/>
-                        <Route path="/edit_person_text/:person_id" component={TextEdit}/>
-                    </div>
+                        <Route path="/edit_text/" component={TextEdit}/>
+                     </div>
                 </div>
             </Router>
 

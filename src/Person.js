@@ -22,8 +22,6 @@ class Person extends Component {
         this.edit = this.edit.bind(this);
         this.combine = this.combine.bind(this);
         this.delete = this.delete.bind(this);
-        this.add_text = this.add_text.bind(this);
-        this.edit_text = this.edit_text.bind(this);
         this.add_link = this.add_link.bind(this);
         this.update_link = this.update_link.bind(this);
 
@@ -94,31 +92,6 @@ class Person extends Component {
         )
     }
 
-    edit_text(event){
-        event.preventDefault();
-
-        let postData = {
-            requestCode: 0,
-            id: this.state.text.id
-        };
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
-        axios.post('https://pengo.christine.nl:8443/edit_text/',
-            postData,
-            axiosConfig
-        )
-            .then(response =>
-                this.setState({
-                    showTextEdit: false
-                })
-            )
-    }
-
     delete(event) {
         event.preventDefault();
 
@@ -148,36 +121,6 @@ class Person extends Component {
                     deleted: true
                 })
             )
-    }
-
-    add_text(event) {
-        event.preventDefault();
-
-        this.setState(
-            {
-                showTextEdit: true
-            }
-        )
-
-        let postData = {
-            person_id: this.state.person.id
-        }
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-        axios.post('https://pengo.christine.nl:8443/get_text/',
-            postData,
-            axiosConfig
-        )
-            .then(response =>
-                this.setState({
-                    text: response.data.text,
-                    text_id: response.data.id
-                })
-            )
-
     }
 
     update_link(event) {
@@ -210,8 +153,6 @@ class Person extends Component {
     render() {
 
         const person = this.state.person;
-        const linkto = '/get_person_text/' + person.id;
-        const linktoedit = '/edit_person_text/' + location.id;
 
         if (this.state.combine === true) {
             return <Redirect to={'/combine_person/' + person.id}/>
@@ -248,11 +189,16 @@ class Person extends Component {
                                 </p>
 
 
-                                <div>
-                                    {this.state.person.text != null ?
+                                <div className='mt-5'>
+                                    {person.text != null && person.text.text_string != null ?
                                         <div>
                                             <p>
-                                                <Link to={linkto}>
+                                                <Link to={{
+                                                    pathname: '/get_text/',
+                                                    query : {
+                                                        person_id: person.id
+                                                    }
+                                                }}>
                                                     Meer
                                                 </Link>
                                             </p>
@@ -355,7 +301,10 @@ class Person extends Component {
                             </td>
                             <td>
                                 <div>
-                                    <Link to={linktoedit}>
+                                    <Link to={{
+                                        pathname: '/edit_text/',
+                                        person_id: person.id
+                                    }}>
                                         Edit text
                                     </Link>
                                 </div>

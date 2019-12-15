@@ -9,13 +9,19 @@ class Text extends Component {
         super(props)
 
         this.state = {
-            person_id : props.match.params.person_id,
-            location_id : props.match.params.location_id,
-            id : props.match.params.id,
+            person_id: props.person_id,
+            location_id: props.location.location_id,
+            id: props.match.params.id,
             person: {},
             location: {},
-            text: {}
+            text: {},
+            text_string: '',
+            cancel: false
         }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
 
         let postData = {
             id: this.state.id,
@@ -47,12 +53,20 @@ class Text extends Component {
         this.setState({text_string: event.target.value});
     }
 
+    handleCancel(event) {
+        event.preventDefault();
+
+        this.setState(
+            {cancel: true}
+        )
+    }
+
     handleSubmit(event) {
         event.preventDefault();
 
         let postData = {
-            location_id: this.state.location.id,
-            person_id: this.state.person.id,
+            location_id: this.state.location_id,
+            person_id: this.state.person_id,
             text_id: this.state.text_id,
             text_string: this.state.text_string,
         };
@@ -81,25 +95,32 @@ class Text extends Component {
 
         const location = this.state.location;
         const person = this.state.person;
-        let text = location.text !=null ? location.text : person.text;
+        let text = location.text != null ? location.text : person.text;
+        const redirectTo = (location != null && location.text != null) ? '/get_location/' + location.id : '/get_person/' + person.id;
 
         return (
             <div className='container'>
                 <div>
-                    {this.state.person != null ?
-                        <Link
-                            to={'get_person' + person.id}> {person.first_name} {person.last_name}</Link>
-                        : null
-                    }</div>
-                <div>
-                    {this.state.location != null ?
-                        <Link to={'get_location' + location.id}> {location.location_name}</Link>
-                        : null
-                    }
-                </div>
+                    {
+                        this.state.cancel  ?
+                            <Redirect to={redirectTo}/> :
+                            <div>
 
-                <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
+                                <div>
+                                    {this.state.person != null ?
+                                        <Link
+                                            to={'get_person' + person.id}> {person.first_name} {person.last_name}</Link>
+                                        : null
+                                    }</div>
+                                <div>
+                                    {this.state.location != null ?
+                                        <Link to={'get_location' + location.id}> {location.location_name}</Link>
+                                        : null
+                                    }
+                                </div>
+
+                                <form onSubmit={this.handleSubmit} oncancel={this.handleCancel} className='mt-5'>
+                                    <div className="form-group">
                         <textarea
                             type="text"
                             className="form-control textarea"
@@ -107,9 +128,32 @@ class Text extends Component {
                             value={this.state.text_string}
                             onChange={this.handleTextChange}
                         />
-                    </div>
-                </form>
-
+                                    </div>
+                                    <table className='mt-5'>
+                                        <tr>
+                                            <td>
+                                                <input
+                                                    type="submit"
+                                                    className="btn btn-outline-success mybutton"
+                                                    value="Save"
+                                                />
+                                            </td>
+                                            <td>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-outline-danger mybutton ml-5"
+                                                    onClick={() => {
+                                                        this.props.history.push(redirectTo)
+                                                    }}
+                                                >Cancel
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                    }
+                </div>
             </div>
         )
     }
