@@ -19,12 +19,6 @@ import TextEdit from './TextEdit'
 
 class App extends Component {
 
-    // https://medium.com/@thejasonfile/basic-intro-to-react-router-v4-a08ae1ba5c42
-
-    constructor() {
-        super()
-    }
-
     render() {
 
         return (

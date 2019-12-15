@@ -82,7 +82,8 @@ class Letter extends Component {
         const images = this.state.imageData;
         const remarks = this.state.letter.comment;
         const letterNumber = this.state.letter.number;
-        const listItems = images.map((d) => (<div className='letter_image'><img width="1000" src={d}/></div>));
+        const listItems = images.map((d) => (
+            <div className='letter_image'><img width="1000" alt="original letter" src={d}/></div>));
         const senders = this.state.senders;
         const recipients = this.state.recipients;
         const senderList = senders.map((s) => <span>{s.first_name} {s.last_name}  </span>);
@@ -196,20 +197,22 @@ class CommentForm extends React.Component {
     render() {
 
         if (this.state.editDone === true) {
-            this.state.editDone = false;
+            this.setState({
+                editDone: false
+            })
             this.props.toggleEditDone(this.state.letter);
         }
 
         return (
-             <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                      <textarea
-                        type="text"
-                        id="text"
-                        value={this.state.text}
-                        className="form-control textarea"
-                        onChange={this.handleChange}/>
-                 </div>
+                         type="text"
+                         id="text"
+                         value={this.state.text}
+                         className="form-control textarea"
+                         onChange={this.handleChange}/>
+                </div>
                 <input
                     type="submit"
                     className="btn btn-outline-success mybutton"

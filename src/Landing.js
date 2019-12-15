@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import axios from "axios";
-import {BrowserRouter as Router, Link, Route} from "react-router-dom";
 import './css/bootstrap.css'
 
 class Landing extends Component {
@@ -11,18 +9,6 @@ class Landing extends Component {
         super()
 
         this.state = {}
-
-        let postData = {
-            requestCode: 0
-        };
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
     }
 
     render() {
@@ -31,8 +17,8 @@ class Landing extends Component {
 
             <div className='container'>
                 <div className='photo'>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Th%C3%A9r%C3%A8se_Schwartze_-_Portret_van_Lizzie_Ansingh.jpg/1024px-Th%C3%A9r%C3%A8se_Schwartze_-_Portret_van_Lizzie_Ansingh.jpg" height="400" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Th%C3%A9r%C3%A8se_Schwartze_038.jpg/1024px-Th%C3%A9r%C3%A8se_Schwartze_038.jpg" height="400" />
+                    <img alt="schilderij lizzy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Th%C3%A9r%C3%A8se_Schwartze_-_Portret_van_Lizzie_Ansingh.jpg/1024px-Th%C3%A9r%C3%A8se_Schwartze_-_Portret_van_Lizzie_Ansingh.jpg" height="400" />
+                    <img alt="schilderij therese" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Th%C3%A9r%C3%A8se_Schwartze_038.jpg/1024px-Th%C3%A9r%C3%A8se_Schwartze_038.jpg" height="400" />
                  </div>
                  <div className='text'><p >
                     Thérèse Schwartze was de eerste vrouw in ons land die met portretschilderen

@@ -45,14 +45,14 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
 
   _formReset() {
     for (const option of this.options) {
-      option._selectedness = option.hasAttribute("selected");
+      option._selectedness = option.hasAttributeNS(null, "selected");
       option._dirtyness = false;
     }
     this._askedForAReset();
   }
 
   _askedForAReset() {
-    if (this.hasAttribute("multiple")) {
+    if (this.hasAttributeNS(null, "multiple")) {
       return;
     }
 
@@ -62,11 +62,11 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
     if (size === 1 && !selected.length) {
       // select the first option that is not disabled
       for (const option of this.options) {
-        let disabled = option.hasAttribute("disabled");
+        let disabled = option.hasAttributeNS(null, "disabled");
         const parentNode = domSymbolTree.parent(option);
         if (parentNode &&
           parentNode.nodeName.toUpperCase() === "OPTGROUP" &&
-          parentNode.hasAttribute("disabled")) {
+          parentNode.hasAttributeNS(null, "disabled")) {
           disabled = true;
         }
 
@@ -108,8 +108,8 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
   }
 
   get _displaySize() {
-    if (this.hasAttribute("size")) {
-      const attr = this.getAttribute("size");
+    if (this.hasAttributeNS(null, "size")) {
+      const attr = this.getAttributeNS(null, "size");
       // We don't allow hexadecimal numbers here.
       // eslint-disable-next-line radix
       const size = parseInt(attr, 10);
@@ -117,7 +117,7 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
         return size;
       }
     }
-    return this.hasAttribute("multiple") ? 4 : 1;
+    return this.hasAttributeNS(null, "multiple") ? 4 : 1;
   }
 
   get options() {
@@ -144,7 +144,13 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
 
   set selectedIndex(index) {
     for (let i = 0; i < this.options.length; i++) {
-      this.options.item(i).selected = i === index;
+      this.options.item(i)._selectedness = false;
+    }
+
+    const selectedOption = this.options.item(index);
+    if (selectedOption) {
+      selectedOption._selectedness = true;
+      selectedOption._dirtyness = true;
     }
   }
 
@@ -153,14 +159,13 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
   }
 
   get value() {
-    let i = this.selectedIndex;
-    if (this.options.length && (i === -1)) {
-      i = 0;
+    for (const option of this.options) {
+      if (option._selectedness) {
+        return option.value;
+      }
     }
-    if (i === -1) {
-      return "";
-    }
-    return this.options.item(i).value;
+
+    return "";
   }
 
   set value(val) {
@@ -179,7 +184,7 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
   }
 
   get type() {
-    return this.hasAttribute("multiple") ? "select-multiple" : "select-one";
+    return this.hasAttributeNS(null, "multiple") ? "select-multiple" : "select-one";
   }
 
   get [idlUtils.supportedPropertyIndices]() {
@@ -226,7 +231,7 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
   }
 
   _barredFromConstraintValidationSpecialization() {
-    return this.hasAttribute("readonly");
+    return this.hasAttributeNS(null, "readonly");
   }
 
   // Constraint validation: If the element has its required attribute specified,
@@ -238,7 +243,7 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
     if (!this._validity) {
       this._validity = ValidityState.createImpl(this, {
         valueMissing: () => {
-          if (!this.hasAttribute("required")) {
+          if (!this.hasAttributeNS(null, "required")) {
             return false;
           }
           const selectedOptionIndex = this.selectedIndex;
@@ -256,7 +261,7 @@ class HTMLSelectElementImpl extends HTMLElementImpl {
   // element's placeholder label option.
   // https://html.spec.whatwg.org/multipage/form-elements.html#placeholder-label-option
   get _hasPlaceholderOption() {
-    return this.hasAttribute("required") && !this.hasAttribute("multiple") &&
+    return this.hasAttributeNS(null, "required") && !this.hasAttributeNS(null, "multiple") &&
       this._displaySize === 1 && this.options.length > 0 && this.options.item(0).value === "" &&
       this.options.item(0).parentNode._localName !== "optgroup";
   }

@@ -2,6 +2,7 @@
   "name": "schwartze-react",
   "version": "0.1.0",
   "private": true,
+  "license": "Apache 2.0",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",

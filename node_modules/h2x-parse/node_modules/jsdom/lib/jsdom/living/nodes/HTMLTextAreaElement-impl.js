@@ -11,6 +11,7 @@ const DOMException = require("domexception");
 const { cloningSteps } = require("../helpers/internal-constants");
 const { normalizeToCRLF, getLabelsForLabelable, formOwner } = require("../helpers/form-controls");
 const { childTextContent } = require("../helpers/text");
+const { fireAnEvent } = require("../helpers/events");
 
 class HTMLTextAreaElementImpl extends HTMLElementImpl {
   constructor(args, privateData) {
@@ -33,12 +34,15 @@ class HTMLTextAreaElementImpl extends HTMLElementImpl {
     return this._rawValue.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
   }
 
+  // https://html.spec.whatwg.org/multipage/form-elements.html#textarea-wrapping-transformation
   _getValue() {
     // Hard-wrapping omitted, for now.
     return normalizeToCRLF(this._rawValue);
   }
 
   _childTextContentChangeSteps() {
+    super._childTextContentChangeSteps();
+
     if (this._dirtyValue === false) {
       this._rawValue = childTextContent(this);
     }
@@ -82,9 +86,7 @@ class HTMLTextAreaElementImpl extends HTMLElementImpl {
   }
 
   _dispatchSelectEvent() {
-    const event = this._ownerDocument.createEvent("HTMLEvents");
-    event.initEvent("select", true, true);
-    this.dispatchEvent(event);
+    fireAnEvent("select", this, undefined, { bubbles: true, cancelable: true });
   }
 
   _getValueLength() {
@@ -174,42 +176,42 @@ class HTMLTextAreaElementImpl extends HTMLElementImpl {
   }
 
   get cols() {
-    if (!this.hasAttribute("cols")) {
+    if (!this.hasAttributeNS(null, "cols")) {
       return 20;
     }
-    return parseInt(this.getAttribute("cols"));
+    return parseInt(this.getAttributeNS(null, "cols"));
   }
 
   set cols(value) {
     if (value <= 0) {
       throw new DOMException("The index is not in the allowed range.", "IndexSizeError");
     }
-    this.setAttribute("cols", String(value));
+    this.setAttributeNS(null, "cols", String(value));
   }
 
   get rows() {
-    if (!this.hasAttribute("rows")) {
+    if (!this.hasAttributeNS(null, "rows")) {
       return 2;
     }
-    return parseInt(this.getAttribute("rows"));
+    return parseInt(this.getAttributeNS(null, "rows"));
   }
 
   set rows(value) {
     if (value <= 0) {
       throw new DOMException("The index is not in the allowed range.", "IndexSizeError");
     }
-    this.setAttribute("rows", String(value));
+    this.setAttributeNS(null, "rows", String(value));
   }
 
   _barredFromConstraintValidationSpecialization() {
-    return this.hasAttribute("readonly");
+    return this.hasAttributeNS(null, "readonly");
   }
 
   // https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-required
   get validity() {
     if (!this._validity) {
       this._validity = ValidityState.createImpl(this, {
-        valueMissing: () => this.hasAttribute("required") && this.value === ""
+        valueMissing: () => this.hasAttributeNS(null, "required") && this.value === ""
       });
     }
     return this._validity;

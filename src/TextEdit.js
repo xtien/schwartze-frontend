@@ -9,7 +9,7 @@ class Text extends Component {
         super(props)
 
         this.state = {
-            person_id: props.person_id,
+            person_id: props.location.person_id,
             location_id: props.location.location_id,
             id: props.match.params.id,
             person: {},
@@ -42,7 +42,7 @@ class Text extends Component {
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
-                    text: response.data.location.text,
+                    text: response.data.location != null ? response.data.location.text : (response.data.person != null ? response.data.person.text : ''),
                     location: response.data.location,
                     person: response.data.person
                 })
@@ -78,7 +78,7 @@ class Text extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/edit_link/',
+        axios.post('https://pengo.christine.nl:8443/update_text/',
             postData,
             axiosConfig
         )
@@ -86,6 +86,7 @@ class Text extends Component {
                 this.setState({
                     resultCode: response.data.resultCode,
                     location: response.data.location,
+                    person: response.data.person,
                     editDone: true
                 })
             );
@@ -95,14 +96,13 @@ class Text extends Component {
 
         const location = this.state.location;
         const person = this.state.person;
-        let text = location.text != null ? location.text : person.text;
-        const redirectTo = (location != null && location.text != null) ? '/get_location/' + location.id : '/get_person/' + person.id;
+        const redirectTo = (location != null && location.text != null) ? '/get_location/' + location.id : person !=null ? '/get_person_details/' + person.id : '';
 
         return (
             <div className='container'>
                 <div>
                     {
-                        this.state.cancel  ?
+                        this.state.cancel ?
                             <Redirect to={redirectTo}/> :
                             <div>
 
@@ -118,8 +118,7 @@ class Text extends Component {
                                         : null
                                     }
                                 </div>
-
-                                <form onSubmit={this.handleSubmit} oncancel={this.handleCancel} className='mt-5'>
+                                <form onSubmit={this.handleSubmit} className='mt-5'>
                                     <div className="form-group">
                         <textarea
                             type="text"
@@ -139,14 +138,12 @@ class Text extends Component {
                                                 />
                                             </td>
                                             <td>
-                                                <button
+                                                <input
                                                     type="button"
-                                                    className="btn btn-outline-danger mybutton ml-5"
-                                                    onClick={() => {
-                                                        this.props.history.push(redirectTo)
-                                                    }}
-                                                >Cancel
-                                                </button>
+                                                    onClick={this.handleCancel}
+                                                    className="btn btn-outline-danger mybutton"
+                                                    value="Cancel"
+                                                />
                                             </td>
                                         </tr>
                                     </table>

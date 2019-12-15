@@ -23,7 +23,8 @@ class Person extends Component {
         this.combine = this.combine.bind(this);
         this.delete = this.delete.bind(this);
         this.add_link = this.add_link.bind(this);
-        this.update_link = this.update_link.bind(this);
+        this.edit_link = this.edit_link.bind(this);
+        this.delete_link = this.delete_link.bind(this);
 
         let id;
 
@@ -123,12 +124,40 @@ class Person extends Component {
             )
     }
 
-    update_link(event) {
-        event.preventDefault();
+    delete_link(id) {
+
+        let postData = {
+            link_id: id
+        };
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        axios.post('https://pengo.christine.nl:8443/delete_link/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    resultCode: response.data.resultCode,
+                    person: response.data.person
+                })
+            )
+    }
+
+    edit_link(id) {
+
+        const link = this.state.person.links.find(link => link.id = id);
 
         this.setState(
             {
-                add_link: false
+                showLinkEdit: true,
+                link_name: link.link_name,
+                link_url: link.link_url,
+                link_id: link.id
             }
         )
     }
@@ -146,6 +175,13 @@ class Person extends Component {
         )
     }
 
+    togglelinkEditDone = (person) => {
+        this.setState({
+            showLinkEdit: false,
+            person: person
+        })
+    }
+
     handleTextChange(event) {
         this.setState({text: event.target.value});
     }
@@ -153,6 +189,8 @@ class Person extends Component {
     render() {
 
         const person = this.state.person;
+        var edit_link = this.edit_link;
+        var delete_link = this.delete_link;
 
         if (this.state.combine === true) {
             return <Redirect to={'/combine_person/' + person.id}/>
@@ -163,30 +201,67 @@ class Person extends Component {
         }
 
         var links = []
-        if (person.links != null) {
+        if (person != null && person.links != null) {
             links = person.links.map(function (link, i) {
                 return (
-                    <div key={i}><a href={link.link_url}>{link.link_name}</a></div>
+                    <div key={i}>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <a href={link.link_url}>{link.link_name}</a>
+                                </td>
+                                <td width="20%">
+                                    <button
+                                        className="btn btn-outline-success mybutton ml-2 mt-2"
+                                        onClick={edit_link.bind(this, link.id)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="btn btn-outline-danger mybutton ml-2 mt-2"
+                                        onClick={delete_link.bind(this, link.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 );
             });
         }
 
         return (
             <div>
-                <div className='container'>
+                <div className='container letter'>
                     {this.state.showEdit ? null : (
-                        <div className="letter text-black-50">
+                        <div>
                             <div>
                                 <p>
                                     {person.id} {person.first_name} {person.middle_name} {person.last_name}
                                 </p>
                                 <p>{person.comment}</p>
-                                <p><Link to={'/get_letters_from_person/${person.id}'}> Brieven
+                                <p><Link to={`/get_letters_from_person/${person.id}`}> Brieven
                                     van {person.first_name} </Link>
                                 </p>
-                                <p><Link to={'/get_letters_to_person/${person.id}'}> Brieven
+                                <p><Link to={`/get_letters_to_person/${person.id}`}> Brieven
                                     aan {person.first_name} </Link>
                                 </p>
+                                <div>
+                                    {this.state.showEdit ? null : (
+                                        <div>
+                                            <div>
+                                                <button
+                                                    className="btn btn-outline-success mybutton"
+                                                    onClick={this.edit}
+                                                    value={this.state.id}
+                                                >
+                                                    edit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
 
 
                                 <div className='mt-5'>
@@ -195,7 +270,7 @@ class Person extends Component {
                                             <p>
                                                 <Link to={{
                                                     pathname: '/get_text/',
-                                                    query : {
+                                                    query: {
                                                         person_id: person.id
                                                     }
                                                 }}>
@@ -207,37 +282,11 @@ class Person extends Component {
 
                             </div>
 
-                            <div>
-                                {this.state.showEdit ? null : (
-                                    <div>
-                                        <div>
-                                            <button
-                                                className="btn btn-outline-success mybutton"
-                                                onClick={this.edit}
-                                                value={this.state.id}
-                                            >
-                                                edit
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
+                            <div id='linkContainer'>
+                                <h3 className='mt-5'>Links</h3>
+                                {links}
                             </div>
 
-                            <div id='linkcontainer'>
-                                <div id='linkContainer'>
-                                    <h3 className='mt-5'>Links</h3>
-                                    {links}
-
-                                </div>
-                                <form onSubmit={this.add_link} className='mt-5'>
-                                    <input
-                                        type="submit"
-                                        className="btn btn-outline-success mybutton"
-                                        value="Link toevoegen"
-                                    />
-                                </form>
-
-                            </div>
 
                         </div>
                     )}
@@ -271,47 +320,63 @@ class Person extends Component {
 
                     <div className="mt-5">
                         {this.state.showLinkEdit ? (
-                            <EditLinkForm
-                                person_id={this.state.person.id}
-                                toggleLinkEditDone={this.togglelinkEditDone}
-                            />
-                        ) : null
+                                <EditLinkForm
+                                    person_id={this.state.person.id}
+                                    link_id={this.state.link_id}
+                                    link_name={this.state.link_name}
+                                    link_url={this.state.link_url}
+                                    togglelinkEditDone={this.togglelinkEditDone}
+                                />
+                            )
+                            :
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <form onSubmit={this.add_link} className='ml-5 mb-5'>
+                                                <input
+                                                    type="submit"
+                                                    className="btn btn-outline-success mybutton"
+                                                    value="Link toevoegen"
+                                                />
+                                            </form>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <form onSubmit={this.combine} className="ml-5 mb-5">
+                                            <input
+                                                type="submit"
+                                                className="btn btn-outline-success mybutton"
+                                                value="Combineren"
+                                            />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form onSubmit={this.delete} className="ml-5 mb-5">
+                                            <input
+                                                type="submit"
+                                                className="btn btn-outline-danger mybutton"
+                                                value="Verwijderen"
+                                            />
+
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <div className="ml-5 mb-5">
+                                            <Link to={{
+                                                pathname: '/edit_text/',
+                                                person_id: person.id
+                                            }}>
+                                                Edit text
+                                            </Link>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
                         }
                     </div>
-                    <table>
-                        <tr>
-                            <td>
-                                <form onSubmit={this.combine} className="ml-5 mb-5">
-                                    <input
-                                        type="submit"
-                                        className="btn btn-outline-success mybutton"
-                                        value="Combineren"
-                                    />
-                                </form>
-                            </td>
-                            <td>
-                                <form onSubmit={this.delete} className="ml-5 mb-5">
-                                    <input
-                                        type="submit"
-                                        className="btn btn-outline-danger mybutton"
-                                        value="Verwijderen"
-                                    />
-
-                                </form>
-                            </td>
-                            <td>
-                                <div>
-                                    <Link to={{
-                                        pathname: '/edit_text/',
-                                        person_id: person.id
-                                    }}>
-                                        Edit text
-                                    </Link>
-                                </div>
-
-                            </td>
-                        </tr>
-                    </table>
                 </div>
             </div>
 
@@ -400,7 +465,9 @@ class EditPersonForm extends React.Component {
     render() {
 
         if (this.state.editDone === true) {
-            this.state.editDone = false;
+            this.setState({
+                editDone: false
+            })
             this.props.toggleEditDone(this.state.person);
         }
 
@@ -515,14 +582,18 @@ class EditLinkForm extends React.Component {
 
     render() {
 
+        const redirectTo = '/get_person/' + this.state.person_id;
+
         if (this.state.linkEditDone === true) {
-            this.state.linkEditDone = false;
+            this.setState({
+                linkEditDone: false
+            });
             this.props.toggleLinkEditDone(this.state.person);
         }
 
         return (
             <form onSubmit={this.handleLinkSubmit}>
-                <div className="form-group">
+                <div className="form-group mt-5">
                     <label htmlFor="status">Link naam</label>
                     <textarea
                         type="text"
@@ -542,11 +613,27 @@ class EditLinkForm extends React.Component {
                         onChange={this.handleUrlChange}
                     />
                 </div>
-                <input
-                    type="submit"
-                    className="btn btn-outline-success mybutton"
-                    value="Submit"
-                />
+                <table className='mt-5'>
+                    <tr>
+                        <td>
+                            <input
+                                type="submit"
+                                className="btn btn-outline-success mybutton"
+                                value="Submit"
+                            />
+                        </td>
+                        <td>
+                            <button
+                                type="button"
+                                className="btn btn-outline-danger mybutton ml-5"
+                                onClick={() => {
+                                    this.props.history.push(redirectTo)
+                                }}>
+                                Cancel
+                            </button>
+                        </td>
+                    </tr>
+                </table>
             </form>
         );
     }

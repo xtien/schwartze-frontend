@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import './css/bootstrap.css'
-import ReactTable from "react-table";
 
 class Location extends Component {
 
@@ -120,19 +119,28 @@ class Location extends Component {
         if (location.links != null) {
             links = location.links.map(function (link, i) {
                 return (
-                    <div key={i}><a href={link.link_url}>{link.link_name}</a>
-                        <button
-                            className="btn btn-outline-success mybutton ml-2 mt-2"
-                            onClick={edit_link.bind(this, link.id)}
-                        >
-                            Edit
-                        </button>
-                        <button
-                            className="btn btn-outline-danger mybutton ml-2 mt-2"
-                            onClick={delete_link.bind(this, link.id)}
-                        >
-                            Delete
-                        </button>
+                    <div key={i}>
+                        <table width="80%">
+                            <tr>
+                                <td>
+                                    <a href={link.link_url}>{link.link_name}</a>
+                                </td>
+                                <td width="20%">
+                                    <button
+                                        className="btn btn-outline-success mybutton ml-2 mt-2"
+                                        onClick={edit_link.bind(this, link.id)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="btn btn-outline-danger mybutton ml-2 mt-2"
+                                        onClick={delete_link.bind(this, link.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 );
             });
@@ -140,7 +148,7 @@ class Location extends Component {
 
         return (
 
-            <div className='container'>
+            <div className='container letter'>
                 <h3>{location.location_name}</h3>
                 <p>{location.comment}</p>
                 <p>{location.description}</p>
@@ -151,7 +159,7 @@ class Location extends Component {
                             <p>
                                 <Link to={{
                                     pathname: '/get_text/',
-                                    query : {
+                                    query: {
                                         location_id: location.id
                                     }
                                 }}>
@@ -161,40 +169,47 @@ class Location extends Component {
                         </div> : null}
                 </div>
 
-                <div id='linkcontainer'>
+                <div>
                     <div id='linkContainer'>
                         {links}
                     </div>
-                    <form onSubmit={this.add_link} className='mt-5'>
-                        <input
-                            type="submit"
-                            className="btn btn-outline-success mybutton"
-                            value="Link toevoegen"
-                        />
+                    {this.state.showLinkEdit ? (
+                            <EditLinkForm
+                                location_id={this.state.location.id}
+                                link_id={this.state.link_id}
+                                link_name={this.state.link_name}
+                                link_url={this.state.link_url}
+                                togglelinkEditDone={this.togglelinkEditDone}
+                            />
+                        )
+                        :
+                        <table>
+                            <tr>
+                                <td>
+                                    <form onSubmit={this.add_link} className='mt-5'>
+                                        <input
+                                            type="submit"
+                                            className="btn btn-outline-success mybutton"
+                                            value="Link toevoegen"
+                                        />
 
-                    </form>
-
+                                    </form>
+                                </td>
+                                <td>
+                                    <div className='mt-5 ml-5'>
+                                        <Link to={{
+                                            pathname: '/edit_text/',
+                                            location_id: location.id
+                                        }}>
+                                            Edit text
+                                        </Link>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    }
                 </div>
 
-                {this.state.showLinkEdit ? (
-                    <EditLinkForm
-                        location_id={this.state.location.id}
-                        link_id={this.state.link_id}
-                        link_name={this.state.link_name}
-                        link_url={this.state.link_url}
-                        togglelinkEditDone={this.togglelinkEditDone}
-                    />
-                ) : null
-                }
-
-                <div className='mt-5'>
-                    <Link to={{
-                        pathname: '/edit_text/',
-                        location_id: location.id
-                    }}>
-                        Edit text
-                    </Link>
-                </div>
 
             </div>
         )
@@ -260,7 +275,9 @@ class EditLinkForm extends React.Component {
     render() {
 
         if (this.state.linkEditDone === true) {
-            this.state.linkEditDone = false;
+            this.setState({
+                linkEditDone: false
+            })
             this.props.togglelinkEditDone(this.state.location);
         }
 
