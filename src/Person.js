@@ -3,7 +3,7 @@ import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
-import {useAuth} from "./context/auth";
+//import {useAuth} from "./context/auth";
 
 // https://medium.com/better-programming/building-basic-react-authentication-e20a574d5e71
 
@@ -12,7 +12,7 @@ class Person extends Component {
     constructor(props) {
         super(props)
 
-        const isAuthenticated = useAuth();
+  //      const isAuthenticated = useAuth();
 
         this.state = {
             resultCode: -1,
@@ -22,7 +22,7 @@ class Person extends Component {
             showTextEdit: false,
             text_id: '',
             person: {},
-            isAuthenticated: isAuthenticated
+   //         isAuthenticated: isAuthenticated
         }
 
         this.edit = this.edit.bind(this);

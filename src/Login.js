@@ -1,8 +1,7 @@
+import React, {Component} from 'react'
 import './App.css'
 import './css/bootstrap.css'
-import axios from "axios";
 import {Link} from "react-router-dom";
-import {Card, Logo, Form, Input, Button} from '../components/AuthForms';
 
 class Login extends Component {
 
@@ -15,16 +14,15 @@ class Login extends Component {
 
     render() {
         return (
-            <Card>
-                <Logo src={logoImg}/>
-                <Form>
-                    <Input type="email" placeholder="email"/>
-                    <Input type="password" placeholder="password"/>
-                    <Input type="password" placeholder="password again"/>
-                    <Button>Sign Up</Button>
-                </Form>
+            <div>
+                <form>
+                    <input type="email" placeholder="email"/>
+                    <input type="password" placeholder="password"/>
+                    <input type="password" placeholder="password again"/>
+                    <button>Sign Up</button>
+                </form>
                 <Link to="/signup">Don't have an account?</Link>
-            </Card>
+            </div>
         );
     }
 }

@@ -16,7 +16,6 @@ import PersonFromLetters from './PersonFromLetters'
 import CombinePerson from './CombinePerson'
 import Text from './Text'
 import TextEdit from './TextEdit'
-import {CookiesProvider} from 'react-cookie';
 import Login from "./Login";
 import Signup from "./Signup";
 
@@ -26,39 +25,37 @@ class App extends Component {
 
         return (
 
-            <CookiesProvider>
-                <Router>
-                    <div className='container'>
-                        <div className='jumbotron'>
-                            <h1>Het nichtje van tante Therèse</h1>
-                            <nav className="navbar navbar-expand-lg navbar-light">
-                                <p className="navbar-nav"><Link to='/'>Home</Link></p>
-                                <p className="navbar-nav"><Link to='/get_letters/'>Brieven</Link></p>
-                                <p className="navbar-nav"><Link to='/add_person/'>Persoon toevoegen</Link></p>
-                                <p className="navbar-nav"><Link to='/add_letter/'>Brief toevoegen</Link></p>
-                                <p className="navbar-nav"><Link to='/add_location/'>Locatie toevoegen</Link></p>
-                            </nav>
-                        </div>
-                        <div>
-                            <Route exact path="/" component={Landing}/>
-                            <Route path="/login" component={Login} />
-                            <Route path="/signup" component={Signup} />
-                            <Route path="/get_letters/" component={Letters}/>
-                            <Route path="/add_person/" component={AddPerson}/>
-                            <Route path="/add_letter/" component={AddLetter}/>
-                            <Route path="/add_location/" component={AddLocation}/>
-                            <Route path="/combine_person/:id" component={CombinePerson}/>
-                            <Route path="/get_location/:id" component={Location}/>
-                            <Route path="/get_person_details/:id" component={Person}/>
-                            <Route path="/get_letter_details/:number" component={Letter}/>
-                            <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
-                            <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
-                            <Route path="/get_text/:id" component={Text}/>
-                            <Route path="/edit_text/" component={TextEdit}/>
-                        </div>
+            <Router>
+                <div className='container'>
+                    <div className='jumbotron'>
+                        <h1>Het nichtje van tante Therèse</h1>
+                        <nav className="navbar navbar-expand-lg navbar-light">
+                            <p className="navbar-nav"><Link to='/'>Home</Link></p>
+                            <p className="navbar-nav"><Link to='/get_letters/'>Brieven</Link></p>
+                            <p className="navbar-nav"><Link to='/add_person/'>Persoon toevoegen</Link></p>
+                            <p className="navbar-nav"><Link to='/add_letter/'>Brief toevoegen</Link></p>
+                            <p className="navbar-nav"><Link to='/add_location/'>Locatie toevoegen</Link></p>
+                        </nav>
                     </div>
-                </Router>
-            </CookiesProvider>
+                    <div>
+                        <Route exact path="/" component={Landing}/>
+                        <Route path="/login" component={Login}/>
+                        <Route path="/signup" component={Signup}/>
+                        <Route path="/get_letters/" component={Letters}/>
+                        <Route path="/add_person/" component={AddPerson}/>
+                        <Route path="/add_letter/" component={AddLetter}/>
+                        <Route path="/add_location/" component={AddLocation}/>
+                        <Route path="/combine_person/:id" component={CombinePerson}/>
+                        <Route path="/get_location/:id" component={Location}/>
+                        <Route path="/get_person_details/:id" component={Person}/>
+                        <Route path="/get_letter_details/:number" component={Letter}/>
+                        <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
+                        <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
+                        <Route path="/get_text/:id" component={Text}/>
+                        <Route path="/edit_text/" component={TextEdit}/>
+                    </div>
+                </div>
+            </Router>
 
         )
     }
