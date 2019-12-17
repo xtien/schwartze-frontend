@@ -3,11 +3,16 @@ import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
+import {useAuth} from "./context/auth";
+
+// https://medium.com/better-programming/building-basic-react-authentication-e20a574d5e71
 
 class Person extends Component {
 
     constructor(props) {
         super(props)
+
+        const isAuthenticated = useAuth();
 
         this.state = {
             resultCode: -1,
@@ -16,7 +21,8 @@ class Person extends Component {
             showLinkEdit: false,
             showTextEdit: false,
             text_id: '',
-            person: {}
+            person: {},
+            isAuthenticated: isAuthenticated
         }
 
         this.edit = this.edit.bind(this);
@@ -318,65 +324,69 @@ class Person extends Component {
                         ) : null
                     }
 
-                    <div className="mt-5">
-                        {this.state.showLinkEdit ? (
-                                <EditLinkForm
-                                    person_id={this.state.person.id}
-                                    link_id={this.state.link_id}
-                                    link_name={this.state.link_name}
-                                    link_url={this.state.link_url}
-                                    togglelinkEditDone={this.togglelinkEditDone}
-                                />
-                            )
-                            :
-                            <table>
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <form onSubmit={this.add_link} className='ml-5 mb-5'>
+                    {this.state.isAuthenticated ?
+
+                        <div className="mt-5">
+                            {this.state.showLinkEdit ? (
+                                    <EditLinkForm
+                                        person_id={this.state.person.id}
+                                        link_id={this.state.link_id}
+                                        link_name={this.state.link_name}
+                                        link_url={this.state.link_url}
+                                        togglelinkEditDone={this.togglelinkEditDone}
+                                    />
+                                )
+                                :
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <form onSubmit={this.add_link} className='ml-5 mb-5'>
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-outline-success mybutton"
+                                                        value="Link toevoegen"
+                                                    />
+                                                </form>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form onSubmit={this.combine} className="ml-5 mb-5">
                                                 <input
                                                     type="submit"
                                                     className="btn btn-outline-success mybutton"
-                                                    value="Link toevoegen"
+                                                    value="Combineren"
                                                 />
                                             </form>
+                                        </td>
+                                        <td>
+                                            <form onSubmit={this.delete} className="ml-5 mb-5">
+                                                <input
+                                                    type="submit"
+                                                    className="btn btn-outline-danger mybutton"
+                                                    value="Verwijderen"
+                                                />
 
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <form onSubmit={this.combine} className="ml-5 mb-5">
-                                            <input
-                                                type="submit"
-                                                className="btn btn-outline-success mybutton"
-                                                value="Combineren"
-                                            />
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form onSubmit={this.delete} className="ml-5 mb-5">
-                                            <input
-                                                type="submit"
-                                                className="btn btn-outline-danger mybutton"
-                                                value="Verwijderen"
-                                            />
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <div className="ml-5 mb-5">
+                                                <Link to={{
+                                                    pathname: '/edit_text/',
+                                                    person_id: person.id
+                                                }}>
+                                                    Edit text
+                                                </Link>
+                                            </div>
 
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <div className="ml-5 mb-5">
-                                            <Link to={{
-                                                pathname: '/edit_text/',
-                                                person_id: person.id
-                                            }}>
-                                                Edit text
-                                            </Link>
-                                        </div>
-
-                                    </td>
-                                </tr>
-                            </table>
-                        }
-                    </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            }
+                        </div>
+                        : null
+                    }
                 </div>
             </div>
 
