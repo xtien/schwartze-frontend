@@ -2,11 +2,14 @@ import React, {Component} from 'react'
 import axios from "axios";
 import {Link} from "react-router-dom";
 import './css/bootstrap.css'
+import AuthenticationService from "./service/AuthenticationService";
 
 class Location extends Component {
 
     constructor(props) {
         super(props)
+
+        const isAuthenticated = AuthenticationService.isUserLoggedIn();
 
         this.state = {
             resultCode: -1,
@@ -17,6 +20,7 @@ class Location extends Component {
             link_id: '',
             link_name: '',
             link_url: '',
+            isAuthenticated: isAuthenticated
         }
 
         this.add_link = this.add_link.bind(this);
@@ -111,33 +115,38 @@ class Location extends Component {
 
     render() {
 
+        const auth = this.state.isAuthenticated;
         const location = this.state.location;
-        var edit_link = this.edit_link;
-        var delete_link = this.delete_link;
+        const edit_link = this.edit_link;
+        const delete_link = this.delete_link;
 
-        var links = []
+        let links = []
         if (location.links != null) {
             links = location.links.map(function (link, i) {
                 return (
                     <div key={i}>
-                        <table width="80%">
+                        <table width="100%">
                             <tr>
                                 <td>
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    <button
-                                        className="btn btn-outline-success mybutton ml-2 mt-2"
-                                        onClick={edit_link.bind(this, link.id)}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        className="btn btn-outline-danger mybutton ml-2 mt-2"
-                                        onClick={delete_link.bind(this, link.id)}
-                                    >
-                                        Delete
-                                    </button>
+                                    { auth ?
+                                    <div>
+                                            <button
+                                                className="btn btn-outline-success mybutton ml-2 mt-2"
+                                                onClick={edit_link.bind(this, link.id)}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="btn btn-outline-danger mybutton ml-2 mt-2"
+                                                onClick={delete_link.bind(this, link.id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                        : null }
                                 </td>
                             </tr>
                         </table>
@@ -183,30 +192,35 @@ class Location extends Component {
                             />
                         )
                         :
-                        <table>
-                            <tr>
-                                <td>
-                                    <form onSubmit={this.add_link} className='mt-5'>
-                                        <input
-                                            type="submit"
-                                            className="btn btn-outline-success mybutton"
-                                            value="Link toevoegen"
-                                        />
+                        <div>
+                            {
+                                this.state.isAuthenticated ?
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <form onSubmit={this.add_link} className='mt-5'>
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-outline-success mybutton"
+                                                        value="Link toevoegen"
+                                                    />
 
-                                    </form>
-                                </td>
-                                <td>
-                                    <div className='mt-5 ml-5'>
-                                        <Link to={{
-                                            pathname: '/edit_text/',
-                                            location_id: location.id
-                                        }}>
-                                            Edit text
-                                        </Link>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <div className='mt-5 ml-5'>
+                                                    <Link to={{
+                                                        pathname: '/edit_text/',
+                                                        location_id: location.id
+                                                    }}>
+                                                        Edit text
+                                                    </Link>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    : null }
+                        </div>
                     }
                 </div>
 

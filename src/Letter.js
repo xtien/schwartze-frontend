@@ -2,11 +2,13 @@ import React, {Component} from 'react'
 import './App.css'
 import axios from "axios";
 import './css/bootstrap.css'
+import AuthenticationService from './service/AuthenticationService';
 
 class Letter extends Component {
 
     constructor(props) {
         super(props)
+        const isAuthenticated = AuthenticationService.isUserLoggedIn();
 
         this.state = {
             resultCode: -1,
@@ -16,7 +18,8 @@ class Letter extends Component {
             showEdit: false,
             senders: [],
             recipients: [],
-            imageData: []
+            imageData: [],
+            isAuthenticated: isAuthenticated
         }
 
         this.edit = this.edit.bind(this);
@@ -98,12 +101,14 @@ class Letter extends Component {
                             {remarks}
                         </div>
                         <div>
-                            <button
-                                className="btn btn-outline-success mybutton"
-                                onClick={this.edit}
-                                value={letterNumber}>
-                                edit
-                            </button>
+                            {
+                                this.state.isAuthenticated ?
+                                    <button
+                                        className="btn btn-outline-success mybutton"
+                                        onClick={this.edit}
+                                        value={letterNumber}>
+                                        edit
+                                    </button> : null}
                         </div>
                     </div>
                 )}

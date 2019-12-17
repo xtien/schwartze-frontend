@@ -3,7 +3,7 @@ import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
-//import {useAuth} from "./context/auth";
+import AuthenticationService from './service/AuthenticationService';
 
 // https://medium.com/better-programming/building-basic-react-authentication-e20a574d5e71
 
@@ -12,7 +12,7 @@ class Person extends Component {
     constructor(props) {
         super(props)
 
-  //      const isAuthenticated = useAuth();
+        const isAuthenticated = AuthenticationService.isUserLoggedIn();
 
         this.state = {
             resultCode: -1,
@@ -22,7 +22,7 @@ class Person extends Component {
             showTextEdit: false,
             text_id: '',
             person: {},
-   //         isAuthenticated: isAuthenticated
+            isAuthenticated: isAuthenticated
         }
 
         this.edit = this.edit.bind(this);
@@ -195,8 +195,9 @@ class Person extends Component {
     render() {
 
         const person = this.state.person;
-        var edit_link = this.edit_link;
-        var delete_link = this.delete_link;
+        const auth = this.state.isAuthenticated;
+        const edit_link = this.edit_link;
+        const delete_link = this.delete_link;
 
         if (this.state.combine === true) {
             return <Redirect to={'/combine_person/' + person.id}/>
@@ -206,7 +207,7 @@ class Person extends Component {
             return <Redirect to={'/get_letters/'}/>
         }
 
-        var links = []
+        let links = [];
         if (person != null && person.links != null) {
             links = person.links.map(function (link, i) {
                 return (
@@ -217,18 +218,22 @@ class Person extends Component {
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    <button
-                                        className="btn btn-outline-success mybutton ml-2 mt-2"
-                                        onClick={edit_link.bind(this, link.id)}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        className="btn btn-outline-danger mybutton ml-2 mt-2"
-                                        onClick={delete_link.bind(this, link.id)}
-                                    >
-                                        Delete
-                                    </button>
+                                    { auth ?
+                                    <div>
+                                        <button
+                                            className="btn btn-outline-success mybutton ml-2 mt-2"
+                                            onClick={edit_link.bind(this, link.id)}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className="btn btn-outline-danger mybutton ml-2 mt-2"
+                                            onClick={delete_link.bind(this, link.id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                        : null }
                                 </td>
                             </tr>
                         </table>
@@ -253,21 +258,25 @@ class Person extends Component {
                                 <p><Link to={`/get_letters_to_person/${person.id}`}> Brieven
                                     aan {person.first_name} </Link>
                                 </p>
-                                <div>
-                                    {this.state.showEdit ? null : (
+                                {
+                                    this.state.isAuthenticated ?
                                         <div>
-                                            <div>
-                                                <button
-                                                    className="btn btn-outline-success mybutton"
-                                                    onClick={this.edit}
-                                                    value={this.state.id}
-                                                >
-                                                    edit
-                                                </button>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                                            {this.state.showEdit ? null : (
+                                                <div>
+                                                    <div>
+                                                        <button
+                                                            className="btn btn-outline-success mybutton"
+                                                            onClick={this.edit}
+                                                            value={this.state.id}
+                                                        >
+                                                            edit
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            )
+                                            }
+                                        </div> : null
+                                }
 
 
                                 <div className='mt-5'>

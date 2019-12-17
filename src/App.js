@@ -35,12 +35,13 @@ class App extends Component {
                             <p className="navbar-nav"><Link to='/add_person/'>Persoon toevoegen</Link></p>
                             <p className="navbar-nav"><Link to='/add_letter/'>Brief toevoegen</Link></p>
                             <p className="navbar-nav"><Link to='/add_location/'>Locatie toevoegen</Link></p>
+                            <p className="navbar-nav"><Link to='/login/'>Login</Link></p>
                         </nav>
                     </div>
                     <div>
                         <Route exact path="/" component={Landing}/>
-                        <Route path="/login" component={Login}/>
-                        <Route path="/signup" component={Signup}/>
+                        <Route path="/login/" component={Login}/>
+                        <Route path="/signup/" component={Signup}/>
                         <Route path="/get_letters/" component={Letters}/>
                         <Route path="/add_person/" component={AddPerson}/>
                         <Route path="/add_letter/" component={AddLetter}/>
