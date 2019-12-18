@@ -87,6 +87,11 @@ text {
   padding: 10px;
 }
 
+.field {
+  width:100px;
+  height: 20px;
+}
+
 .textarea {
   width: 800px;
   height: 800px;
@@ -100,4 +105,16 @@ text {
 .photo img{
   float: right;
   padding: 10px;
+}
+
+a {
+  color: #6c757d !important;
+}
+
+ a:active {
+  color: #005cbf !important;
+}
+
+a:visited {
+  color: #4e555b !important;
 }

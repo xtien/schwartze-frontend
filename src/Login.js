@@ -43,24 +43,33 @@ class Login extends React.Component {
             <div>
                 <form onSubmit={this.handleLinkSubmit}>
                     <div className="form-group">
+                        <table><tr><td>
+                            <div  className="field">
                         <label htmlFor="status">User name</label>
+                            </div>
+                        </td><td>
                         <textarea
                             type="text"
-                            className="form-control textarea"
+                            className="form-control textarea ml-5"
                             id="username"
                             value={this.state.username}
                             onChange={this.handleUserNameChange}
                         />
+                        </td></tr></table>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="status">Password</label>
-                        <textarea
+                        <table><tr><td>
+                            <div  className="field">
+                                <label htmlFor="status" >Password</label></div>
+                        </td><td>
+                       <textarea
                             type="password"
-                            className="form-control textarea"
+                            className="form-control textarea ml-5"
                             id="password"
                             value={this.state.password}
                             onChange={this.handlePwChange}
                         />
+                        </td></tr></table>
                     </div>
                     <input
                         type="submit"

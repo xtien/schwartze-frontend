@@ -11,8 +11,14 @@ class Admin extends Component {
         const isAuthenticated = AuthenticationService.isUserLoggedIn();
 
         this.state = {
-            isAuthenticated: isAuthenticated
+            isAuthenticated: isAuthenticated,
+            addLetter: false,
+            addPerson: false,
+            addLocation: false
         }
+        this.add_location = this.add_location.bind(this);
+        this.add_person = this.add_person.bind(this);
+        this.add_letter = this.add_letter.bind(this);
     }
 
     add_person() {

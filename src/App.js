@@ -19,6 +19,8 @@ import TextEdit from './TextEdit'
 import Login from "./Login";
 import Signup from "./Signup";
 import Admin from "./Admin";
+import Locations from "./Locations"
+import People from "./People"
 import AuthenticationService from "./service/AuthenticationService";
 
 class App extends Component {
@@ -55,6 +57,7 @@ class App extends Component {
                     </div>
                     <div>
                         <Route exact path="/" component={Landing}/>
+                        <Route path="/admin/" component={Admin}/>
                         <Route path="/login/" component={Login}/>
                         <Route path="/signup/" component={Signup}/>
                         <Route path="/get_letters/" component={Letters}/>
@@ -69,6 +72,8 @@ class App extends Component {
                         <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
                         <Route path="/get_text/:id" component={Text}/>
                         <Route path="/edit_text/" component={TextEdit}/>
+                        <Route path="/get_locations/" component={Locations}/>
+                        <Route path="/get_people/" component={People}/>
                     </div>
                 </div>
             </Router>
