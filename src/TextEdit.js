@@ -78,7 +78,7 @@ class Text extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/update_text/',
+        axios.post('https://pengo.christine.nl:8443/admin/update_text/',
             postData,
             axiosConfig
         )
@@ -122,7 +122,7 @@ class Text extends Component {
                                     <div className="form-group">
                         <textarea
                             type="text"
-                            className="form-control textarea"
+                            className="form-control extratextarea"
                             id="text_string"
                             value={this.state.text_string}
                             onChange={this.handleTextChange}

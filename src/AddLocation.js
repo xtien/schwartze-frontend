@@ -49,7 +49,7 @@ class AddLocation extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/add_location/',
+        axios.post('https://pengo.christine.nl:8443/admin/add_location/',
             postData,
             axiosConfig
         )

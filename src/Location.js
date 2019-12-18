@@ -74,7 +74,7 @@ class Location extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/delete_link/',
+        axios.post('https://pengo.christine.nl:8443/admin/delete_link/',
             postData,
             axiosConfig
         )
@@ -265,7 +265,7 @@ class EditLinkForm extends React.Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/edit_link/',
+        axios.post('https://pengo.christine.nl:8443/admin/edit_link/',
             postData,
             axiosConfig
         )

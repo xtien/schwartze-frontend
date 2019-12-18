@@ -54,14 +54,16 @@
   margin-right: 20px;
   margin-bottom: 20px;
   padding: 60px;
-  background: #ffffff;
+  background: #e8e8e8;
 }
+
 .remark {
   margin-top: 100px;
   margin-left: 100px;
   margin-right: 100px;
   margin-bottom: 100px;
 }
+
 .letter td {
   padding-left: 10px;
   padding-right: 10px;
@@ -88,6 +90,11 @@ text {
 .textarea {
   width: 800px;
   height: 800px;
+}
+
+.extratextarea {
+  width: 800px;
+  min-height: 800px;
 }
 
 .photo img{

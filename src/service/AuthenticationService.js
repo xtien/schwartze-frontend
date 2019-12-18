@@ -8,6 +8,9 @@ class AuthenticationService {
 
     constructor(props) {
         this.registerSuccessfulLogin = this.registerSuccessfulLogin.bind(this);
+        this.state = {
+            roles: {}
+        }
     }
 
     executeLogin(username, password) {
@@ -27,8 +30,10 @@ class AuthenticationService {
             postData,
             axiosConfig
         )
-            .then(response =>
-                this.registerSuccessfulLogin(username, password)
+            .then(response => {
+                    this.registerSuccessfulLogin(username, password);
+                  //  this.setState({roles: response.roles});
+                }
             )
     }
 

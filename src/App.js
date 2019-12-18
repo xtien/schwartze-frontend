@@ -18,8 +18,20 @@ import Text from './Text'
 import TextEdit from './TextEdit'
 import Login from "./Login";
 import Signup from "./Signup";
+import Admin from "./Admin";
+import AuthenticationService from "./service/AuthenticationService";
 
 class App extends Component {
+
+    constructor(props) {
+        super(props)
+
+        const isAuthenticated = AuthenticationService.isUserLoggedIn();
+
+        this.state = {
+            isAuthenticated: isAuthenticated
+        }
+    }
 
     render() {
 
@@ -32,10 +44,13 @@ class App extends Component {
                         <nav className="navbar navbar-expand-lg navbar-light">
                             <p className="navbar-nav"><Link to='/'>Home</Link></p>
                             <p className="navbar-nav"><Link to='/get_letters/'>Brieven</Link></p>
-                            <p className="navbar-nav"><Link to='/add_person/'>Persoon toevoegen</Link></p>
-                            <p className="navbar-nav"><Link to='/add_letter/'>Brief toevoegen</Link></p>
-                            <p className="navbar-nav"><Link to='/add_location/'>Locatie toevoegen</Link></p>
-                            <p className="navbar-nav"><Link to='/login/'>Login</Link></p>
+                            <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
+                            <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
+                            {this.state.isAuthenticated ?
+                                <p className="navbar-nav"><Link to='/admin/'>Admin</Link></p>
+                                :
+                                <p className="navbar-nav"><Link to='/login/'>Login</Link></p>
+                            }
                         </nav>
                     </div>
                     <div>
@@ -57,7 +72,6 @@ class App extends Component {
                     </div>
                 </div>
             </Router>
-
         )
     }
 }

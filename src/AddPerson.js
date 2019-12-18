@@ -67,7 +67,7 @@ class AddPerson extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/add_person/',
+        axios.post('https://pengo.christine.nl:8443/admin/add_person/',
             postData,
             axiosConfig
         )

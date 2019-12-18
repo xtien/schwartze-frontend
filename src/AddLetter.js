@@ -66,7 +66,7 @@ class AddLetter extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/add_letter/',
+        axios.post('https://pengo.christine.nl:8443/admin/add_letter/',
             postData,
             axiosConfig
         )

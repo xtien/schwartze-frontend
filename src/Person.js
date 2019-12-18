@@ -119,7 +119,7 @@ class Person extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/delete_person/',
+        axios.post('https://pengo.christine.nl:8443/admin/delete_person/',
             postData,
             axiosConfig
         )
@@ -142,7 +142,7 @@ class Person extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/delete_link/',
+        axios.post('https://pengo.christine.nl:8443/admin/delete_link/',
             postData,
             axiosConfig
         )
@@ -468,7 +468,7 @@ class EditPersonForm extends React.Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/update_person_details/',
+        axios.post('https://pengo.christine.nl:8443/admin/update_person_details/',
             postData,
             axiosConfig
         )
@@ -578,7 +578,7 @@ class EditLinkForm extends React.Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/edit_link/',
+        axios.post('https://pengo.christine.nl:8443/admin/edit_link/',
             postData,
             axiosConfig
         )

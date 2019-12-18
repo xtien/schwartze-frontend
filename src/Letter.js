@@ -185,7 +185,7 @@ class CommentForm extends React.Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/update_letter_details/',
+        axios.post('https://pengo.christine.nl:8443/admin/update_letter_details/',
             postData,
             axiosConfig
         )
