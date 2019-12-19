@@ -3,15 +3,13 @@ import axios from 'axios'
 const API_URL = 'https://pengo.christine.nl:8443'
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
+export const AUTHORITIES = 'authorities'
 
 class AuthenticationService {
 
     constructor(props) {
         this.registerSuccessfulLogin = this.registerSuccessfulLogin.bind(this);
-        this.state = {
-            roles: {}
-        }
-    }
+     }
 
     executeLogin(username, password) {
 
@@ -32,9 +30,13 @@ class AuthenticationService {
         )
             .then(response => {
                     this.registerSuccessfulLogin(username, password);
-                  //  this.setState({roles: response.roles});
+                    this.setAuthorities(response.data.authorities);
                 }
             )
+    }
+
+    setAuthorities(authorities){
+        sessionStorage.setItem(AUTHORITIES, authorities)
     }
 
     executeJwtAuthenticationService(username, password) {

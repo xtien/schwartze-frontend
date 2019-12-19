@@ -40,6 +40,9 @@ class Locations extends Component {
     render() {
 
         const columns = [{
+            accessor: 'id',
+            width: 40
+        }, {
             id: 'name',
             accessor: data => {
                 const id = data.id;
@@ -52,7 +55,6 @@ class Locations extends Component {
             className: 'text'
         }, {
              accessor: 'comment'
-
         }]
 
         return (

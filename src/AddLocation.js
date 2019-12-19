@@ -58,7 +58,14 @@ class AddLocation extends Component {
                     editDone: true,
                     id: response.data.location.id
                 })
-            );
+            )
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
+            });
     }
 
     render() {

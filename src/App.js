@@ -14,6 +14,7 @@ import Location from './Location'
 import PersonToLetters from './PersonToLetters'
 import PersonFromLetters from './PersonFromLetters'
 import CombinePerson from './CombinePerson'
+import CombineLocation from './CombineLocation'
 import Text from './Text'
 import TextEdit from './TextEdit'
 import Login from "./Login";
@@ -65,6 +66,7 @@ class App extends Component {
                         <Route path="/add_letter/" component={AddLetter}/>
                         <Route path="/add_location/" component={AddLocation}/>
                         <Route path="/combine_person/:id" component={CombinePerson}/>
+                        <Route path="/combine_location/:id" component={CombineLocation}/>
                         <Route path="/get_location/:id" component={Location}/>
                         <Route path="/get_person_details/:id" component={Person}/>
                         <Route path="/get_letter_details/:number" component={Letter}/>

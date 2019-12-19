@@ -4,7 +4,7 @@ import './css/bootstrap.css'
 import axios from "axios";
 import {Redirect} from "react-router-dom";
 
-class CombinePerson extends Component {
+class CombineLocation extends Component {
 
     constructor(props) {
         super(props)
@@ -17,16 +17,16 @@ class CombinePerson extends Component {
             second_id: 0
         }
 
-        this.handleFirstPersonChange = this.handleFirstPersonChange.bind(this);
-        this.handleSecondPersonChange = this.handleSecondPersonChange.bind(this);
+        this.handleFirstLocationChange = this.handleFirstLocationChange.bind(this);
+        this.handleSecondLocationChange = this.handleSecondLocationChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleFirstPersonChange(event) {
+    handleFirstLocationChange(event) {
         this.setState({first_id: event.target.value});
     }
 
-    handleSecondPersonChange(event) {
+    handleSecondLocationChange(event) {
         this.setState({second_id: event.target.value});
     }
 
@@ -45,15 +45,15 @@ class CombinePerson extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/get_combine_person/',
+        axios.post('https://pengo.christine.nl:8443/admin/get_combine_location/',
             postData,
             axiosConfig
         )
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
-                    person1: response.data.person1,
-                    person2: response.data.person2,
+                    location1: response.data.location1,
+                    location2: response.data.location2,
                     showConfirm: true
                 })
             );
@@ -67,14 +67,14 @@ class CombinePerson extends Component {
                     this.state.showConfirm ? null : (
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group row">
-                                <label htmlFor="status" class="col-sm-2 col-form-label">Persoon nummer</label>
+                                <label htmlFor="status" class="col-sm-2 col-form-label">Locatie nummer</label>
                                 <div className="col-sm-2"><input
                                     type="text"
                                     pattern="[0-9]*"
                                     className="form-control textarea"
                                     id="first_person"
                                     value={this.state.first_id}
-                                    onChange={this.handleFirstPersonChange}
+                                    onChange={this.handleFirstLocationChange}
                                 /></div>
                             </div>
                             <div className="form-group row">
@@ -85,7 +85,7 @@ class CombinePerson extends Component {
                                     className="form-control textarea"
                                     id="first_person"
                                     value={this.state.second_id}
-                                    onChange={this.handleSecondPersonChange}
+                                    onChange={this.handleSecondLocationChange}
                                 /></div>
                             </div>
                             <input
@@ -97,9 +97,9 @@ class CombinePerson extends Component {
                 }
                 {
                     this.state.showConfirm ? (
-                        <CombinePersonForm
-                            person1={this.state.person1}
-                            person2={this.state.person2}
+                        <CombineLocationForm
+                            location1={this.state.location1}
+                            location2={this.state.location2}
                         />
                     ) : null}
             </div>
@@ -109,7 +109,7 @@ class CombinePerson extends Component {
 
 }
 
-class CombinePersonForm
+class CombineLocationForm
     extends React
         .Component {
 
@@ -117,8 +117,8 @@ class CombinePersonForm
         super(props);
 
         this.state = {
-            person1: this.props.person1,
-            person2: this.props.person2,
+            location1: this.props.location1,
+            location2: this.props.location2,
             redirect: false
         }
 
@@ -130,8 +130,8 @@ class CombinePersonForm
 
         let postData = {
             requestCode: 0,
-            id1: this.state.person1.id,
-            id2: this.state.person2.id
+            id1: this.state.location1.id,
+            id2: this.state.location2.id
         };
 
         let axiosConfig = {
@@ -140,7 +140,7 @@ class CombinePersonForm
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/put_combine_person/',
+        axios.post('https://pengo.christine.nl:8443/admin/put_combine_location/',
             postData,
             axiosConfig
         )
@@ -161,24 +161,24 @@ class CombinePersonForm
 
         if (this.state.redirect) {
             return (
-                <Redirect to={"/get_person/" + this.state.person1.id}/>
+                <Redirect to={"/get_location/" + this.state.location1.id}/>
             )
         }
 
-        const person1 = this.state.person1
-        const person2 = this.state.person2
+        const location1 = this.state.location1
+        const location2 = this.state.location2
 
         return (
             <form onSubmit={this.combine}>
                 <div className="letter text-black-50">
                     <div>
                         <p>
-                            {person1.id} {person1.first_name} {person1.middle_name} {person1.last_name}
+                            {location1.id} {location1.name}
                         </p>
                     </div>
                     <div>
                         <p>
-                            {person2.id} {person2.first_name} {person2.middle_name} {person2.last_name}
+                            {location2.id} {location2.name}
                         </p>
                     </div>
                 </div>
@@ -198,4 +198,4 @@ class CombinePersonForm
     }
 }
 
-export default CombinePerson
+export default CombineLocation

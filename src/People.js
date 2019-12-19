@@ -39,6 +39,9 @@ class People extends Component {
     render() {
 
         const columns = [{
+            accessor: 'id',
+            width: 40
+        }, {
             id: 'name',
             accessor: data => {
                 const id = data.id;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 
@@ -26,6 +26,8 @@ class Location extends Component {
         this.add_link = this.add_link.bind(this);
         this.edit_link = this.edit_link.bind(this);
         this.delete_link = this.delete_link.bind(this);
+        this.combine = this.combine.bind(this);
+        this.delete = this.delete.bind(this);
 
         let id;
 
@@ -60,6 +62,37 @@ class Location extends Component {
             showLinkEdit: false,
             location: location
         })
+    }
+
+    delete(event) {
+        event.preventDefault();
+
+        this.setState(
+            {
+                delete: true
+            }
+        )
+
+        let postData = {
+            requestCode: 0,
+            id: this.state.location.id
+        };
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        axios.post('https://pengo.christine.nl:8443/admin/delete_location/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    deleted: true
+                })
+            )
     }
 
     delete_link(id) {
@@ -113,12 +146,30 @@ class Location extends Component {
         )
     }
 
+    combine(event) {
+        event.preventDefault();
+
+        this.setState(
+            {
+                combine: true
+            }
+        )
+    }
+
     render() {
 
         const auth = this.state.isAuthenticated;
         const location = this.state.location;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
+
+        if (this.state.combine === true) {
+            return <Redirect to={'/combine_location/' + location.id}/>
+        }
+
+        if (this.state.deleted === true) {
+            return <Redirect to={'/get_letters/'}/>
+        }
 
         let links = []
         if (location.links != null) {
@@ -195,10 +246,21 @@ class Location extends Component {
                         <div>
                             {
                                 this.state.isAuthenticated ?
-                                    <table>
+
+                                    <div>
+                                        <div className='mb-5 mt-5 ml-5'>
+                                            <Link to={{
+                                                pathname: '/edit_text/',
+                                                location_id: location.id
+                                            }}>
+                                                Edit text
+                                            </Link>
+                                        </div>
+
+                                        <table>
                                         <tr>
                                             <td>
-                                                <form onSubmit={this.add_link} className='mt-5'>
+                                                <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
                                                     <input
                                                         type="submit"
                                                         className="btn btn-outline-success mybutton"
@@ -208,17 +270,27 @@ class Location extends Component {
                                                 </form>
                                             </td>
                                             <td>
-                                                <div className='mt-5 ml-5'>
-                                                    <Link to={{
-                                                        pathname: '/edit_text/',
-                                                        location_id: location.id
-                                                    }}>
-                                                        Edit text
-                                                    </Link>
-                                                </div>
+                                                <form onSubmit={this.combine} className="mt-5 ml-5 mb-5">
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-outline-success mybutton"
+                                                        value="Combineren"
+                                                    />
+                                                </form>
                                             </td>
+                                            <td>
+                                                <form onSubmit={this.delete} className="mt-5 ml-5 mb-5">
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-outline-danger mybutton"
+                                                        value="Verwijderen"
+                                                    />
+
+                                                </form>
+                                                </td>
                                         </tr>
                                     </table>
+                                    </div>
                                     : null }
                         </div>
                     }
