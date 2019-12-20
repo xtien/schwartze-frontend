@@ -67,7 +67,7 @@ class AddPerson extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/add_person/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/add_person/',
             postData,
             axiosConfig
         )
@@ -76,12 +76,19 @@ class AddPerson extends Component {
                     editDone: true,
                     id: response.data.person.id
                 })
-            );
+            )
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
+            });
     }
 
     render() {
 
-        if (this.state.editDone === true) {
+        if (this.state.editDone == true) {
             return (
                 <Redirect to={"/get_person_details/" + this.state.id}/>
             )

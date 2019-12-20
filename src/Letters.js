@@ -25,7 +25,7 @@ class Letters extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_letters/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_letters/',
             postData,
             axiosConfig
         )
@@ -78,7 +78,7 @@ class Letters extends Component {
                 });
                 const location_content = locations[0];
                 const id_content = ids[0];
-                const linkTo = '/get_location/' + id_content;
+                const linkTo = '/get_location_details/' + id_content;
                 let result = <Link to={linkTo}>{location_content}</Link>
                 return result;
             },
@@ -110,7 +110,7 @@ class Letters extends Component {
                 });
                 const location_content = locations[0];
                 const id_content = ids[0];
-                const linkTo = '/get_location/' + id_content;
+                const linkTo = '/get_location_details/' + id_content;
                 let result = <Link to={linkTo}>{location_content}</Link>
                 return result;
             },

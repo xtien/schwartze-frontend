@@ -45,7 +45,7 @@ class Location extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_location/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_location/',
             postData,
             axiosConfig
         )
@@ -84,7 +84,7 @@ class Location extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/delete_location/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/delete_location/',
             postData,
             axiosConfig
         )
@@ -98,7 +98,8 @@ class Location extends Component {
     delete_link(id) {
 
         let postData = {
-            link_id: id
+            link_id: id,
+            location_id: this.state.location.id
         };
 
         let axiosConfig = {
@@ -107,7 +108,7 @@ class Location extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/delete_link/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/delete_link/',
             postData,
             axiosConfig
         )
@@ -168,7 +169,7 @@ class Location extends Component {
         }
 
         if (this.state.deleted === true) {
-            return <Redirect to={'/get_letters/'}/>
+            return <Redirect to={'/get_locations/'}/>
         }
 
         let links = []
@@ -337,7 +338,7 @@ class EditLinkForm extends React.Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/edit_link/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/edit_link/',
             postData,
             axiosConfig
         )

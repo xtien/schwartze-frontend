@@ -35,7 +35,7 @@ class Text extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_text/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_text/',
             postData,
             axiosConfig
         )
@@ -78,7 +78,7 @@ class Text extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/update_text/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/update_text/',
             postData,
             axiosConfig
         )
@@ -96,7 +96,7 @@ class Text extends Component {
 
         const location = this.state.location;
         const person = this.state.person;
-        const redirectTo = (location != null && location.text != null) ? '/get_location/' + location.id : person !=null ? '/get_person_details/' + person.id : '';
+        const redirectTo = (location != null && location.text != null) ? '/get_location_details/' + location.id : person !=null ? '/get_person_details/' + person.id : '';
 
         return (
             <div className='container'>

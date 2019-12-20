@@ -45,7 +45,7 @@ class CombineLocation extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/get_combine_location/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/get_combine_location/',
             postData,
             axiosConfig
         )
@@ -140,7 +140,7 @@ class CombineLocationForm
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/put_combine_location/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/put_combine_location/',
             postData,
             axiosConfig
         )
@@ -161,7 +161,7 @@ class CombineLocationForm
 
         if (this.state.redirect) {
             return (
-                <Redirect to={"/get_location/" + this.state.location1.id}/>
+                <Redirect to={"/get_location_details/" + this.state.location1.id}/>
             )
         }
 

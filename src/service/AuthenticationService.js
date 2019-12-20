@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'https://pengo.christine.nl:8443'
+const API_URL = process.env.REACT_APP_API_URL + ''
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 export const AUTHORITIES = 'authorities'
@@ -9,7 +9,7 @@ class AuthenticationService {
 
     constructor(props) {
         this.registerSuccessfulLogin = this.registerSuccessfulLogin.bind(this);
-     }
+    }
 
     executeLogin(username, password) {
 
@@ -21,10 +21,10 @@ class AuthenticationService {
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
         };
 
-        return axios.post('https://pengo.christine.nl:8443/login/',
+        return axios.post(process.env.REACT_APP_API_URL + '/login/',
             postData,
             axiosConfig
         )
@@ -35,16 +35,8 @@ class AuthenticationService {
             )
     }
 
-    setAuthorities(authorities){
+    setAuthorities(authorities) {
         sessionStorage.setItem(AUTHORITIES, authorities)
-    }
-
-    executeJwtAuthenticationService(username, password) {
-        console.log(username);
-        return axios.post(`${API_URL}/authenticate`, {
-            username,
-            password
-        })
     }
 
     createBasicAuthToken(username, password) {
@@ -52,21 +44,9 @@ class AuthenticationService {
     }
 
     registerSuccessfulLogin(username, password) {
-        //let basicAuthHeader = 'Basic ' +  window.btoa(username + ":" + password)
-        //console.log('registerSuccessfulLogin')
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
         this.setupAxiosInterceptors(this.createBasicAuthToken(username, password))
     }
-
-    registerSuccessfulLoginForJwt(username, token) {
-        sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
-        this.setupAxiosInterceptors(this.createJWTToken(token))
-    }
-
-    createJWTToken(token) {
-        return 'Bearer ' + token
-    }
-
 
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
@@ -74,14 +54,20 @@ class AuthenticationService {
 
     isUserLoggedIn() {
         let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
-        if (user === null) return false
-        return true
+        if (user === null) {
+            return false
+        } else {
+            return true
+        }
     }
 
     getLoggedInUserName() {
         let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
-        if (user === null) return ''
-        return user
+        if (user === null) {
+            return ''
+        } else {
+            return user
+        }
     }
 
     setupAxiosInterceptors(token) {

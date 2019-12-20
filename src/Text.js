@@ -29,7 +29,7 @@ class Text extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_text/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_text/',
             postData,
             axiosConfig
         )

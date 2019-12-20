@@ -49,7 +49,7 @@ class Person extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_person_details/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_person_details/',
             postData,
             axiosConfig
         )
@@ -119,7 +119,7 @@ class Person extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/delete_person/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/delete_person/',
             postData,
             axiosConfig
         )
@@ -142,7 +142,7 @@ class Person extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/delete_link/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/delete_link/',
             postData,
             axiosConfig
         )
@@ -204,7 +204,7 @@ class Person extends Component {
         }
 
         if (this.state.deleted === true) {
-            return <Redirect to={'/get_letters/'}/>
+            return <Redirect to={'/get_people/'}/>
         }
 
         let links = [];
@@ -468,7 +468,7 @@ class EditPersonForm extends React.Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/update_person_details/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/update_person_details/',
             postData,
             axiosConfig
         )
@@ -578,7 +578,7 @@ class EditLinkForm extends React.Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/edit_link/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/edit_link/',
             postData,
             axiosConfig
         )

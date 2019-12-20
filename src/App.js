@@ -28,12 +28,6 @@ class App extends Component {
 
     constructor(props) {
         super(props)
-
-        const isAuthenticated = AuthenticationService.isUserLoggedIn();
-
-        this.state = {
-            isAuthenticated: isAuthenticated
-        }
     }
 
     render() {
@@ -49,7 +43,7 @@ class App extends Component {
                             <p className="navbar-nav"><Link to='/get_letters/'>Brieven</Link></p>
                             <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
                             <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
-                            {this.state.isAuthenticated ?
+                            {AuthenticationService.isUserLoggedIn() ?
                                 <p className="navbar-nav"><Link to='/admin/'>Admin</Link></p>
                                 :
                                 <p className="navbar-nav"><Link to='/login/'>Login</Link></p>
@@ -67,7 +61,7 @@ class App extends Component {
                         <Route path="/add_location/" component={AddLocation}/>
                         <Route path="/combine_person/:id" component={CombinePerson}/>
                         <Route path="/combine_location/:id" component={CombineLocation}/>
-                        <Route path="/get_location/:id" component={Location}/>
+                        <Route path="/get_location_details/:id" component={Location}/>
                         <Route path="/get_person_details/:id" component={Person}/>
                         <Route path="/get_letter_details/:number" component={Letter}/>
                         <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>

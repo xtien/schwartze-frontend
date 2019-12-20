@@ -45,7 +45,7 @@ class CombinePerson extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/get_combine_person/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/get_combine_person/',
             postData,
             axiosConfig
         )
@@ -140,7 +140,7 @@ class CombinePersonForm
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/put_combine_person/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/put_combine_person/',
             postData,
             axiosConfig
         )
