@@ -1,42 +1,23 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import {Link, Redirect} from "react-router-dom";
-import './css/bootstrap.css'
+import {Redirect} from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
 
-class Location extends Component {
+class References extends Component {
 
-    constructor(props) {
-        super(props)
+    constructor() {
+
+        super()
 
         const isAuthenticated = AuthenticationService.isUserLoggedIn();
 
         this.state = {
-            resultCode: -1,
-            data: {},
-            locationText: '',
-            location: {},
-            showLinkEdit: false,
-            link_id: '',
-            link_name: '',
-            link_url: '',
+             references: '',
             isAuthenticated: isAuthenticated
         }
 
-        this.add_link = this.add_link.bind(this);
-        this.edit_link = this.edit_link.bind(this);
-        this.delete_link = this.delete_link.bind(this);
-        this.combine = this.combine.bind(this);
-        this.delete = this.delete.bind(this);
-
-        let id;
-
-        if (props.match.params.id != null) {
-            id = props.match.params.id;
-        }
-
         let postData = {
-            id: id
+            type: 'site'
         };
 
         let axiosConfig = {
@@ -45,77 +26,13 @@ class Location extends Component {
             }
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/get_location/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_references/',
             postData,
             axiosConfig
         )
             .then(response =>
                 this.setState({
-                    resultCode: response.data.resultCode,
-                    location: response.data.location
-                })
-            )
-    }
-
-    togglelinkEditDone = (location) => {
-        this.setState({
-            showLinkEdit: false,
-            location: location
-        })
-    }
-
-    delete(event) {
-        event.preventDefault();
-
-        this.setState(
-            {
-                delete: true
-            }
-        )
-
-        let postData = {
-            requestCode: 0,
-            id: this.state.location.id
-        };
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
-        axios.post(process.env.REACT_APP_API_URL + '/admin/delete_location/',
-            postData,
-            axiosConfig
-        )
-            .then(response =>
-                this.setState({
-                    deleted: true
-                })
-            )
-    }
-
-    delete_link(id) {
-
-        let postData = {
-            link_id: id,
-            location_id: this.state.location.id
-        };
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
-        axios.post(process.env.REACT_APP_API_URL + '/admin/delete_link/',
-            postData,
-            axiosConfig
-        )
-            .then(response =>
-                this.setState({
-                    resultCode: response.data.resultCode,
-                    location: response.data.location
+                    references: response.data.references
                 })
             )
     }
@@ -133,9 +50,33 @@ class Location extends Component {
         )
     }
 
+    delete_link(id) {
+
+        let postData = {
+            link_id: id,
+            type : this.state.references.type
+        };
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        axios.post(process.env.REACT_APP_API_URL + '/admin/update_referencs/',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    resultCode: response.data.resultCode,
+                    location: response.data.location
+                })
+            )
+    }
     edit_link(id) {
 
-        const link = this.state.location.links.find(link => link.id = id);
+        const link = this.state.references.links.find(link => link.id = id);
 
         this.setState(
             {
@@ -147,34 +88,16 @@ class Location extends Component {
         )
     }
 
-    combine(event) {
-        event.preventDefault();
-
-        this.setState(
-            {
-                combine: true
-            }
-        )
-    }
-
     render() {
 
         const auth = this.state.isAuthenticated;
-        const location = this.state.location;
+        const references = this.state.references;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
 
-        if (this.state.combine === true) {
-            return <Redirect to={'/combine_location/' + location.id}/>
-        }
-
-        if (this.state.deleted === true) {
-            return <Redirect to={'/get_locations/'}/>
-        }
-
         let links = []
-        if (location.links != null) {
-            links = location.links.map(function (link, i) {
+        if (references.links != null) {
+            links = references.links.map(function (link, i) {
                 return (
                     <div key={i}>
                         <table width="100%">
@@ -183,8 +106,8 @@ class Location extends Component {
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    { auth ?
-                                    <div>
+                                    {auth ?
+                                        <div>
                                             <button
                                                 className="btn btn-outline-success mybutton ml-2 mt-2"
                                                 onClick={edit_link.bind(this, link.id)}
@@ -198,7 +121,7 @@ class Location extends Component {
                                                 Delete
                                             </button>
                                         </div>
-                                        : null }
+                                        : null}
                                 </td>
                             </tr>
                         </table>
@@ -210,25 +133,7 @@ class Location extends Component {
         return (
 
             <div className='container letter'>
-                <h3>{location.location_name}</h3>
-                <p>{location.comment}</p>
-                <p>{location.description}</p>
-
-                <div className='mt-5'>
-                    {location.text != null && location.text.text_string != null ?
-                        <div>
-                            <p>
-                                <Link to={{
-                                    pathname: '/get_text/',
-                                    query: {
-                                        location_id: location.id
-                                    }
-                                }}>
-                                    Meer
-                                </Link>
-                            </p>
-                        </div> : null}
-                </div>
+                <h3>Referenties</h3>
 
                 <div>
                     <div id='linkContainer'>
@@ -236,7 +141,7 @@ class Location extends Component {
                     </div>
                     {this.state.showLinkEdit ? (
                             <EditLinkForm
-                                location_id={this.state.location.id}
+                                type={this.state.references.type}
                                 link_id={this.state.link_id}
                                 link_name={this.state.link_name}
                                 link_url={this.state.link_url}
@@ -249,48 +154,31 @@ class Location extends Component {
                                 this.state.isAuthenticated ?
 
                                     <div>
-                                        <div className='mb-5 mt-5 ml-5'>
-                                            <Link to={{
-                                                pathname: '/edit_text/',
-                                                location_id: location.id
-                                            }}>
-                                                Edit text
-                                            </Link>
-                                        </div>
 
                                         <table>
-                                        <tr>
-                                            <td>
-                                                <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
-                                                    <input
-                                                        type="submit"
-                                                        className="btn btn-outline-success mybutton"
-                                                        value="Link toevoegen"
-                                                    />
+                                            <tr>
+                                                <td>
+                                                    <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
+                                                        <input
+                                                            type="submit"
+                                                            className="btn btn-outline-success mybutton"
+                                                            value="Link toevoegen"
+                                                        />
 
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form onSubmit={this.combine} className="mt-5 ml-5 mb-5">
-                                                    <input
-                                                        type="submit"
-                                                        className="btn btn-outline-success mybutton"
-                                                        value="Combineren"
-                                                    />
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form onSubmit={this.delete} className="mt-5 ml-5 mb-5">
-                                                    <input
-                                                        type="submit"
-                                                        className="btn btn-outline-danger mybutton"
-                                                        value="Verwijderen"
-                                                    />
-
-                                                </form>
+                                                    </form>
                                                 </td>
-                                        </tr>
-                                    </table>
+                                                 <td>
+                                                    <form onSubmit={this.delete} className="mt-5 ml-5 mb-5">
+                                                        <input
+                                                            type="submit"
+                                                            className="btn btn-outline-danger mybutton"
+                                                            value="Verwijderen"
+                                                        />
+
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </div>
                                     : null }
                         </div>
@@ -300,9 +188,11 @@ class Location extends Component {
 
             </div>
         )
-    }
-}
 
+    }
+
+
+}
 class EditLinkForm extends React.Component {
 
     constructor(props) {
@@ -401,4 +291,4 @@ class EditLinkForm extends React.Component {
     }
 }
 
-export default Location
+export default References

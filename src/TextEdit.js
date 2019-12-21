@@ -98,6 +98,10 @@ class Text extends Component {
         const person = this.state.person;
         const redirectTo = (location != null && location.text != null) ? '/get_location_details/' + location.id : person !=null ? '/get_person_details/' + person.id : '';
 
+        if (this.state.editDone == true) {
+            return <Redirect to={redirectTo}/>
+        }
+
         return (
             <div className='container'>
                 <div>

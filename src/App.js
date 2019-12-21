@@ -23,6 +23,7 @@ import Admin from "./Admin";
 import Locations from "./Locations"
 import People from "./People"
 import AuthenticationService from "./service/AuthenticationService";
+import References from "./References";
 
 class App extends Component {
 
@@ -43,11 +44,13 @@ class App extends Component {
                             <p className="navbar-nav"><Link to='/get_letters/'>Brieven</Link></p>
                             <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
                             <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
+                            <p className="navbar-nav"><Link to='/references/'>Referenties</Link></p>
                             {AuthenticationService.isUserLoggedIn() ?
                                 <p className="navbar-nav"><Link to='/admin/'>Admin</Link></p>
                                 :
                                 <p className="navbar-nav"><Link to='/login/'>Login</Link></p>
                             }
+
                         </nav>
                     </div>
                     <div>
@@ -66,10 +69,11 @@ class App extends Component {
                         <Route path="/get_letter_details/:number" component={Letter}/>
                         <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
                         <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
-                        <Route path="/get_text/:id" component={Text}/>
+                        <Route path="/get_text/:entity/:id" component={Text}/>
                         <Route path="/edit_text/" component={TextEdit}/>
                         <Route path="/get_locations/" component={Locations}/>
                         <Route path="/get_people/" component={People}/>
+                        <Route path="/references/" component={References}/>
                     </div>
                 </div>
             </Router>

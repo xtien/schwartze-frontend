@@ -161,7 +161,7 @@ class CombinePersonForm
 
         if (this.state.redirect) {
             return (
-                <Redirect to={"/get_person/" + this.state.person1.id}/>
+                <Redirect to={"/get_person_details/" + this.state.person1.id}/>
             )
         }
 

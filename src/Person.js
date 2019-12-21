@@ -198,6 +198,10 @@ class Person extends Component {
         const auth = this.state.isAuthenticated;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
+        let linkTo = '';
+        if(person !=null){
+            linkTo = '/get_text/person/1';
+        }
 
         if (this.state.combine === true) {
             return <Redirect to={'/combine_person/' + person.id}/>
@@ -218,22 +222,22 @@ class Person extends Component {
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    { auth ?
-                                    <div>
-                                        <button
-                                            className="btn btn-outline-success mybutton ml-2 mt-2"
-                                            onClick={edit_link.bind(this, link.id)}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            className="btn btn-outline-danger mybutton ml-2 mt-2"
-                                            onClick={delete_link.bind(this, link.id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
-                                        : null }
+                                    {auth ?
+                                        <div>
+                                            <button
+                                                className="btn btn-outline-success mybutton ml-2 mt-2"
+                                                onClick={edit_link.bind(this, link.id)}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="btn btn-outline-danger mybutton ml-2 mt-2"
+                                                onClick={delete_link.bind(this, link.id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                        : null}
                                 </td>
                             </tr>
                         </table>
@@ -283,14 +287,7 @@ class Person extends Component {
                                     {person.text != null && person.text.text_string != null ?
                                         <div>
                                             <p>
-                                                <Link to={{
-                                                    pathname: '/get_text/',
-                                                    query: {
-                                                        person_id: person.id
-                                                    }
-                                                }}>
-                                                    Meer
-                                                </Link>
+                                                 <Link to={linkTo}> Meer </Link>
                                             </p>
                                         </div> : null}
                                 </div>
@@ -316,21 +313,6 @@ class Person extends Component {
                             toggleEditDone={this.toggleEditDone}
                         />
                     ) : null
-                    }
-
-                    {
-                        this.state.showLinkEdit ? (
-                            <form onSubmit={this.edit_text}>
-                                <textarea
-                                    type="text"
-                                    className="form-control textarea"
-                                    id="text"
-                                    value={this.state.text}
-                                    onChange={this.handleTextChange}
-                                />
-
-                            </form>
-                        ) : null
                     }
 
                     {this.state.isAuthenticated ?
@@ -524,7 +506,7 @@ class EditPersonForm extends React.Component {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="status">Text</label>
+                    <label htmlFor="status">Opmerkingen</label>
                     <textarea
                         type="text"
                         className="form-control textarea"
@@ -603,11 +585,8 @@ class EditLinkForm extends React.Component {
 
         const redirectTo = '/get_person/' + this.state.person_id;
 
-        if (this.state.linkEditDone === true) {
-            this.setState({
-                linkEditDone: false
-            });
-            this.props.toggleLinkEditDone(this.state.person);
+        if (this.state.linkEditDone == true) {
+            return <Redirect to={redirectTo}/>
         }
 
         return (
