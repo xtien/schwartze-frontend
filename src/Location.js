@@ -3,6 +3,7 @@ import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
+import Util from './service/Util';
 
 class Location extends Component {
 
@@ -215,7 +216,7 @@ class Location extends Component {
                 <p>{location.description}</p>
 
                 <div className='mt-5'>
-                    {location.text != null && location.text.text_string != null ?
+                    {location.text != null && Util.isNotEmpty(location.text.text_string) ?
                         <div>
                             <p>
                                 <Link to={{

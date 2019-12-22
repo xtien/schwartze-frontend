@@ -4,6 +4,7 @@ import './css/bootstrap.css'
 import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
 import AuthenticationService from './service/AuthenticationService';
+import Util from './service/Util';
 
 // https://medium.com/better-programming/building-basic-react-authentication-e20a574d5e71
 
@@ -282,9 +283,8 @@ class Person extends Component {
                                         </div> : null
                                 }
 
-
                                 <div className='mt-5'>
-                                    {person.text != null && person.text.text_string != null ?
+                                    {person.text !=null && Util.isNotEmpty(person.text.text_string) ?
                                         <div>
                                             <p>
                                                  <Link to={linkTo}> Meer </Link>

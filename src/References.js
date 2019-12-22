@@ -12,9 +12,13 @@ class References extends Component {
         const isAuthenticated = AuthenticationService.isUserLoggedIn();
 
         this.state = {
-             references: '',
+            references: {},
             isAuthenticated: isAuthenticated
         }
+
+        this.edit_link = this.edit_link.bind(this);
+        this.delete_link = this.delete_link.bind(this);
+        this.add_link = this.add_link.bind(this);
 
         let postData = {
             type: 'site'
@@ -54,7 +58,7 @@ class References extends Component {
 
         let postData = {
             link_id: id,
-            type : this.state.references.type
+            type: this.state.references.type
         };
 
         let axiosConfig = {
@@ -63,7 +67,7 @@ class References extends Component {
             }
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/admin/update_referencs/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/remove_reference_link/',
             postData,
             axiosConfig
         )
@@ -74,6 +78,7 @@ class References extends Component {
                 })
             )
     }
+
     edit_link(id) {
 
         const link = this.state.references.links.find(link => link.id = id);
@@ -167,7 +172,7 @@ class References extends Component {
 
                                                     </form>
                                                 </td>
-                                                 <td>
+                                                <td>
                                                     <form onSubmit={this.delete} className="mt-5 ml-5 mb-5">
                                                         <input
                                                             type="submit"
@@ -180,7 +185,7 @@ class References extends Component {
                                             </tr>
                                         </table>
                                     </div>
-                                    : null }
+                                    : null}
                         </div>
                     }
                 </div>
@@ -193,6 +198,7 @@ class References extends Component {
 
 
 }
+
 class EditLinkForm extends React.Component {
 
     constructor(props) {
@@ -204,6 +210,7 @@ class EditLinkForm extends React.Component {
             link_id: this.props.link_id,
             link_name: this.props.link_name,
             link_url: this.props.link_url,
+            type: this.props.type
         };
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
@@ -215,10 +222,10 @@ class EditLinkForm extends React.Component {
         event.preventDefault();
 
         let postData = {
-            location_id: this.state.location_id,
             link_id: this.state.link_id,
             link_name: this.state.link_name,
             link_url: this.state.link_url,
+            type: this.state.type
         };
 
         let axiosConfig = {
@@ -228,14 +235,14 @@ class EditLinkForm extends React.Component {
             }
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/admin/edit_link/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/edit_reference_link/',
             postData,
             axiosConfig
         )
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
-                    location: response.data.location,
+                    references: response.data.references,
                     linkEditDone: true
                 })
             );
@@ -251,7 +258,7 @@ class EditLinkForm extends React.Component {
 
     render() {
 
-        const redirectTo = '/get_location_details/' + this.state.location_id;
+        const redirectTo = '/references/';
 
         if (this.state.linkEditDone == true) {
             if (this.state.linkEditDone == true) {
