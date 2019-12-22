@@ -66,7 +66,7 @@ class AddLetter extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/add_letter/',
+        axios.post(process.env.REACT_APP_API_URL + process.env.REACT_APP_API_URL + '/admin/add_letter/',
             postData,
             axiosConfig
         )
@@ -80,7 +80,7 @@ class AddLetter extends Component {
 
     render() {
 
-        if (this.state.editDone === true) {
+        if (this.state.editDone == true) {
             return (
                 <Redirect to={"/get_letter_details/" + this.state.id}/>
             )

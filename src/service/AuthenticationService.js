@@ -1,50 +1,32 @@
 import axios from 'axios'
 
-const API_URL = 'https://pengo.christine.nl:8443'
+const API_URL = process.env.REACT_APP_API_URL + ''
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
-export const AUTHORITIES = 'authorities'
+export const VISITOR = 'visitor'
+export const ADMIN = 'admin'
 
 class AuthenticationService {
 
     constructor(props) {
         this.registerSuccessfulLogin = this.registerSuccessfulLogin.bind(this);
-     }
+    }
 
     executeLogin(username, password) {
-
-        let postData = {
-            userName: username,
-            password: password
-        };
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
-        return axios.post('https://pengo.christine.nl:8443/login/',
-            postData,
-            axiosConfig
-        )
-            .then(response => {
-                    this.registerSuccessfulLogin(username, password);
-                    this.setAuthorities(response.data.authorities);
-                }
-            )
+        return axios.post(`${API_URL}/login`,
+            { headers: {
+                    'Content-Type': 'application/json',
+                    authorization: this.createBasicAuthToken(username, password)
+            } })
     }
 
-    setAuthorities(authorities){
-        sessionStorage.setItem(AUTHORITIES, authorities)
+    setAuthorities(authorities) {
+        sessionStorage.setItem(VISITOR, authorities.includes("READ_PRIVILIGE"))
+        sessionStorage.setItem(ADMIN, authorities.includes("WRITE_PRIVILIGE"))
     }
 
-    executeJwtAuthenticationService(username, password) {
-        console.log(username);
-        return axios.post(`${API_URL}/authenticate`, {
-            username,
-            password
-        })
+    isAdmin(){
+        return sessionStorage.getItem(ADMIN);
     }
 
     createBasicAuthToken(username, password) {
@@ -52,21 +34,9 @@ class AuthenticationService {
     }
 
     registerSuccessfulLogin(username, password) {
-        //let basicAuthHeader = 'Basic ' +  window.btoa(username + ":" + password)
-        //console.log('registerSuccessfulLogin')
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
         this.setupAxiosInterceptors(this.createBasicAuthToken(username, password))
     }
-
-    registerSuccessfulLoginForJwt(username, token) {
-        sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
-        this.setupAxiosInterceptors(this.createJWTToken(token))
-    }
-
-    createJWTToken(token) {
-        return 'Bearer ' + token
-    }
-
 
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
@@ -74,14 +44,20 @@ class AuthenticationService {
 
     isUserLoggedIn() {
         let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
-        if (user === null) return false
-        return true
+        if (user === null) {
+            return false
+        } else {
+            return true
+        }
     }
 
     getLoggedInUserName() {
         let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
-        if (user === null) return ''
-        return user
+        if (user === null) {
+            return ''
+        } else {
+            return user
+        }
     }
 
     setupAxiosInterceptors(token) {

@@ -23,17 +23,13 @@ import Admin from "./Admin";
 import Locations from "./Locations"
 import People from "./People"
 import AuthenticationService from "./service/AuthenticationService";
+import References from "./References";
+import twitli from './images/logo64.png'
 
 class App extends Component {
 
     constructor(props) {
         super(props)
-
-        const isAuthenticated = AuthenticationService.isUserLoggedIn();
-
-        this.state = {
-            isAuthenticated: isAuthenticated
-        }
     }
 
     render() {
@@ -43,18 +39,22 @@ class App extends Component {
             <Router>
                 <div className='container'>
                     <div className='jumbotron'>
+                        <table width="100%"><tr><td>
                         <h1>Het nichtje van tante Therèse</h1>
                         <nav className="navbar navbar-expand-lg navbar-light">
                             <p className="navbar-nav"><Link to='/'>Home</Link></p>
                             <p className="navbar-nav"><Link to='/get_letters/'>Brieven</Link></p>
                             <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
                             <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
-                            {this.state.isAuthenticated ?
+                            <p className="navbar-nav"><Link to='/references/'>Referenties</Link></p>
+                            {AuthenticationService.isAdmin() ?
                                 <p className="navbar-nav"><Link to='/admin/'>Admin</Link></p>
                                 :
                                 <p className="navbar-nav"><Link to='/login/'>Login</Link></p>
                             }
-                        </nav>
+                        </nav></td><td valign="top">
+                        <img src={twitli} />
+                        </td></tr></table>
                     </div>
                     <div>
                         <Route exact path="/" component={Landing}/>
@@ -67,15 +67,16 @@ class App extends Component {
                         <Route path="/add_location/" component={AddLocation}/>
                         <Route path="/combine_person/:id" component={CombinePerson}/>
                         <Route path="/combine_location/:id" component={CombineLocation}/>
-                        <Route path="/get_location/:id" component={Location}/>
+                        <Route path="/get_location_details/:id" component={Location}/>
                         <Route path="/get_person_details/:id" component={Person}/>
                         <Route path="/get_letter_details/:number" component={Letter}/>
                         <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
                         <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
-                        <Route path="/get_text/:id" component={Text}/>
+                        <Route path="/get_text/:entity/:id" component={Text}/>
                         <Route path="/edit_text/" component={TextEdit}/>
                         <Route path="/get_locations/" component={Locations}/>
                         <Route path="/get_people/" component={People}/>
+                        <Route path="/references/" component={References}/>
                     </div>
                 </div>
             </Router>

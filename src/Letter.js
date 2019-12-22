@@ -8,7 +8,7 @@ class Letter extends Component {
 
     constructor(props) {
         super(props)
-        const isAuthenticated = AuthenticationService.isUserLoggedIn();
+        const isAuthenticated = AuthenticationService.isAdmin();
 
         this.state = {
             resultCode: -1,
@@ -35,7 +35,7 @@ class Letter extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_letter_details/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_letter_details/',
             postData,
             axiosConfig
         )
@@ -49,7 +49,7 @@ class Letter extends Component {
                 })
             )
 
-        axios.post('https://pengo.christine.nl:8443/get_letter_images/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_letter_images/',
             postData,
             axiosConfig
         )
@@ -185,7 +185,7 @@ class CommentForm extends React.Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/admin/update_letter_details/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/update_letter_details/',
             postData,
             axiosConfig
         )
@@ -201,7 +201,7 @@ class CommentForm extends React.Component {
 
     render() {
 
-        if (this.state.editDone === true) {
+        if (this.state.editDone == true) {
             this.setState({
                 editDone: false
             })

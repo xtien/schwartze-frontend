@@ -32,7 +32,7 @@ class PersonFromLetters extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_letters_from_person/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_letters_from_person/',
             postData,
             axiosConfig
         )
@@ -83,7 +83,7 @@ class PersonFromLetters extends Component {
                     locations.push(locationName);
                 });
                 const location_content = locations.join(', ');
-                const linkTo = '/get_location/' + location_content;
+                const linkTo = '/get_location_details/' + location_content;
                 let result = <Link to={linkTo}>{location_content}</Link>
                 return result;
             },
@@ -115,7 +115,7 @@ class PersonFromLetters extends Component {
                 });
                 const location_content = locations.join(', ');
                 const id_content = cell_ids;
-                const linkTo = '/get_location/' + id_content;
+                const linkTo = '/get_location_details/' + id_content;
                 let result = <Link to={linkTo}>{location_content}</Link>
                 return result;
             },

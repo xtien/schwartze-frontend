@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import _ from "lodash";
 import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 
@@ -25,7 +24,7 @@ class Locations extends Component {
             }
         };
 
-        axios.post('https://pengo.christine.nl:8443/get_locations/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_locations/',
             postData,
             axiosConfig
         )
@@ -47,7 +46,7 @@ class Locations extends Component {
             accessor: data => {
                 const id = data.id;
                 const name = data.location_name;
-                const linkto = '/get_location/' + id;
+                const linkto = '/get_location_details/' + id;
                 let result = <Link to={linkto}>{name}</Link>
                 return result;
             },
