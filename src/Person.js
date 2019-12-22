@@ -13,7 +13,7 @@ class Person extends Component {
     constructor(props) {
         super(props)
 
-        const isAuthenticated = AuthenticationService.isUserLoggedIn();
+        const isAuthenticated = AuthenticationService.isAdmin();
 
         this.state = {
             resultCode: -1,
@@ -157,7 +157,9 @@ class Person extends Component {
 
     edit_link(id) {
 
-        const link = this.state.person.links.find(link => link.id = id);
+        const link = this.state.person.links.find(link => {
+            return link.id === id
+        });
 
         this.setState(
             {

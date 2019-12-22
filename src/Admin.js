@@ -8,7 +8,7 @@ class Admin extends Component {
     constructor(props) {
         super(props)
 
-        const isAuthenticated = AuthenticationService.isUserLoggedIn();
+        const isAuthenticated = AuthenticationService.isAdmin();
 
         this.state = {
             isAuthenticated: isAuthenticated,

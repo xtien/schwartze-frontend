@@ -3,6 +3,7 @@ import './App.css'
 import axios from "axios";
 import './css/bootstrap.css'
 import {Redirect} from "react-router-dom";
+import AuthenticationService from "./service/AuthenticationService";
 
 class AddLocation extends Component {
 

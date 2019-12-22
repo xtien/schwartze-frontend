@@ -3,7 +3,8 @@ import axios from 'axios'
 const API_URL = process.env.REACT_APP_API_URL + ''
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
-export const AUTHORITIES = 'authorities'
+export const VISITOR = 'visitor'
+export const ADMIN = 'admin'
 
 class AuthenticationService {
 
@@ -12,31 +13,20 @@ class AuthenticationService {
     }
 
     executeLogin(username, password) {
-
-        let postData = {
-            userName: username,
-            password: password
-        };
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
-        return axios.post(process.env.REACT_APP_API_URL + '/login/',
-            postData,
-            axiosConfig
-        )
-            .then(response => {
-                    this.registerSuccessfulLogin(username, password);
-                    this.setAuthorities(response.data.authorities);
-                }
-            )
+        return axios.post(`${API_URL}/login`,
+            { headers: {
+                    'Content-Type': 'application/json',
+                    authorization: this.createBasicAuthToken(username, password)
+            } })
     }
 
     setAuthorities(authorities) {
-        sessionStorage.setItem(AUTHORITIES, authorities)
+        sessionStorage.setItem(VISITOR, authorities.includes("READ_PRIVILIGE"))
+        sessionStorage.setItem(ADMIN, authorities.includes("WRITE_PRIVILIGE"))
+    }
+
+    isAdmin(){
+        return sessionStorage.getItem(ADMIN);
     }
 
     createBasicAuthToken(username, password) {

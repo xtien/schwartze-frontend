@@ -10,7 +10,7 @@ class Location extends Component {
     constructor(props) {
         super(props)
 
-        const isAuthenticated = AuthenticationService.isUserLoggedIn();
+        const isAuthenticated = AuthenticationService.isAdmin();
 
         this.state = {
             resultCode: -1,
@@ -136,7 +136,9 @@ class Location extends Component {
 
     edit_link(id) {
 
-        const link = this.state.location.links.find(link => link.id = id);
+        const link = this.state.location.links.find(link => {
+            return link.id === id
+        });
 
         this.setState(
             {

@@ -24,6 +24,7 @@ import Locations from "./Locations"
 import People from "./People"
 import AuthenticationService from "./service/AuthenticationService";
 import References from "./References";
+import twitli from './images/logo64.png'
 
 class App extends Component {
 
@@ -38,6 +39,7 @@ class App extends Component {
             <Router>
                 <div className='container'>
                     <div className='jumbotron'>
+                        <table width="100%"><tr><td>
                         <h1>Het nichtje van tante Therèse</h1>
                         <nav className="navbar navbar-expand-lg navbar-light">
                             <p className="navbar-nav"><Link to='/'>Home</Link></p>
@@ -45,13 +47,14 @@ class App extends Component {
                             <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
                             <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
                             <p className="navbar-nav"><Link to='/references/'>Referenties</Link></p>
-                            {AuthenticationService.isUserLoggedIn() ?
+                            {AuthenticationService.isAdmin() ?
                                 <p className="navbar-nav"><Link to='/admin/'>Admin</Link></p>
                                 :
                                 <p className="navbar-nav"><Link to='/login/'>Login</Link></p>
                             }
-
-                        </nav>
+                        </nav></td><td valign="top">
+                        <img src={twitli} />
+                        </td></tr></table>
                     </div>
                     <div>
                         <Route exact path="/" component={Landing}/>

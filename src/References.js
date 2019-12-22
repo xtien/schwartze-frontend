@@ -9,11 +9,12 @@ class References extends Component {
 
         super()
 
-        const isAuthenticated = AuthenticationService.isUserLoggedIn();
+        const isAuthenticated = AuthenticationService.isAdmin();
 
         this.state = {
             references: {},
-            isAuthenticated: isAuthenticated
+            isAuthenticated: isAuthenticated,
+            linkEditDone: false
         }
 
         this.edit_link = this.edit_link.bind(this);
@@ -81,7 +82,10 @@ class References extends Component {
 
     edit_link(id) {
 
-        const link = this.state.references.links.find(link => link.id = id);
+        const link = this.state.references.links.find(link =>
+        {
+           return link.id === id
+        });
 
         this.setState(
             {
@@ -172,16 +176,6 @@ class References extends Component {
 
                                                     </form>
                                                 </td>
-                                                <td>
-                                                    <form onSubmit={this.delete} className="mt-5 ml-5 mb-5">
-                                                        <input
-                                                            type="submit"
-                                                            className="btn btn-outline-danger mybutton"
-                                                            value="Verwijderen"
-                                                        />
-
-                                                    </form>
-                                                </td>
                                             </tr>
                                         </table>
                                     </div>
@@ -210,11 +204,12 @@ class EditLinkForm extends React.Component {
             link_id: this.props.link_id,
             link_name: this.props.link_name,
             link_url: this.props.link_url,
-            type: this.props.type
-        };
+            type: this.props.type,
+         };
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleUrlChange = this.handleUrlChange.bind(this);
         this.handleUrlChange = this.handleUrlChange.bind(this);
     }
 

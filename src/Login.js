@@ -25,7 +25,8 @@ class Login extends React.Component {
         AuthenticationService
             .executeLogin(this.state.username, this.state.password)
             .then(response => {
-            AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
+            AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+            AuthenticationService.setAuthorities(response.data.authorities);
             this.props.history.push(`/get_letters/`)
                 this.setState({
                     auth: true
