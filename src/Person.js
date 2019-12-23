@@ -23,7 +23,14 @@ class Person extends Component {
             showTextEdit: false,
             text_id: '',
             person: {},
-            isAuthenticated: isAuthenticated
+            isAuthenticated: isAuthenticated,
+            textString: ''
+        }
+
+        if (this.state.person != null && this.state.person.text != null) {
+            this.setState({
+                textString: this.state.person.text.textString
+            })
         }
 
         this.edit = this.edit.bind(this);
@@ -202,8 +209,8 @@ class Person extends Component {
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
         let linkTo = '';
-        if(person !=null){
-            linkTo = '/get_text/person/1';
+        if (person != null) {
+            linkTo = '/get_text/person/' + person.id;
         }
 
         if (this.state.combine === true) {
@@ -255,11 +262,21 @@ class Person extends Component {
                     {this.state.showEdit ? null : (
                         <div>
                             <div>
+                                <div className="person_image">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <img className="person_image" alt="" src={person.image_url}/>
+                                        </td></tr>
+                                       <tr> <td><p className="person_caption">{person.image_caption}</p>
+                                        </td>
+                                    </tr>
+                                </table></div>
                                 <p>
                                     {person.id} {person.first_name} {person.middle_name} {person.last_name}
                                 </p>
                                 <p>{person.comment}</p>
-                                <p><Link to={`/get_letters_from_person/${person.id}`}> Brieven
+                                <p className='mt-5'><Link to={`/get_letters_from_person/${person.id}`}> Brieven
                                     van {person.first_name} </Link>
                                 </p>
                                 <p><Link to={`/get_letters_to_person/${person.id}`}> Brieven
@@ -285,12 +302,15 @@ class Person extends Component {
                                         </div> : null
                                 }
 
-                                <div className='mt-5'>
-                                    {person.text !=null && Util.isNotEmpty(person.text.text_string) ?
+                                <div className='textpage mt-5 ml-5'>
+                                    {person.text != null && Util.isNotEmpty(person.text.text_string) ?
                                         <div>
-                                            <p>
-                                                 <Link to={linkTo}> Meer </Link>
-                                            </p>
+                                            <p>  {person.text.text_string.substr(0, 300)}</p>
+                                            {person.text.text_string.length > 300 ?
+                                                <p>
+                                                    <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
+                                                </p>
+                                                : null}
                                         </div> : null}
                                 </div>
 
@@ -312,6 +332,7 @@ class Person extends Component {
                             first_name={this.state.person.first_name}
                             middle_name={this.state.person.middle_name}
                             last_name={this.state.person.last_name}
+                            person={this.state.person}
                             toggleEditDone={this.toggleEditDone}
                         />
                     ) : null
@@ -367,7 +388,7 @@ class Person extends Component {
                                             <div className="ml-5 mb-5">
                                                 <Link to={{
                                                     pathname: '/edit_text/',
-                                                    person_id: person.id
+                                                    person_id: person.id,
                                                 }}>
                                                     Edit text
                                                 </Link>
@@ -398,6 +419,8 @@ class EditPersonForm extends React.Component {
             middle_name: this.props.middle_name,
             last_name: this.props.last_name,
             comment: this.props.comment,
+            image_url: this.props.image_url,
+            image_caption: this.props.image_caption,
             links: this.props.links,
             redirect: false,
             person: {}
@@ -406,12 +429,20 @@ class EditPersonForm extends React.Component {
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleMiddleNameChange = this.handleMiddleNameChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
-        this.handleCommentChange = this.handleCommentChange.bind(this);
+        this.handlecommentChange = this.handlecommentChange.bind(this);
         this.handleLinksChange = this.handleLinksChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleCommentChange(event) {
+    handlecommentChange(event) {
+        this.setState({comment: event.target.value});
+    }
+
+    handlecImageUrlChange(event) {
+        this.setState({comment: event.target.value});
+    }
+
+    handleImageCaptionChange(event) {
         this.setState({comment: event.target.value});
     }
 
@@ -441,6 +472,8 @@ class EditPersonForm extends React.Component {
                 middle_name: this.state.middle_name,
                 last_name: this.state.last_name,
                 comment: this.state.comment,
+                image_url: this.state.image_url,
+                image_caption: this.state.image_caption,
                 links: this.state.links,
             }
         };
@@ -514,7 +547,27 @@ class EditPersonForm extends React.Component {
                         className="form-control textarea"
                         id="comments"
                         value={this.state.comment}
-                        onChange={this.handleCommentChange}
+                        onChange={this.handlecommentChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="status">Image URL</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="image_url"
+                        value={this.state.image_url}
+                        onChange={this.handleImageUrlChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="status">Image caption</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="image_caption"
+                        value={this.state.image_url}
+                        onChange={this.handleImageCaptionChange}
                     />
                 </div>
                 <input

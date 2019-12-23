@@ -11,8 +11,8 @@ class Text extends Component {
         this.state = {
             entity: props.match.params.entity,
             id: props.match.params.id,
-            person: {},
-            location: {},
+            person: props.match.params.location.person,
+            location: props.match.params.location.location,
             text: {}
         }
 
@@ -47,11 +47,11 @@ class Text extends Component {
         let text = location != null ? location.text : person.text;
 
         return (
-            <div className='container'>
+            <div className='textpage ml-5'>
                 <div>
                     {this.state.person != null ?
-                        <Link
-                            to={'/get_person_details/' + person.id}> {person.first_name} {person.last_name}</Link>
+                       <h3> <Link className='mb-5'
+                           to={'/get_person_details/' + person.id}> {person.first_name} {person.last_name}</Link></h3>
                         : null
                     }</div>
                 <div>
@@ -60,7 +60,7 @@ class Text extends Component {
                         : null
                     }
                 </div>
-                <div>
+                <div className='mt-3'>
                     {(text != null && text.text_string != null) ?
                         <div>
                             {text.text_string}

@@ -42,7 +42,7 @@ class Text extends Component {
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
-                    text: response.data.location != null ? response.data.location.text : (response.data.person != null ? response.data.person.text : ''),
+                    text_string: (response.data.location != null && response.data.location.text !=null) ? response.data.location.text.text_string : ((response.data.person != null && response.data.person.text !=null )? response.data.person.text.text_string : ''),
                     location: response.data.location,
                     person: response.data.person
                 })
