@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
 import './css/bootstrap.css'
+import AuthenticationService from "./service/AuthenticationService";
 
 class Text extends Component {
 
@@ -29,15 +30,10 @@ class Text extends Component {
             person_id: this.state.person_id,
 
         };
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_text/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -71,16 +67,9 @@ class Text extends Component {
             text_string: this.state.text_string,
         };
 
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/update_text/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({

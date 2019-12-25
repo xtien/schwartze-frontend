@@ -3,6 +3,7 @@ import './App.css'
 import axios from "axios";
 import './css/bootstrap.css'
 import {Redirect} from "react-router-dom";
+import AuthenticationService from "./service/AuthenticationService";
 
 class AddPerson extends Component {
 
@@ -60,16 +61,9 @@ class AddPerson extends Component {
             }
         };
 
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/add_person/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({

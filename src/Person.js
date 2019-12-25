@@ -51,15 +51,9 @@ class Person extends Component {
             id: id
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/get_person_details/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -121,15 +115,9 @@ class Person extends Component {
             id: this.state.person.id
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/delete_person/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -144,15 +132,9 @@ class Person extends Component {
             link_id: id
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/delete_link/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -332,6 +314,8 @@ class Person extends Component {
                             first_name={this.state.person.first_name}
                             middle_name={this.state.person.middle_name}
                             last_name={this.state.person.last_name}
+                            image_url={this.state.person.image_url}
+                            image_caption={this.state.person.image_caption}
                             person={this.state.person}
                             toggleEditDone={this.toggleEditDone}
                         />
@@ -432,18 +416,20 @@ class EditPersonForm extends React.Component {
         this.handlecommentChange = this.handlecommentChange.bind(this);
         this.handleLinksChange = this.handleLinksChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleImageUrlChange = this.handleImageUrlChange.bind(this);
+        this.handleImageCaptionChange = this.handleImageCaptionChange.bind(this);
     }
 
     handlecommentChange(event) {
         this.setState({comment: event.target.value});
     }
 
-    handlecImageUrlChange(event) {
-        this.setState({comment: event.target.value});
+    handleImageUrlChange(event) {
+        this.setState({image_url: event.target.value});
     }
 
     handleImageCaptionChange(event) {
-        this.setState({comment: event.target.value});
+        this.setState({image_caption: event.target.value});
     }
 
     handleFirstNameChange(event) {
@@ -478,16 +464,9 @@ class EditPersonForm extends React.Component {
             }
         };
 
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/update_person_details/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -566,7 +545,7 @@ class EditPersonForm extends React.Component {
                         type="text"
                         className="form-control textarea"
                         id="image_caption"
-                        value={this.state.image_url}
+                        value={this.state.image_caption}
                         onChange={this.handleImageCaptionChange}
                     />
                 </div>
@@ -608,16 +587,9 @@ class EditLinkForm extends React.Component {
             link_url: this.state.link_url,
         };
 
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/edit_link/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({

@@ -28,16 +28,9 @@ class Letter extends Component {
             number: props.match.params.number
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/get_letter_details/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -51,7 +44,7 @@ class Letter extends Component {
 
         axios.post(process.env.REACT_APP_API_URL + '/get_letter_images/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -178,16 +171,9 @@ class CommentForm extends React.Component {
             comment: this.state.text
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/update_letter_details/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({

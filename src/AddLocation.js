@@ -43,18 +43,9 @@ class AddLocation extends Component {
             }
         };
 
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-            },
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/add_location/',
             postData,
-            axiosConfig,
+            AuthenticationService.getAxiosConfig(),
         )
             .then(response =>
                 this.setState({
