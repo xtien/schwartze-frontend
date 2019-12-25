@@ -5,6 +5,8 @@ const API_URL = process.env.REACT_APP_API_URL + ''
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 export const VISITOR = 'visitor'
 export const ADMIN = 'admin'
+export const AUTH1 = 'auth1'
+export const AUTH2 = 'auth2'
 
 class AuthenticationService {
 
@@ -14,10 +16,12 @@ class AuthenticationService {
 
     executeLogin(username, password) {
         return axios.post(`${API_URL}/login`,
-            { headers: {
+            {
+                headers: {
                     'Content-Type': 'application/json',
                     authorization: this.createBasicAuthToken(username, password)
-            } })
+                }
+            })
     }
 
     setAuthorities(authorities) {
@@ -25,8 +29,40 @@ class AuthenticationService {
         sessionStorage.setItem(ADMIN, authorities.includes("WRITE_PRIVILIGE"))
     }
 
-    isAdmin(){
+    isAdmin() {
         return sessionStorage.getItem(ADMIN);
+    }
+
+    setAuth(username, password) {
+        sessionStorage.setItem(AUTH1, username)
+        sessionStorage.setItem(AUTH2, password)
+    }
+
+    getAuth1() {
+        return sessionStorage.getItem(AUTH1)
+    }
+
+    getAuth2() {
+        return sessionStorage.getItem(AUTH2)
+    }
+
+    getAuth() {
+        return {
+                username: this.getAuth1(),
+                password: this.getAuth2()
+        }
+    }
+
+    getAxiosConfig(){
+        return  {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+            },
+            auth: this.getAuth()
+        }
     }
 
     createBasicAuthToken(username, password) {
@@ -36,6 +72,7 @@ class AuthenticationService {
     registerSuccessfulLogin(username, password) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
         this.setupAxiosInterceptors(this.createBasicAuthToken(username, password))
+        this.setAuth(username, password)
     }
 
     logout() {

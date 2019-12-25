@@ -82,6 +82,16 @@
   margin-bottom: 30px;
 }
 
+.person_image {
+  float:right;
+  width: 200px;
+}
+
+.person_caption {
+  float:right;
+  font-size: small;
+}
+
 text {
   width:400px;
   padding: 10px;
@@ -95,6 +105,10 @@ text {
 .textarea {
   width: 800px;
   height: 800px;
+}
+
+.textpage {
+  width: 800px;
 }
 
 .extratextarea {

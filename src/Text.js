@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from "axios";
 import {Link} from "react-router-dom";
 import './css/bootstrap.css'
+import AuthenticationService from "./service/AuthenticationService";
 
 class Text extends Component {
 
@@ -11,8 +12,8 @@ class Text extends Component {
         this.state = {
             entity: props.match.params.entity,
             id: props.match.params.id,
-            person: {},
-            location: {},
+            person: props.match.params.location.person,
+            location: props.match.params.location.location,
             text: {}
         }
 
@@ -21,15 +22,10 @@ class Text extends Component {
             person_id: this.state.entity == 'person' ? this.state.id : null,
 
         };
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_text/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -47,11 +43,11 @@ class Text extends Component {
         let text = location != null ? location.text : person.text;
 
         return (
-            <div className='container'>
+            <div className='textpage ml-5'>
                 <div>
                     {this.state.person != null ?
-                        <Link
-                            to={'/get_person_details/' + person.id}> {person.first_name} {person.last_name}</Link>
+                       <h3> <Link className='mb-5'
+                           to={'/get_person_details/' + person.id}> {person.first_name} {person.last_name}</Link></h3>
                         : null
                     }</div>
                 <div>
@@ -60,7 +56,7 @@ class Text extends Component {
                         : null
                     }
                 </div>
-                <div>
+                <div className='mt-3'>
                     {(text != null && text.text_string != null) ?
                         <div>
                             {text.text_string}

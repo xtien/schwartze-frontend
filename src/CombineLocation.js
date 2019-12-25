@@ -3,6 +3,7 @@ import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
 import {Redirect} from "react-router-dom";
+import AuthenticationService from "./service/AuthenticationService";
 
 class CombineLocation extends Component {
 
@@ -38,16 +39,9 @@ class CombineLocation extends Component {
             id2: this.state.second_id
         };
 
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/get_combine_location/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -134,15 +128,9 @@ class CombineLocationForm
             id2: this.state.location2.id
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/put_combine_location/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response => {
                     this.setState({

@@ -40,15 +40,9 @@ class Location extends Component {
             id: id
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/get_location/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -79,15 +73,9 @@ class Location extends Component {
             id: this.state.location.id
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/delete_location/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -103,15 +91,9 @@ class Location extends Component {
             location_id: this.state.location.id
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/delete_link/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -166,6 +148,10 @@ class Location extends Component {
         const location = this.state.location;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
+        let linkTo = '';
+        if (location != null) {
+            linkTo = '/get_text/location/' + location.id;
+        }
 
         if (this.state.combine === true) {
             return <Redirect to={'/combine_location/' + location.id}/>
@@ -217,20 +203,16 @@ class Location extends Component {
                 <p>{location.comment}</p>
                 <p>{location.description}</p>
 
-                <div className='mt-5'>
-                    {location.text != null && Util.isNotEmpty(location.text.text_string) ?
-                        <div>
+                <div className='textpage mt-5 ml-5'>
+                {location.text != null && Util.isNotEmpty(location.text.text_string) ?
+                    <div>
+                        <p>  {location.text.text_string.substr(0, 300)}</p>
+                        {location.text.text_string.length > 300 ?
                             <p>
-                                <Link to={{
-                                    pathname: '/get_text/',
-                                    query: {
-                                        location_id: location.id
-                                    }
-                                }}>
-                                    Meer
-                                </Link>
+                                <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
                             </p>
-                        </div> : null}
+                            : null}
+                    </div> : null}
                 </div>
 
                 <div>
@@ -334,16 +316,9 @@ class EditLinkForm extends React.Component {
             link_url: this.state.link_url,
         };
 
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/edit_link/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({

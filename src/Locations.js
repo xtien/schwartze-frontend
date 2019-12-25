@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from "axios";
 import {Link} from "react-router-dom";
 import ReactTable from "react-table";
+import AuthenticationService from "./service/AuthenticationService";
 
 class Locations extends Component {
 
@@ -18,15 +19,9 @@ class Locations extends Component {
             requestCode: 0
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/get_locations/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({

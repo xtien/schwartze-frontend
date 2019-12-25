@@ -25,15 +25,9 @@ class References extends Component {
             type: 'site'
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/get_references/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -62,15 +56,9 @@ class References extends Component {
             type: this.state.references.type
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/remove_reference_link/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
@@ -223,16 +211,9 @@ class EditLinkForm extends React.Component {
             type: this.state.type
         };
 
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/admin/edit_reference_link/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({

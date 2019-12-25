@@ -3,6 +3,7 @@ import axios from "axios";
 import _ from "lodash";
 import {Link} from "react-router-dom";
 import ReactTable from "react-table";
+import AuthenticationService from "./service/AuthenticationService";
 
 class Letters extends Component {
 
@@ -19,15 +20,9 @@ class Letters extends Component {
             requestCode: 0
         };
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
-
         axios.post(process.env.REACT_APP_API_URL + '/get_letters/',
             postData,
-            axiosConfig
+            AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
