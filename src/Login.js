@@ -46,7 +46,7 @@ class Login extends React.Component {
 
         if (this.state.auth == true) {
             return (
-                <Redirect to='/get_letters/'/>
+                <Redirect to={"/get_letters/"}/>
             )
         }
 

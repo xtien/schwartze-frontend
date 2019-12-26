@@ -7,29 +7,70 @@ import AuthenticationService from "./service/AuthenticationService";
 
 class Letters extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             resultCode: -1,
             data: ['a', 'b'],
-            letters: [{}]
+            letters: [{}],
+            order_by: 'number'
         }
+
+        this.sort = this.sort.bind(this);
 
         let postData = {
             requestCode: 0
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/get_letters/',
+        let axiosConfig = AuthenticationService.getAxiosConfig();
+
+        const url = process.env.REACT_APP_API_URL + (this.state.order_by == 'number' ? '/get_letters/' : '/get_letters_by_date/');
+
+        axios.post(url,
             postData,
-            AuthenticationService.getAxiosConfig()
+            axiosConfig
         )
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
-                    letters: response.data.letters
+                    letters: response.data.letters,
+                    order_by: 'date'
                 })
             )
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    sort(event) {
+        event.preventDefault();
+
+        let postData = {
+            requestCode: 0
+        };
+
+        let axiosConfig = AuthenticationService.getAxiosConfig();
+
+        const url = process.env.REACT_APP_API_URL + (this.state.order_by == 'date' ? '/get_letters_by_date/' : '/get_letters/')
+        const a = this.state.order_by
+
+        axios.post(url,
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    resultCode: response.data.resultCode,
+                    letters: response.data.letters,
+                    order_by: a == 'number' ? 'date' : 'number'
+                })
+            )
+            .catch(error => {
+                console.log(error)
+            });
+
+
     }
 
     render() {
@@ -68,8 +109,8 @@ class Letters extends Component {
                 let locations = [];
                 let ids = [];
                 _.map(data.sender_location, location => {
-                     locations.push(location.location_name);
-                     ids.push(location.id);
+                    locations.push(location.location_name);
+                    ids.push(location.id);
                 });
                 const location_content = locations[0];
                 const id_content = ids[0];
@@ -118,11 +159,24 @@ class Letters extends Component {
         }]
 
         return (
-            <div className='container'>
-                <ReactTable
-                    data={this.state.letters}
-                    columns={columns}
-                />
+
+            <div>
+                <form onSubmit={this.sort} className='ml-5 mb-2'>
+                    <input
+                        type="submit"
+                        className="btn btn-outline-secondary mybutton"
+                        value={this.state.order_by == 'date' ? 'op datum' : 'op nummer'}
+                    />
+
+                </form>
+
+
+                <div className='container'>
+                    <ReactTable
+                        data={this.state.letters}
+                        columns={columns}
+                    />
+                </div>
             </div>
         )
     }

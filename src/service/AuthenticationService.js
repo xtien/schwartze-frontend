@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = process.env.REACT_APP_API_URL + ''
+const API_URL = process.env.REACT_APP_API_URL
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 export const VISITOR = 'visitor'
@@ -17,9 +17,9 @@ class AuthenticationService {
     executeLogin(username, password) {
         return axios.post(`${API_URL}/login`,
             {
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: this.createBasicAuthToken(username, password)
+                auth: {
+                    username: username,
+                    password: password
                 }
             })
     }
@@ -57,9 +57,6 @@ class AuthenticationService {
         return {
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
             },
             auth: ((this.getAuth1() != null && this.getAuth2() != null) ? this.getAuth() : null
             )
