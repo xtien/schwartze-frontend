@@ -110,14 +110,20 @@ class Letter extends Component {
                         <div className='remark'>
                             <div>
                                 <CommentForm
-                                    letterId={this.state.letter.id}
+                                    letter_number={this.state.letter.number}
                                     text={this.state.letter.remarks}
+                                    date={this.state.letter.date}
                                     toggleEditDone={this.toggleEditDone}
                                 />
                             </div>
                         </div> : null}
                 </div>
                 <div className='letter'>
+                    <tr>
+                        <td>
+                            Nummer: {this.state.letter.number}
+                        </td>
+                    </tr>
                     <tr>
                         <td>From:</td>
                         <td>{senderList}</td>
@@ -149,13 +155,15 @@ class CommentForm extends React.Component {
         super(props);
 
         this.state = {
-            letterId: this.props.letterId,
+            letter_number: this.props.letter_number,
             text: this.props.text,
+            date: this.props.date,
             resultCode: 0,
             editDone: false
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -163,12 +171,17 @@ class CommentForm extends React.Component {
         this.setState({text: event.target.value});
     }
 
+    handleDateChange(event) {
+        this.setState({date: event.target.value});
+    }
+
     handleSubmit(event) {
         event.preventDefault();
 
         let postData = {
-            number: this.state.letterId,
-            comment: this.state.text
+            number: this.state.letter_number,
+            comment: this.state.text,
+            date: this.state.date
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/admin/update_letter_details/',
@@ -197,12 +210,20 @@ class CommentForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                     <textarea
+                    <label htmlFor="status"></label>
+                    <textarea
                          type="text"
                          id="text"
                          value={this.state.text}
-                         className="form-control textarea"
+                         className="form-control textarea mb-5"
                          onChange={this.handleChange}/>
+                    <label htmlFor="status">Datum</label>
+                    <textarea
+                         type="text"
+                        id="date"
+                        value={this.state.date}
+                        className="form-control textarea"
+                        onChange={this.handleDateChange}/>
                 </div>
                 <input
                     type="submit"
