@@ -48,20 +48,21 @@ class AuthenticationService {
 
     getAuth() {
         return {
-                username: this.getAuth1(),
-                password: this.getAuth2()
+            username: this.getAuth1(),
+            password: this.getAuth2()
         }
     }
 
-    getAxiosConfig(){
-        return  {
+    getAxiosConfig() {
+        return {
             headers: {
                 "Content-Type": "application/json",
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
                 'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
             },
-            auth: this.getAuth()
+            auth: ((this.getAuth1() != null && this.getAuth2() != null) ? this.getAuth() : null
+            )
         }
     }
 

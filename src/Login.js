@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
+import {Redirect} from "react-router";
 
 class Login extends React.Component {
 
@@ -25,13 +26,12 @@ class Login extends React.Component {
         AuthenticationService
             .executeLogin(this.state.username, this.state.password)
             .then(response => {
-            AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
-            AuthenticationService.setAuthorities(response.data.authorities);
-            this.props.history.push(`/get_letters/`)
+                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+                AuthenticationService.setAuthorities(response.data.authorities);
                 this.setState({
                     auth: true
                 })
-        })
+            })
     }
 
     handleUserNameChange(event) {
@@ -43,15 +43,25 @@ class Login extends React.Component {
     }
 
     render() {
+
+        if (this.state.auth == true) {
+            return (
+                <Redirect to='/get_letters/'/>
+            )
+        }
+
         return (
             <div>
                 <form onSubmit={this.handleLinkSubmit}>
                     <div className="form-group">
-                        <table><tr><td>
-                            <div  className="field">
-                        <label htmlFor="status">User name</label>
-                            </div>
-                        </td><td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div className="field">
+                                        <label htmlFor="status">User name</label>
+                                    </div>
+                                </td>
+                                <td>
                         <textarea
                             type="text"
                             className="form-control textarea ml-5"
@@ -59,21 +69,28 @@ class Login extends React.Component {
                             value={this.state.username}
                             onChange={this.handleUserNameChange}
                         />
-                        </td></tr></table>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     <div className="form-group">
-                        <table><tr><td>
-                            <div  className="field">
-                                <label htmlFor="status" >Password</label></div>
-                        </td><td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div className="field">
+                                        <label htmlFor="status">Password</label></div>
+                                </td>
+                                <td>
                        <textarea
-                            type="password"
-                            className="form-control textarea ml-5"
-                            id="password"
-                            value={this.state.password}
-                            onChange={this.handlePwChange}
-                        />
-                        </td></tr></table>
+                           type="password"
+                           className="form-control textarea ml-5"
+                           id="password"
+                           value={this.state.password}
+                           onChange={this.handlePwChange}
+                       />
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     <input
                         type="submit"

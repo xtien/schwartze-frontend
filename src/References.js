@@ -70,9 +70,8 @@ class References extends Component {
 
     edit_link(id) {
 
-        const link = this.state.references.links.find(link =>
-        {
-           return link.id === id
+        const link = this.state.references.links.find(link => {
+            return link.id === id
         });
 
         this.setState(
@@ -83,6 +82,12 @@ class References extends Component {
                 link_id: link.id
             }
         )
+    }
+
+    toggleLinkEditDone() {
+        this.setState({
+            linkEditDone: true
+        })
     }
 
     render() {
@@ -193,7 +198,7 @@ class EditLinkForm extends React.Component {
             link_name: this.props.link_name,
             link_url: this.props.link_url,
             type: this.props.type,
-         };
+        };
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -232,14 +237,17 @@ class EditLinkForm extends React.Component {
         this.setState({link_url: event.target.value});
     }
 
+    editDone() {
+        this.props.togglelinkEditDone();
+    }
+
     render() {
 
         const redirectTo = '/references/';
 
         if (this.state.linkEditDone == true) {
-            if (this.state.linkEditDone == true) {
-                return <Redirect to={redirectTo}/>
-            }
+            this.editDone()
+            return <Redirect to={redirectTo}/>
         }
 
         return (
