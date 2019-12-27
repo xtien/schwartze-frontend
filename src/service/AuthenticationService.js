@@ -48,8 +48,7 @@ class AuthenticationService {
 
     getAuth() {
         return {
-            username: this.getAuth1(),
-            password: this.getAuth2()
+            authorization: this.createBasicAuthToken(this.getAuth1(), this.getAuth2())
         }
     }
 
@@ -64,7 +63,7 @@ class AuthenticationService {
     }
 
     createBasicAuthToken(username, password) {
-        return 'Basic ' + window.btoa(username + ":" + password)
+        return window.btoa(username + ":" + password)
     }
 
     registerSuccessfulLogin(username, password) {
