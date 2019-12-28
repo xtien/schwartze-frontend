@@ -23,15 +23,21 @@ class Login extends React.Component {
     handleLinkSubmit(event) {
         event.preventDefault();
 
+        const username = this.state.username
+        const password = this.state.password
+
         AuthenticationService
-            .executeLogin(this.state.username, this.state.password)
+            .executeLogin(username, password)
             .then(response => {
-                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+                AuthenticationService.registerSuccessfulLogin(username, password);
                 AuthenticationService.setAuthorities(response.data.authorities);
                 this.setState({
                     auth: true
                 })
             })
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     handleUserNameChange(event) {

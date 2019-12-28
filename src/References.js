@@ -108,7 +108,7 @@ class References extends Component {
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    {auth ?
+                                    {auth === true ?
                                         <div>
                                             <button
                                                 className="btn btn-outline-success mybutton ml-2 mt-2"
@@ -153,7 +153,7 @@ class References extends Component {
                         :
                         <div>
                             {
-                                this.state.isAuthenticated ?
+                                this.state.isAuthenticated === true ?
 
                                     <div>
 

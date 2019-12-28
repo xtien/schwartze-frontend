@@ -13,8 +13,6 @@ class Person extends Component {
     constructor(props) {
         super(props)
 
-        const isAuthenticated = AuthenticationService.isAdmin();
-
         this.state = {
             resultCode: -1,
             data: {},
@@ -23,8 +21,7 @@ class Person extends Component {
             showTextEdit: false,
             text_id: '',
             person: {},
-            isAuthenticated: isAuthenticated,
-            textString: ''
+            textString: '',
         }
 
         if (this.state.person != null && this.state.person.text != null) {
@@ -187,7 +184,6 @@ class Person extends Component {
     render() {
 
         const person = this.state.person;
-        const auth = this.state.isAuthenticated;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
         let linkTo = '';
@@ -214,22 +210,24 @@ class Person extends Component {
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    {auth ?
-                                        <div>
-                                            <button
-                                                className="btn btn-outline-success mybutton ml-2 mt-2"
-                                                onClick={edit_link.bind(this, link.id)}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="btn btn-outline-danger mybutton ml-2 mt-2"
-                                                onClick={delete_link.bind(this, link.id)}
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                        : null}
+                                    {
+                                        AuthenticationService.isAdmin() === true ?
+                                            <div>
+                                                <button
+                                                    className="btn btn-outline-success mybutton ml-2 mt-2"
+                                                    onClick={edit_link.bind(this, link.id)}
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className="btn btn-outline-danger mybutton ml-2 mt-2"
+                                                    onClick={delete_link.bind(this, link.id)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                            : null
+                                    }
                                 </td>
                             </tr>
                         </table>
@@ -268,7 +266,7 @@ class Person extends Component {
                                     aan {person.first_name} </Link>
                                 </p>
                                 {
-                                    this.state.isAuthenticated ?
+                                    AuthenticationService.isAdmin() === true ?
                                         <div>
                                             {this.state.showEdit ? null : (
                                                 <div>
@@ -325,7 +323,7 @@ class Person extends Component {
                     ) : null
                     }
 
-                    {this.state.isAuthenticated ?
+                    {AuthenticationService.isAdmin() === true ?
 
                         <div className="mt-5">
                             {this.state.showLinkEdit ? (

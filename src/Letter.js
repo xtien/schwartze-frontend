@@ -95,7 +95,7 @@ class Letter extends Component {
                         </div>
                         <div>
                             {
-                                this.state.isAuthenticated ?
+                                this.state.isAuthenticated === true ?
                                     <button
                                         className="btn btn-outline-success mybutton"
                                         onClick={this.edit}

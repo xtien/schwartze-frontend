@@ -231,7 +231,7 @@ class Location extends Component {
                         :
                         <div>
                             {
-                                this.state.isAuthenticated ?
+                                this.state.isAuthenticated === true ?
 
                                     <div>
                                         <div className='mb-5 mt-5 ml-5'>

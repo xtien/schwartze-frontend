@@ -17,10 +17,7 @@ class AuthenticationService {
     executeLogin(username, password) {
         return axios.post(`${API_URL}/login`,
             {
-                auth: {
-                    username: username,
-                    password: password
-                }
+                authorization: this.createBasicAuthToken(username, password)
             })
     }
 
