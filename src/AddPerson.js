@@ -82,7 +82,7 @@ class AddPerson extends Component {
 
     render() {
 
-        if (this.state.editDone == true) {
+        if (this.state.editDone === true) {
             return (
                 <Redirect to={"/get_person_details/" + this.state.id}/>
             )

@@ -10,8 +10,6 @@ class Location extends Component {
     constructor(props) {
         super(props)
 
-        const isAuthenticated = AuthenticationService.isAdmin();
-
         this.state = {
             resultCode: -1,
             data: {},
@@ -21,7 +19,6 @@ class Location extends Component {
             link_id: '',
             link_name: '',
             link_url: '',
-            isAuthenticated: isAuthenticated
         }
 
         this.add_link = this.add_link.bind(this);
@@ -52,7 +49,7 @@ class Location extends Component {
             )
     }
 
-    togglelinkEditDone = (location) => {
+    setLocation = (location) => {
         this.setState({
             showLinkEdit: false,
             location: location
@@ -144,7 +141,6 @@ class Location extends Component {
 
     render() {
 
-        const auth = this.state.isAuthenticated;
         const location = this.state.location;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
@@ -172,8 +168,8 @@ class Location extends Component {
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    { auth ?
-                                    <div>
+                                    {AuthenticationService.isAdmin() === "true" ?
+                                        <div>
                                             <button
                                                 className="btn btn-outline-success mybutton ml-2 mt-2"
                                                 onClick={edit_link.bind(this, link.id)}
@@ -187,7 +183,7 @@ class Location extends Component {
                                                 Delete
                                             </button>
                                         </div>
-                                        : null }
+                                        : null}
                                 </td>
                             </tr>
                         </table>
@@ -198,52 +194,55 @@ class Location extends Component {
 
         return (
 
-            <div className='container letter'>
-                <h3>{location.location_name}</h3>
-                <p>{location.comment}</p>
-                <p>{location.description}</p>
+            <div>
+                <div className='container letter'>
+                    <h3>{location.location_name}</h3>
+                    <p>{location.comment}</p>
+                    <p>{location.description}</p>
 
-                <div className='textpage mt-5 ml-5'>
-                {location.text != null && Util.isNotEmpty(location.text.text_string) ?
-                    <div>
-                        <p>  {location.text.text_string.substr(0, 300)}</p>
-                        {location.text.text_string.length > 300 ?
-                            <p>
-                                <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
-                            </p>
-                            : null}
-                    </div> : null}
+                    <div className='textpage mt-5 ml-5'>
+                        {location.text != null && Util.isNotEmpty(location.text.text_string) ?
+                            <div>
+                                <p>  {location.text.text_string.substr(0, 300)}</p>
+                                {location.text.text_string.length > 300 ?
+                                    <p>
+                                        <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
+                                    </p>
+                                    : null}
+                            </div> : null}
+                    </div>
                 </div>
-
                 <div>
                     <div id='linkContainer'>
                         {links}
                     </div>
-                    {this.state.showLinkEdit ? (
-                            <EditLinkForm
-                                location_id={this.state.location.id}
-                                link_id={this.state.link_id}
-                                link_name={this.state.link_name}
-                                link_url={this.state.link_url}
-                                togglelinkEditDone={this.togglelinkEditDone}
-                            />
-                        )
-                        :
-                        <div>
-                            {
-                                this.state.isAuthenticated ?
 
-                                    <div>
-                                        <div className='mb-5 mt-5 ml-5'>
-                                            <Link to={{
-                                                pathname: '/edit_text/',
-                                                location_id: location.id
-                                            }}>
-                                                Edit text
-                                            </Link>
-                                        </div>
+                    {AuthenticationService.isAdmin() === "true" ?
 
-                                        <table>
+                        <div className="mt-5">
+                            {this.state.showLinkEdit ? (
+                                    <EditLinkForm
+                                        location_id={this.state.location.id}
+                                        link_id={this.state.link_id}
+                                        link_name={this.state.link_name}
+                                        link_url={this.state.link_url}
+                                        setLocation={this.setLocation}
+                                    />
+                                )
+                                :
+
+                                <div>
+                                    <div className='mb-5 mt-5 ml-5'>
+                                        <Link to={{
+                                            pathname: '/edit_text/',
+                                            location_id: location.id
+                                        }}>
+                                            Edit text
+                                        </Link>
+                                    </div>
+
+                                    <table>
+                                        <tbody>
                                         <tr>
                                             <td>
                                                 <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
@@ -273,13 +272,14 @@ class Location extends Component {
                                                     />
 
                                                 </form>
-                                                </td>
+                                            </td>
                                         </tr>
+                                        </tbody>
                                     </table>
-                                    </div>
-                                    : null }
+                                </div>
+                            }
                         </div>
-                    }
+                        : null}
                 </div>
 
 
@@ -320,12 +320,9 @@ class EditLinkForm extends React.Component {
             postData,
             AuthenticationService.getAxiosConfig()
         )
-            .then(response =>
-                this.setState({
-                    resultCode: response.data.resultCode,
-                    location: response.data.location,
-                    linkEditDone: true
-                })
+            .then(response => {
+                    this.props.setLocation(response.data.location)
+                }
             );
     }
 
@@ -341,8 +338,8 @@ class EditLinkForm extends React.Component {
 
         const redirectTo = '/get_location_details/' + this.state.location_id;
 
-        if (this.state.linkEditDone == true) {
-            if (this.state.linkEditDone == true) {
+        if (this.state.linkEditDone === true) {
+            if (this.state.linkEditDone === true) {
                 return <Redirect to={redirectTo}/>
             }
         }

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import './App.css'
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
@@ -23,15 +23,21 @@ class Login extends React.Component {
     handleLinkSubmit(event) {
         event.preventDefault();
 
+        const username = this.state.username
+        const password = this.state.password
+
         AuthenticationService
-            .executeLogin(this.state.username, this.state.password)
+            .executeLogin(username, password)
             .then(response => {
-                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+                AuthenticationService.registerSuccessfulLogin(username, password);
                 AuthenticationService.setAuthorities(response.data.authorities);
                 this.setState({
                     auth: true
                 })
             })
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     handleUserNameChange(event) {
@@ -44,7 +50,7 @@ class Login extends React.Component {
 
     render() {
 
-        if (this.state.auth == true) {
+        if (this.state.auth === true) {
             return (
                 <Redirect to={"/get_letters/"}/>
             )
@@ -55,6 +61,7 @@ class Login extends React.Component {
                 <form onSubmit={this.handleLinkSubmit}>
                     <div className="form-group">
                         <table>
+                            <tbody>
                             <tr>
                                 <td>
                                     <div className="field">
@@ -71,10 +78,12 @@ class Login extends React.Component {
                         />
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                     <div className="form-group">
                         <table>
+                            <tbody>
                             <tr>
                                 <td>
                                     <div className="field">
@@ -90,6 +99,7 @@ class Login extends React.Component {
                        />
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                     <input

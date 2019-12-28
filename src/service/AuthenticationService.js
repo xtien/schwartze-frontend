@@ -15,18 +15,22 @@ class AuthenticationService {
     }
 
     executeLogin(username, password) {
-        return axios.post(`${API_URL}/login`,
+        return axios.get(`${API_URL}/login/`,
             {
-                auth: {
-                    username: username,
-                    password: password
+                headers: {
+                    authorization: this.createBasicAuthToken(username, password)
                 }
-            })
+            }
+        )
     }
 
     setAuthorities(authorities) {
-        sessionStorage.setItem(VISITOR, authorities.includes("READ_PRIVILIGE"))
-        sessionStorage.setItem(ADMIN, authorities.includes("WRITE_PRIVILIGE"))
+        if (authorities.includes("READ_PRIVILEGE")) {
+            sessionStorage.setItem(VISITOR, true)
+        }
+        if (authorities.includes("WRITE_PRIVILEGE")) {
+            sessionStorage.setItem(ADMIN, true)
+        }
     }
 
     isAdmin() {
@@ -57,13 +61,12 @@ class AuthenticationService {
             headers: {
                 "Content-Type": "application/json",
             },
-            auth: ((this.getAuth1() != null && this.getAuth2() != null) ? this.getAuth() : null
-            )
+            authorization: this.createBasicAuthToken(this.getAuth1(), this.getAuth2())
         }
     }
 
     createBasicAuthToken(username, password) {
-        return window.btoa(username + ":" + password)
+        return 'Basic ' + window.btoa(username + ":" + password)
     }
 
     registerSuccessfulLogin(username, password) {
@@ -74,6 +77,8 @@ class AuthenticationService {
 
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+        sessionStorage.removeItem(AUTH1);
+        sessionStorage.removeItem(AUTH2);
     }
 
     isUserLoggedIn() {

@@ -18,8 +18,8 @@ class Text extends Component {
         }
 
         let postData = {
-            location_id: this.state.entity == 'location' ? this.state.id : null,
-            person_id: this.state.entity == 'person' ? this.state.id : null,
+            location_id: this.state.entity === 'location' ? this.state.id : null,
+            person_id: this.state.entity === 'person' ? this.state.id : null,
 
         };
 
