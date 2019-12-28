@@ -64,7 +64,7 @@ class AddLocation extends Component {
 
     render() {
 
-        if (this.state.editDone == true) {
+        if (this.state.editDone === true) {
             return (
                 <Redirect to={"/get_location_details/" + this.state.id}/>
             )

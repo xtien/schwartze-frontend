@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import './App.css'
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
@@ -44,7 +44,7 @@ class Login extends React.Component {
 
     render() {
 
-        if (this.state.auth == true) {
+        if (this.state.auth === true) {
             return (
                 <Redirect to={"/get_letters/"}/>
             )
@@ -75,6 +75,7 @@ class Login extends React.Component {
                     </div>
                     <div className="form-group">
                         <table>
+                            <tbody>
                             <tr>
                                 <td>
                                     <div className="field">
@@ -90,6 +91,7 @@ class Login extends React.Component {
                        />
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                     <input

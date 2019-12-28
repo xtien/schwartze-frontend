@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import {Redirect} from "react-router-dom";
+import axios from "axios";
 
 class Admin extends Component {
 
@@ -14,11 +15,13 @@ class Admin extends Component {
             isAuthenticated: isAuthenticated,
             addLetter: false,
             addPerson: false,
-            addLocation: false
+            addLocation: false,
+            logout: false
         }
         this.add_location = this.add_location.bind(this);
         this.add_person = this.add_person.bind(this);
         this.add_letter = this.add_letter.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     add_person() {
@@ -27,12 +30,14 @@ class Admin extends Component {
                 addPerson: true
             })
     }
+
     add_location() {
         this.setState(
             {
                 addLocation: true
             })
     }
+
     add_letter() {
         this.setState(
             {
@@ -40,8 +45,39 @@ class Admin extends Component {
             })
     }
 
+    logout() {
+        let postData = {
+            requestCode: 0
+        };
+
+        let axiosConfig = AuthenticationService.getAxiosConfig();
+
+        const url = process.env.REACT_APP_API_URL + '/logout/';
+
+        axios.post(url,
+            postData,
+            axiosConfig
+        )
+            .then(response => {
+                    this.setState({
+                        logout: true
+                    })
+                    AuthenticationService.logout()
+                }
+            )
+            .catch(error => {
+                console.log(error)
+            });
+
+    }
+
     render() {
 
+        if (this.state.logout === true) {
+            return (
+                <Redirect to={"/"}/>
+            )
+        }
         if (this.state.addPerson === true) {
             return (
                 <Redirect to={"/add_person/" + this.state.id}/>
@@ -65,6 +101,7 @@ class Admin extends Component {
                 {
                     this.state.isAuthenticated ?
                         <table>
+                            <tbody>
                             <tr>
                                 <td>
                                     <form onSubmit={this.add_person} className='mt-5'>
@@ -96,7 +133,18 @@ class Admin extends Component {
 
                                     </form>
                                 </td>
+                                <td>
+                                    <form onSubmit={this.logout} className='mt-5'>
+                                        <input
+                                            type="submit"
+                                            className="btn btn-outline-success mybutton"
+                                            value="Logout"
+                                        />
+
+                                    </form>
+                                </td>
                             </tr>
+                            </tbody>
                         </table>
                         : null}
             </div>

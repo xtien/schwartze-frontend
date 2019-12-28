@@ -200,7 +200,7 @@ class CommentForm extends React.Component {
 
     render() {
 
-        if (this.state.editDone == true) {
+        if (this.state.editDone === true) {
             this.setState({
                 editDone: false
             })

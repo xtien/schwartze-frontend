@@ -158,6 +158,7 @@ class References extends Component {
                                     <div>
 
                                         <table>
+                                            <tbody>
                                             <tr>
                                                 <td>
                                                     <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
@@ -170,6 +171,7 @@ class References extends Component {
                                                     </form>
                                                 </td>
                                             </tr>
+                                            </tbody>
                                         </table>
                                     </div>
                                     : null}
@@ -245,7 +247,7 @@ class EditLinkForm extends React.Component {
 
         const redirectTo = '/references/';
 
-        if (this.state.linkEditDone == true) {
+        if (this.state.linkEditDone === true) {
             this.editDone()
             return <Redirect to={redirectTo}/>
         }

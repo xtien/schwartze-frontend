@@ -245,15 +245,18 @@ class Person extends Component {
                         <div>
                             <div>
                                 <div className="person_image">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <img className="person_image" alt="" src={person.image_url}/>
-                                        </td></tr>
-                                       <tr> <td><p className="person_caption">{person.image_caption}</p>
-                                        </td>
-                                    </tr>
-                                </table></div>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <img className="person_image" alt="" src={person.image_url}/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p className="person_caption">{person.image_caption}</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                                 <p>
                                     {person.id} {person.first_name} {person.middle_name} {person.last_name}
                                 </p>
@@ -336,6 +339,7 @@ class Person extends Component {
                                 )
                                 :
                                 <table>
+                                    <tbody>
                                     <tr>
                                         <td>
                                             <div>
@@ -380,6 +384,7 @@ class Person extends Component {
 
                                         </td>
                                     </tr>
+                                    </tbody>
                                 </table>
                             }
                         </div>
@@ -612,7 +617,7 @@ class EditLinkForm extends React.Component {
 
         const redirectTo = '/get_person/' + this.state.person_id;
 
-        if (this.state.linkEditDone == true) {
+        if (this.state.linkEditDone === true) {
             return <Redirect to={redirectTo}/>
         }
 

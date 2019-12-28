@@ -1,5 +1,3 @@
-import React from 'react'
-
 class Util {
 
     isNotEmpty(string) {
@@ -8,7 +6,7 @@ class Util {
     }
 
     isEmpty(string) {
-        return string == null || string.length == 0;
+        return string == null || string.length === 0;
     }
 }
 

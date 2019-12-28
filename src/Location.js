@@ -172,8 +172,8 @@ class Location extends Component {
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    { auth ?
-                                    <div>
+                                    {auth ?
+                                        <div>
                                             <button
                                                 className="btn btn-outline-success mybutton ml-2 mt-2"
                                                 onClick={edit_link.bind(this, link.id)}
@@ -187,7 +187,7 @@ class Location extends Component {
                                                 Delete
                                             </button>
                                         </div>
-                                        : null }
+                                        : null}
                                 </td>
                             </tr>
                         </table>
@@ -204,15 +204,15 @@ class Location extends Component {
                 <p>{location.description}</p>
 
                 <div className='textpage mt-5 ml-5'>
-                {location.text != null && Util.isNotEmpty(location.text.text_string) ?
-                    <div>
-                        <p>  {location.text.text_string.substr(0, 300)}</p>
-                        {location.text.text_string.length > 300 ?
-                            <p>
-                                <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
-                            </p>
-                            : null}
-                    </div> : null}
+                    {location.text != null && Util.isNotEmpty(location.text.text_string) ?
+                        <div>
+                            <p>  {location.text.text_string.substr(0, 300)}</p>
+                            {location.text.text_string.length > 300 ?
+                                <p>
+                                    <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
+                                </p>
+                                : null}
+                        </div> : null}
                 </div>
 
                 <div>
@@ -244,40 +244,42 @@ class Location extends Component {
                                         </div>
 
                                         <table>
-                                        <tr>
-                                            <td>
-                                                <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
-                                                    <input
-                                                        type="submit"
-                                                        className="btn btn-outline-success mybutton"
-                                                        value="Link toevoegen"
-                                                    />
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
+                                                        <input
+                                                            type="submit"
+                                                            className="btn btn-outline-success mybutton"
+                                                            value="Link toevoegen"
+                                                        />
 
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form onSubmit={this.combine} className="mt-5 ml-5 mb-5">
-                                                    <input
-                                                        type="submit"
-                                                        className="btn btn-outline-success mybutton"
-                                                        value="Combineren"
-                                                    />
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form onSubmit={this.delete} className="mt-5 ml-5 mb-5">
-                                                    <input
-                                                        type="submit"
-                                                        className="btn btn-outline-danger mybutton"
-                                                        value="Verwijderen"
-                                                    />
-
-                                                </form>
+                                                    </form>
                                                 </td>
-                                        </tr>
-                                    </table>
+                                                <td>
+                                                    <form onSubmit={this.combine} className="mt-5 ml-5 mb-5">
+                                                        <input
+                                                            type="submit"
+                                                            className="btn btn-outline-success mybutton"
+                                                            value="Combineren"
+                                                        />
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form onSubmit={this.delete} className="mt-5 ml-5 mb-5">
+                                                        <input
+                                                            type="submit"
+                                                            className="btn btn-outline-danger mybutton"
+                                                            value="Verwijderen"
+                                                        />
+
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    : null }
+                                    : null}
                         </div>
                     }
                 </div>
@@ -341,8 +343,8 @@ class EditLinkForm extends React.Component {
 
         const redirectTo = '/get_location_details/' + this.state.location_id;
 
-        if (this.state.linkEditDone == true) {
-            if (this.state.linkEditDone == true) {
+        if (this.state.linkEditDone === true) {
+            if (this.state.linkEditDone === true) {
                 return <Redirect to={redirectTo}/>
             }
         }
