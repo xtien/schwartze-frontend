@@ -22,7 +22,7 @@ class Person extends Component {
             text_id: '',
             person: {},
             textString: '',
-        }
+         }
 
         if (this.state.person != null && this.state.person.text != null) {
             this.setState({
@@ -211,7 +211,7 @@ class Person extends Component {
                                 </td>
                                 <td width="20%">
                                     {
-                                        AuthenticationService.isAdmin() === true ?
+                                        AuthenticationService.isAdmin() === "true" ?
                                             <div>
                                                 <button
                                                     className="btn btn-outline-success mybutton ml-2 mt-2"
@@ -268,7 +268,7 @@ class Person extends Component {
                                     aan {person.first_name} </Link>
                                 </p>
                                 {
-                                    AuthenticationService.isAdmin() === true ?
+                                    AuthenticationService.isAdmin() === "true" ?
                                         <div>
                                             {this.state.showEdit ? null : (
                                                 <div>
@@ -325,7 +325,7 @@ class Person extends Component {
                     ) : null
                     }
 
-                    {AuthenticationService.isAdmin() === true ?
+                    {AuthenticationService.isAdmin() === "true" ?
 
                         <div className="mt-5">
                             {this.state.showLinkEdit ? (

@@ -9,10 +9,7 @@ class Admin extends Component {
     constructor(props) {
         super(props)
 
-        const isAuthenticated = AuthenticationService.isAdmin();
-
         this.state = {
-            isAuthenticated: isAuthenticated,
             addLetter: false,
             addPerson: false,
             addLocation: false,
@@ -99,7 +96,7 @@ class Admin extends Component {
         return (
             <div className='container letter'>
                 {
-                    this.state.isAuthenticated ?
+                    AuthenticationService.isAdmin() === "true" ?
                         <table>
                             <tbody>
                             <tr>

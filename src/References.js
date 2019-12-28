@@ -9,11 +9,8 @@ class References extends Component {
 
         super()
 
-        const isAuthenticated = AuthenticationService.isAdmin();
-
         this.state = {
             references: {},
-            isAuthenticated: isAuthenticated,
             linkEditDone: false
         }
 
@@ -92,7 +89,6 @@ class References extends Component {
 
     render() {
 
-        const auth = this.state.isAuthenticated;
         const references = this.state.references;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
@@ -108,7 +104,7 @@ class References extends Component {
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    {auth === true ?
+                                    {AuthenticationService.isAdmin() === "true" ?
                                         <div>
                                             <button
                                                 className="btn btn-outline-success mybutton ml-2 mt-2"
@@ -153,7 +149,7 @@ class References extends Component {
                         :
                         <div>
                             {
-                                this.state.isAuthenticated === true ?
+                                AuthenticationService.isAdmin() === "true" ?
 
                                     <div>
 

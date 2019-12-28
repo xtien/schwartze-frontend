@@ -10,8 +10,6 @@ class Location extends Component {
     constructor(props) {
         super(props)
 
-        const isAuthenticated = AuthenticationService.isAdmin();
-
         this.state = {
             resultCode: -1,
             data: {},
@@ -21,8 +19,7 @@ class Location extends Component {
             link_id: '',
             link_name: '',
             link_url: '',
-            isAuthenticated: isAuthenticated
-        }
+         }
 
         this.add_link = this.add_link.bind(this);
         this.edit_link = this.edit_link.bind(this);
@@ -144,8 +141,7 @@ class Location extends Component {
 
     render() {
 
-        const auth = this.state.isAuthenticated;
-        const location = this.state.location;
+         const location = this.state.location;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
         let linkTo = '';
@@ -172,7 +168,7 @@ class Location extends Component {
                                     <a href={link.link_url}>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
-                                    {auth ?
+                                    {AuthenticationService.isAdmin() === "true" ?
                                         <div>
                                             <button
                                                 className="btn btn-outline-success mybutton ml-2 mt-2"
@@ -231,7 +227,7 @@ class Location extends Component {
                         :
                         <div>
                             {
-                                this.state.isAuthenticated === true ?
+                                AuthenticationService.isAdmin() === "true" ?
 
                                     <div>
                                         <div className='mb-5 mt-5 ml-5'>

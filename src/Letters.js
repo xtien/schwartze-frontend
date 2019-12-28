@@ -15,7 +15,6 @@ class Letters extends Component {
             data: ['a', 'b'],
             letters: [{}],
             order_by: 'number',
-            aut: AuthenticationService.isAdmin()
         }
 
         this.sort = this.sort.bind(this);

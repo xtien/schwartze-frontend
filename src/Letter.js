@@ -8,7 +8,6 @@ class Letter extends Component {
 
     constructor(props) {
         super(props)
-        const isAuthenticated = AuthenticationService.isAdmin();
 
         this.state = {
             resultCode: -1,
@@ -19,8 +18,7 @@ class Letter extends Component {
             senders: [],
             recipients: [],
             imageData: [],
-            isAuthenticated: isAuthenticated
-        }
+         }
 
         this.edit = this.edit.bind(this);
 
@@ -95,7 +93,7 @@ class Letter extends Component {
                         </div>
                         <div>
                             {
-                                this.state.isAuthenticated === true ?
+                                AuthenticationService.isAdmin() === "true" ?
                                     <button
                                         className="btn btn-outline-success mybutton"
                                         onClick={this.edit}

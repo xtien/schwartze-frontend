@@ -46,7 +46,7 @@ class App extends Component {
                                         <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
                                         <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
                                         <p className="navbar-nav"><Link to='/references/'>Referenties</Link></p>
-                                        {AuthenticationService.isAdmin() ?
+                                        {AuthenticationService.isAdmin() === "true" ?
                                             <p className="navbar-nav"><Link to='/admin/'>Admin</Link></p>
                                             :
                                             <p className="navbar-nav"><Link to='/login/'>Login</Link></p>
