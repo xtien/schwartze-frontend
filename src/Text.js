@@ -12,8 +12,8 @@ class Text extends Component {
         this.state = {
             entity: props.match.params.entity,
             id: props.match.params.id,
-            person: props.match.params.location.person,
-            location: props.match.params.location.location,
+            person: {},
+            location: {},
             text: {}
         }
 
@@ -52,7 +52,7 @@ class Text extends Component {
                     }</div>
                 <div>
                     {this.state.location != null ?
-                        <Link to={'get_location_details' + location.id}> {location.location_name}</Link>
+                        <h3>  <Link to={'get_location_details' + location.id}> {location.location_name}</Link></h3>
                         : null
                     }
                 </div>
