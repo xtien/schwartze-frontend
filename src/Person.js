@@ -244,6 +244,7 @@ class Person extends Component {
                             <div>
                                 <div className="person_image">
                                     <table>
+                                        <tbody>
                                         <tr>
                                             <td>
                                                 <img className="person_image" alt="" src={person.image_url}/>
@@ -253,6 +254,7 @@ class Person extends Component {
                                             <td><p className="person_caption">{person.image_caption}</p>
                                             </td>
                                         </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                                 <p>
@@ -642,6 +644,7 @@ class EditLinkForm extends React.Component {
                     />
                 </div>
                 <table className='mt-5'>
+                    <tbody>
                     <tr>
                         <td>
                             <input
@@ -661,6 +664,7 @@ class EditLinkForm extends React.Component {
                             </button>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
             </form>
         );

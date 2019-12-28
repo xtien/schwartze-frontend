@@ -61,6 +61,7 @@ class Login extends React.Component {
                 <form onSubmit={this.handleLinkSubmit}>
                     <div className="form-group">
                         <table>
+                            <tbody>
                             <tr>
                                 <td>
                                     <div className="field">
@@ -77,6 +78,7 @@ class Login extends React.Component {
                         />
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                     <div className="form-group">
