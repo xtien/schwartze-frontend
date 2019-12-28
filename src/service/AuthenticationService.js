@@ -15,17 +15,20 @@ class AuthenticationService {
     }
 
     executeLogin(username, password) {
-        return axios.post(`${API_URL}/login`,
+        return axios.get(`${API_URL}/login/`,
             {
-                authorization: this.createBasicAuthToken(username, password)
-            })
+                headers: {
+                    authorization: this.createBasicAuthToken(username, password)
+                }
+            }
+        )
     }
 
     setAuthorities(authorities) {
-        if(authorities.includes("READ_PRIVILEGE")){
+        if (authorities.includes("READ_PRIVILEGE")) {
             sessionStorage.setItem(VISITOR, true)
         }
-        if(authorities.includes("WRITE_PRIVILEGE")){
+        if (authorities.includes("WRITE_PRIVILEGE")) {
             sessionStorage.setItem(ADMIN, true)
         }
     }
@@ -59,7 +62,7 @@ class AuthenticationService {
                 "Content-Type": "application/json",
             },
             authorization: this.createBasicAuthToken(this.getAuth1(), this.getAuth2())
-         }
+        }
     }
 
     createBasicAuthToken(username, password) {

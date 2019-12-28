@@ -19,7 +19,7 @@ class Location extends Component {
             link_id: '',
             link_name: '',
             link_url: '',
-         }
+        }
 
         this.add_link = this.add_link.bind(this);
         this.edit_link = this.edit_link.bind(this);
@@ -49,7 +49,7 @@ class Location extends Component {
             )
     }
 
-    togglelinkEditDone = (location) => {
+    setLocation = (location) => {
         this.setState({
             showLinkEdit: false,
             location: location
@@ -141,7 +141,7 @@ class Location extends Component {
 
     render() {
 
-         const location = this.state.location;
+        const location = this.state.location;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
         let linkTo = '';
@@ -194,90 +194,92 @@ class Location extends Component {
 
         return (
 
-            <div className='container letter'>
-                <h3>{location.location_name}</h3>
-                <p>{location.comment}</p>
-                <p>{location.description}</p>
+            <div>
+                <div className='container letter'>
+                    <h3>{location.location_name}</h3>
+                    <p>{location.comment}</p>
+                    <p>{location.description}</p>
 
-                <div className='textpage mt-5 ml-5'>
-                    {location.text != null && Util.isNotEmpty(location.text.text_string) ?
-                        <div>
-                            <p>  {location.text.text_string.substr(0, 300)}</p>
-                            {location.text.text_string.length > 300 ?
-                                <p>
-                                    <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
-                                </p>
-                                : null}
-                        </div> : null}
+                    <div className='textpage mt-5 ml-5'>
+                        {location.text != null && Util.isNotEmpty(location.text.text_string) ?
+                            <div>
+                                <p>  {location.text.text_string.substr(0, 300)}</p>
+                                {location.text.text_string.length > 300 ?
+                                    <p>
+                                        <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
+                                    </p>
+                                    : null}
+                            </div> : null}
+                    </div>
                 </div>
-
                 <div>
                     <div id='linkContainer'>
                         {links}
                     </div>
-                    {this.state.showLinkEdit ? (
-                            <EditLinkForm
-                                location_id={this.state.location.id}
-                                link_id={this.state.link_id}
-                                link_name={this.state.link_name}
-                                link_url={this.state.link_url}
-                                togglelinkEditDone={this.togglelinkEditDone}
-                            />
-                        )
-                        :
-                        <div>
-                            {
-                                AuthenticationService.isAdmin() === "true" ?
 
-                                    <div>
-                                        <div className='mb-5 mt-5 ml-5'>
-                                            <Link to={{
-                                                pathname: '/edit_text/',
-                                                location_id: location.id
-                                            }}>
-                                                Edit text
-                                            </Link>
-                                        </div>
+                    {AuthenticationService.isAdmin() === "true" ?
 
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td>
-                                                    <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
-                                                        <input
-                                                            type="submit"
-                                                            className="btn btn-outline-success mybutton"
-                                                            value="Link toevoegen"
-                                                        />
+                        <div className="mt-5">
+                            {this.state.showLinkEdit ? (
+                                    <EditLinkForm
+                                        location_id={this.state.location.id}
+                                        link_id={this.state.link_id}
+                                        link_name={this.state.link_name}
+                                        link_url={this.state.link_url}
+                                        setLocation={this.setLocation}
+                                    />
+                                )
+                                :
 
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <form onSubmit={this.combine} className="mt-5 ml-5 mb-5">
-                                                        <input
-                                                            type="submit"
-                                                            className="btn btn-outline-success mybutton"
-                                                            value="Combineren"
-                                                        />
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <form onSubmit={this.delete} className="mt-5 ml-5 mb-5">
-                                                        <input
-                                                            type="submit"
-                                                            className="btn btn-outline-danger mybutton"
-                                                            value="Verwijderen"
-                                                        />
-
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                <div>
+                                    <div className='mb-5 mt-5 ml-5'>
+                                        <Link to={{
+                                            pathname: '/edit_text/',
+                                            location_id: location.id
+                                        }}>
+                                            Edit text
+                                        </Link>
                                     </div>
-                                    : null}
+
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-outline-success mybutton"
+                                                        value="Link toevoegen"
+                                                    />
+
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form onSubmit={this.combine} className="mt-5 ml-5 mb-5">
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-outline-success mybutton"
+                                                        value="Combineren"
+                                                    />
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form onSubmit={this.delete} className="mt-5 ml-5 mb-5">
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-outline-danger mybutton"
+                                                        value="Verwijderen"
+                                                    />
+
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
                         </div>
-                    }
+                        : null}
                 </div>
 
 
@@ -318,12 +320,9 @@ class EditLinkForm extends React.Component {
             postData,
             AuthenticationService.getAxiosConfig()
         )
-            .then(response =>
-                this.setState({
-                    resultCode: response.data.resultCode,
-                    location: response.data.location,
-                    linkEditDone: true
-                })
+            .then(response => {
+                    this.props.setLocation(response.data.location)
+                }
             );
     }
 

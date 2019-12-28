@@ -22,7 +22,7 @@ class Person extends Component {
             text_id: '',
             person: {},
             textString: '',
-         }
+        }
 
         if (this.state.person != null && this.state.person.text != null) {
             this.setState({
@@ -67,7 +67,7 @@ class Person extends Component {
         })
     }
 
-    toggleLinkEditDone = (person) => {
+    setPerson = (person) => {
         this.setState({
             showLinkEdit: false,
             person: person
@@ -126,7 +126,8 @@ class Person extends Component {
     delete_link(id) {
 
         let postData = {
-            link_id: id
+            link_id: id,
+            person_id: this.state.person.id
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/admin/delete_link/',
@@ -170,18 +171,15 @@ class Person extends Component {
         )
     }
 
-    togglelinkEditDone = (person) => {
-        this.setState({
-            showLinkEdit: false,
-            person: person
-        })
-    }
-
     handleTextChange(event) {
         this.setState({text: event.target.value});
     }
 
     render() {
+
+        if (this.state.person == null) {
+            return "Person is null";
+        }
 
         const person = this.state.person;
         const edit_link = this.edit_link;
@@ -205,6 +203,7 @@ class Person extends Component {
                 return (
                     <div key={i}>
                         <table width="100%">
+                            <tbody>
                             <tr>
                                 <td>
                                     <a href={link.link_url}>{link.link_name}</a>
@@ -230,6 +229,7 @@ class Person extends Component {
                                     }
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 );
@@ -334,7 +334,7 @@ class Person extends Component {
                                         link_id={this.state.link_id}
                                         link_name={this.state.link_name}
                                         link_url={this.state.link_url}
-                                        togglelinkEditDone={this.togglelinkEditDone}
+                                        setPerson={this.setPerson}
                                     />
                                 )
                                 :
@@ -596,13 +596,10 @@ class EditLinkForm extends React.Component {
             postData,
             AuthenticationService.getAxiosConfig()
         )
-            .then(response =>
-                this.setState({
-                    resultCode: response.data.resultCode,
-                    person: response.data.person,
-                    linkEditDone: true
-                })
-            );
+            .then(response => {
+                    this.props.setPerson(response.data.person)
+                }
+            )
     }
 
     handleNameChange(event) {
