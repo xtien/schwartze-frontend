@@ -20,7 +20,7 @@ class Text extends Component {
         let postData = {
             location_id: this.state.entity === 'location' ? this.state.id : null,
             person_id: this.state.entity === 'person' ? this.state.id : null,
-
+            letter_id: this.state.entity === 'letter' ? this.state.id : null
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_text/',
@@ -46,21 +46,20 @@ class Text extends Component {
             <div className='textpage ml-5'>
                 <div>
                     {this.state.person != null ?
-                       <h3> <Link className='mb-5'
-                           to={'/get_person_details/' + person.id}> {person.first_name} {person.last_name}</Link></h3>
+                        <h3><Link className='mb-5'
+                                  to={'/get_person_details/' + person.id}> {person.first_name} {person.last_name}</Link>
+                        </h3>
                         : null
                     }</div>
                 <div>
                     {this.state.location != null ?
-                        <h3>  <Link to={'get_location_details' + location.id}> {location.location_name}</Link></h3>
+                        <h3><Link to={'get_location_details' + location.id}> {location.location_name}</Link></h3>
                         : null
                     }
                 </div>
                 <div className='mt-3'>
                     {(text != null && text.text_string != null) ?
-                        <div>
-                            {text.text_string}
-                        </div>
+                        <div dangerouslySetInnerHTML={{__html: text.text_string}}/>
                         : null
                     }
                 </div>

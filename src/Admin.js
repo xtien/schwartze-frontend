@@ -13,8 +13,10 @@ class Admin extends Component {
             addLetter: false,
             addPerson: false,
             addLocation: false,
-            logout: false
+            logout: false,
+            refreshMe: props.match.params.refreshMe
         }
+
         this.add_location = this.add_location.bind(this);
         this.add_person = this.add_person.bind(this);
         this.add_letter = this.add_letter.bind(this);
@@ -48,8 +50,9 @@ class Admin extends Component {
         };
 
         let axiosConfig = AuthenticationService.getAxiosConfig();
+        const self = this;
 
-        const url = process.env.REACT_APP_API_URL + '/logout/';
+        const url = process.env.REACT_APP_API_URL + '/user/signout/';
 
         axios.post(url,
             postData,
@@ -60,12 +63,12 @@ class Admin extends Component {
                         logout: true
                     })
                     AuthenticationService.logout()
+                    self.state.refreshMe()
                 }
             )
             .catch(error => {
                 console.log(error)
             });
-
     }
 
     render() {

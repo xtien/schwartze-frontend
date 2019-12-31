@@ -12,7 +12,8 @@ class Login extends React.Component {
         this.state = {
             username: '',
             password: '',
-            auth: false
+            auth: false,
+            refreshMe : props.match.params.refreshMe
         }
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
@@ -25,15 +26,19 @@ class Login extends React.Component {
 
         const username = this.state.username
         const password = this.state.password
+        const self = this
 
         AuthenticationService
             .executeLogin(username, password)
             .then(response => {
                 AuthenticationService.registerSuccessfulLogin(username, password);
                 AuthenticationService.setAuthorities(response.data.authorities);
-                this.setState({
+                self.setState({
                     auth: true
                 })
+
+                self.state.refreshMe()
+
             })
             .catch(error => {
                 console.log(error)

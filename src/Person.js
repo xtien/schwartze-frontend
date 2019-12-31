@@ -260,6 +260,8 @@ class Person extends Component {
                                 <p>
                                     {person.id} {person.first_name} {person.middle_name} {person.last_name}
                                 </p>
+                                <p>Geboren: {person.date_of_birth}</p>
+                                <p>Overleden: {person.date_of_death}</p>
                                 <p>{person.comment}</p>
                                 <p className='mt-5'><Link to={`/get_letters_from_person/${person.id}`}> Brieven
                                     van {person.first_name} </Link>
@@ -407,6 +409,8 @@ class EditPersonForm extends React.Component {
             first_name: this.props.first_name,
             middle_name: this.props.middle_name,
             last_name: this.props.last_name,
+            date_of_birth: this.props.date_of_birth,
+            date_of_death: this.props.date_of_death,
             comment: this.props.comment,
             image_url: this.props.image_url,
             image_caption: this.props.image_caption,
@@ -423,6 +427,8 @@ class EditPersonForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleImageUrlChange = this.handleImageUrlChange.bind(this);
         this.handleImageCaptionChange = this.handleImageCaptionChange.bind(this);
+        this.handleDoBChange = this.handleDoBChange.bind(this);
+        this.handleDoDChange = this.handleDoDChange.bind(this);
     }
 
     handlecommentChange(event) {
@@ -453,6 +459,13 @@ class EditPersonForm extends React.Component {
         this.setState({links: event.target.value});
     }
 
+    handleDoBChange(event) {
+        this.setState({date_of_birth: event.target.value});
+    }
+    handleDoDChange(event) {
+        this.setState({date_of_death: event.target.value});
+    }
+
     handleSubmit(event) {
         event.preventDefault();
 
@@ -466,6 +479,8 @@ class EditPersonForm extends React.Component {
                 image_url: this.state.image_url,
                 image_caption: this.state.image_caption,
                 links: this.state.links,
+                date_of_birth: this.state.date_of_birth,
+                date_of_death: this.state.date_of_death
             }
         };
 
@@ -483,6 +498,8 @@ class EditPersonForm extends React.Component {
     }
 
     render() {
+
+        const redirectTo = '/get_person/' + this.state.person_id;
 
         if (this.state.editDone === true) {
             this.setState({
@@ -525,6 +542,26 @@ class EditPersonForm extends React.Component {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="status">Geboren</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="last_name"
+                        value={this.state.date_of_birth}
+                        onChange={this.handleDoBChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="status">Overleden</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="last_name"
+                        value={this.state.date_of_death}
+                        onChange={this.handleDoDChange}
+                    />
+                </div>
+                <div className="form-group">
                     <label htmlFor="status">Opmerkingen</label>
                     <textarea
                         type="text"
@@ -554,11 +591,22 @@ class EditPersonForm extends React.Component {
                         onChange={this.handleImageCaptionChange}
                     />
                 </div>
+                <table><tbody><tr><td></td>
                 <input
                     type="submit"
                     className="btn btn-outline-success mybutton"
                     value="Submit"
                 />
+                <td>
+                    <button
+                        type="button"
+                        className="btn btn-outline-danger mybutton ml-1"
+                        onClick={() => {
+                            this.props.history.push(redirectTo)
+                        }}>
+                        Cancel
+                    </button>
+                </td></tr></tbody></table>
             </form>
         );
     }
