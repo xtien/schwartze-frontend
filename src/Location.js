@@ -203,7 +203,7 @@ class Location extends Component {
                     <div className='textpage mt-5 ml-5'>
                         {location.text != null && Util.isNotEmpty(location.text.text_string) ?
                             <div>
-                                <p>  {location.text.text_string.substr(0, 300)}</p>
+                                <p><div dangerouslySetInnerHTML={{__html: location.text.text_string.substr(0, 300)}}/></p>
                                 {location.text.text_string.length > 300 ?
                                     <p>
                                         <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>

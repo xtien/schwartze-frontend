@@ -177,7 +177,7 @@ class Letter extends Component {
                 <div className='textpage mt-5 ml-5'>
                     {letter.text != null && Util.isNotEmpty(letter.text.text_string) ?
                         <div>
-                            <p>  {letter.text.text_string.substr(0, 300)}</p>
+                            <p><div dangerouslySetInnerHTML={{__html: letter.text.text_string.substr(0, 300)}}/></p>
                             {letter.text.text_string.length > 300 ?
                                 <p>
                                     <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>

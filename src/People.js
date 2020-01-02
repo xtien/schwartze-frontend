@@ -39,7 +39,9 @@ class People extends Component {
             id: 'name',
             accessor: data => {
                 const id = data.id;
-                const name = data.first_name + " " + data.middle_name + " " + data.last_name;
+                const name = (data.first_name != null ? data.first_name : '') + " "
+                    + (data.middle_name != null ? data.middle_name : '') + " "
+                    + (data.last_name != null ? data.last_name : '');
                 const linkto = '/get_person_details/' + id;
                 let result = <Link to={linkto}>{name}</Link>
                 return result;

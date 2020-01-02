@@ -292,7 +292,7 @@ class Person extends Component {
                                 <div className='textpage mt-5 ml-5'>
                                     {person.text != null && Util.isNotEmpty(person.text.text_string) ?
                                         <div>
-                                            <p>  {person.text.text_string.substr(0, 300)}</p>
+                                            <p><div dangerouslySetInnerHTML={{__html: person.text.text_string.substr(0, 300)}}/></p>
                                             {person.text.text_string.length > 300 ?
                                                 <p>
                                                     <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
