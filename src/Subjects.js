@@ -3,32 +3,30 @@ import axios from "axios";
 import {Redirect} from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
 
-class References extends Component {
+class Subjects extends Component {
 
     constructor() {
-
         super()
 
         this.state = {
-            references: {},
-            linkEditDone: false
+            resultCode: -1,
+            data: ['a', 'b'],
+            subjects: [{}]
         }
 
-        this.edit_link = this.edit_link.bind(this);
-        this.delete_link = this.delete_link.bind(this);
         this.add_link = this.add_link.bind(this);
 
         let postData = {
-            type: 'site'
+            requestCode: 0
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/get_references/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_subjects/',
             postData,
             AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
-                    references: response.data.references
+                    texts: response.data.texts
                 })
             )
     }
@@ -46,56 +44,15 @@ class References extends Component {
         )
     }
 
-    delete_link(id) {
-
-        let postData = {
-            link_id: id,
-            type: this.state.references.type
-        };
-
-        axios.post(process.env.REACT_APP_API_URL + '/admin/remove_reference_link/',
-            postData,
-            AuthenticationService.getAxiosConfig()
-        )
-            .then(response =>
-                this.setState({
-                    resultCode: response.data.resultCode,
-                    location: response.data.location
-                })
-            )
-    }
-
-    edit_link(id) {
-
-        const link = this.state.references.links.find(link => {
-            return link.id === id
-        });
-
-        this.setState(
-            {
-                showLinkEdit: true,
-                link_name: link.link_name,
-                link_url: link.link_url,
-                link_id: link.id
-            }
-        )
-    }
-
-    toggleLinkEditDone() {
-        this.setState({
-            linkEditDone: true
-        })
-    }
-
     render() {
 
-        const references = this.state.references;
+        const subjects = this.state.subjects;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
 
         let links = []
-        if (references.links != null) {
-            links = references.links.map(function (link, i) {
+        if (subjects.links != null) {
+            links = subjects.links.map(function (link, i) {
                 return (
                     <div key={i}>
                         <table width="100%">
@@ -131,7 +88,7 @@ class References extends Component {
         return (
 
             <div className='container letter'>
-                <h3>Referenties</h3>
+                <h3>Onderwerpen</h3>
 
                 <div>
                     <div id='linkContainer'>
@@ -139,11 +96,7 @@ class References extends Component {
                     </div>
                     {this.state.showLinkEdit ? (
                             <EditLinkForm
-                                type={this.state.references.type}
-                                link_id={this.state.link_id}
-                                link_name={this.state.link_name}
-                                link_url={this.state.link_url}
-                                togglelinkEditDone={this.togglelinkEditDone}
+                                  togglelinkEditDone={this.togglelinkEditDone}
                             />
                         )
                         :
@@ -170,12 +123,14 @@ class References extends Component {
                                             </tbody>
                                         </table>
                                     </div>
-                                    : null}
+                                    : null
+                            }
                         </div>
                     }
                 </div>
             </div>
         )
+
     }
 }
 
@@ -185,19 +140,12 @@ class EditLinkForm extends React.Component {
         super(props);
 
         this.state = {
-            location: {},
-            location_id: this.props.location_id,
-            link_id: this.props.link_id,
             link_name: this.props.link_name,
-            link_url: this.props.link_url,
-            type: this.props.type,
-        };
+         };
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleUrlChange = this.handleUrlChange.bind(this);
-        this.handleUrlChange = this.handleUrlChange.bind(this);
-    }
+     }
 
     handleLinkSubmit(event) {
         event.preventDefault();
@@ -209,14 +157,12 @@ class EditLinkForm extends React.Component {
             type: this.state.type
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/admin/edit_reference_link/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/add_subject/',
             postData,
             AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
-                    resultCode: response.data.resultCode,
-                    references: response.data.references,
                     linkEditDone: true
                 })
             );
@@ -226,16 +172,12 @@ class EditLinkForm extends React.Component {
         this.setState({link_name: event.target.value});
     }
 
-    handleUrlChange(event) {
-        this.setState({link_url: event.target.value});
-    }
-
     render() {
 
-        const redirectTo = '/references/';
+        const redirectTo = '/subjects/';
 
         if (this.state.linkEditDone === true) {
-             return <Redirect to={redirectTo}/>
+            return <Redirect to={redirectTo}/>
         }
 
         return (
@@ -250,17 +192,7 @@ class EditLinkForm extends React.Component {
                         onChange={this.handleNameChange}
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="status">Link url</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="link_url"
-                        value={this.state.link_url}
-                        onChange={this.handleUrlChange}
-                    />
-                </div>
-                <input
+                  <input
                     type="submit"
                     className="btn btn-outline-success mybutton"
                     value="Submit"
@@ -269,5 +201,4 @@ class EditLinkForm extends React.Component {
         );
     }
 }
-
-export default References
+export default Subjects

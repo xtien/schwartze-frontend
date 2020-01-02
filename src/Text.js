@@ -58,8 +58,8 @@ class Text extends Component {
                     }
                 </div>
                 <div className='mt-3'>
+                    {/* TODO: this needs to change when others than myself get access to data entry */}
                     {(text != null && text.text_string != null) ?
-                        <!-- TODO: this needs to change when others than myself get access to data entry -->
                         <div dangerouslySetInnerHTML={{__html: text.text_string}}/>
                         : null
                     }
