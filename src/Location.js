@@ -203,6 +203,7 @@ class Location extends Component {
                     <div className='textpage mt-5 ml-5'>
                         {location.text != null && Util.isNotEmpty(location.text.text_string) ?
                             <div>
+                                <!-- TODO: this needs to change when others than myself get access to data entry -->
                                 <p><div dangerouslySetInnerHTML={{__html: location.text.text_string.substr(0, 300)}}/></p>
                                 {location.text.text_string.length > 300 ?
                                     <p>
