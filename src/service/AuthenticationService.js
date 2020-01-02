@@ -79,6 +79,7 @@ class AuthenticationService {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
         sessionStorage.removeItem(AUTH1);
         sessionStorage.removeItem(AUTH2);
+        sessionStorage.removeItem(ADMIN);
     }
 
     isUserLoggedIn() {

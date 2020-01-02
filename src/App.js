@@ -28,6 +28,20 @@ import twitli from './images/logo64.png'
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            refresh: false
+        }
+    }
+
+
+    refreshMe() {
+        this.setState({
+            refresh: this.state.refresh === true ? false : true
+        })
+    }
+
     render() {
 
         return (
@@ -46,12 +60,11 @@ class App extends Component {
                                         <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
                                         <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
                                         <p className="navbar-nav"><Link to='/references/'>Referenties</Link></p>
-                                        {AuthenticationService.isAdmin() === "true" ?
-                                            <p className="navbar-nav"><Link to='/admin/'>Admin</Link></p>
-                                            :
-                                            <p className="navbar-nav"><Link to='/login/'>Login</Link></p>
-                                        }
-                                    </nav>
+                                            <p className="navbar-nav"><Link to={'/admin/' + this.refreshMe}>Admin</Link>
+                                            </p>
+                                            <p className="navbar-nav"><Link to={'/login/' + this.refreshMe}>Login</Link>
+                                            </p>
+                                     </nav>
                                 </td>
                                 <td valign="top">
                                     <img src={twitli} alt="logo"/>
@@ -62,8 +75,8 @@ class App extends Component {
                     </div>
                     <div>
                         <Route exact path="/" component={Landing}/>
-                        <Route path="/admin/" component={Admin}/>
-                        <Route path="/login/" component={Login}/>
+                        <Route path="/admin/:refresh" component={Admin}/>
+                        <Route path="/login/:refresh" component={Login}/>
                         <Route path="/signup/" component={Signup}/>
                         <Route path="/get_letters/" component={Letters}/>
                         <Route path="/add_person/" component={AddPerson}/>

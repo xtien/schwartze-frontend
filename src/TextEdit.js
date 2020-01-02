@@ -4,7 +4,7 @@ import {Link, Redirect} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 
-class Text extends Component {
+class TextEdit extends Component {
 
     constructor(props) {
         super(props)
@@ -12,9 +12,11 @@ class Text extends Component {
         this.state = {
             person_id: props.location.person_id,
             location_id: props.location.location_id,
+            letter_id: props.location.letter_id,
             id: props.match.params.id,
             person: {},
             location: {},
+            letter: {},
             text: {},
             text_string: '',
             cancel: false
@@ -28,7 +30,7 @@ class Text extends Component {
             id: this.state.id,
             location_id: this.state.location_id,
             person_id: this.state.person_id,
-
+            letter_id: this.state.letter_id
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_text/',
@@ -38,9 +40,14 @@ class Text extends Component {
             .then(response =>
                 this.setState({
                     resultCode: response.data.resultCode,
-                    text_string: (response.data.location != null && response.data.location.text !=null) ? response.data.location.text.text_string : ((response.data.person != null && response.data.person.text !=null )? response.data.person.text.text_string : ''),
+                    text_string: (response.data.letter != null && response.data.letter.text != null) ? response.data.letter.text.text_string : (
+                        (response.data.location != null && response.data.location.text != null) ? response.data.location.text.text_string : (
+                            (response.data.person != null && response.data.person.text != null) ? response.data.person.text.text_string : null
+                        )
+                    ),
                     location: response.data.location,
-                    person: response.data.person
+                    person: response.data.person,
+                    letter: response.data.letter
                 })
             )
     }
@@ -63,6 +70,7 @@ class Text extends Component {
         let postData = {
             location_id: this.state.location_id,
             person_id: this.state.person_id,
+            letter_id: this.state.letter_id,
             text_id: this.state.text_id,
             text_string: this.state.text_string,
         };
@@ -73,19 +81,31 @@ class Text extends Component {
         )
             .then(response =>
                 this.setState({
-                    resultCode: response.data.resultCode,
                     location: response.data.location,
                     person: response.data.person,
+                    letter: response.data.letter,
                     editDone: true
                 })
-            );
+            )
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
+            })
+        ;
     }
 
     render() {
 
         const location = this.state.location;
         const person = this.state.person;
-        const redirectTo = (location != null && location.text != null) ? '/get_location_details/' + location.id : person !=null ? '/get_person_details/' + person.id : '';
+        const letter = this.state.letter;
+        const redirectTo =
+            (letter != null && letter.text != null) ? '/get_letter_details/' + letter.number : (
+                (location != null && location.text != null) ? '/get_location_details/' + location.id : (
+                    (person != null) ? '/get_person_details/' + person.id : ''));
 
         if (this.state.editDone === true) {
             return <Redirect to={redirectTo}/>
@@ -102,12 +122,21 @@ class Text extends Component {
                                 <div>
                                     {this.state.person != null ?
                                         <Link
-                                            to={'get_person' + person.id}> {person.first_name} {person.last_name}</Link>
+                                            to={'get_person' + person.id}>
+                                            <h3> {person.first_name} {person.last_name}</h3></Link>
                                         : null
                                     }</div>
                                 <div>
                                     {this.state.location != null ?
-                                        <Link to={'get_location' + location.id}> {location.location_name}</Link>
+                                        <Link to={'get_location' + location.id}><h3> {location.location_name}</h3>
+                                        </Link>
+                                        : null
+                                    }
+                                </div>
+                                <div>
+                                    {this.state.letter != null ?
+                                        <Link to={'get_letter_details' + letter.id}><h3> Brief {letter.id}</h3>
+                                        </Link>
                                         : null
                                     }
                                 </div>
@@ -149,4 +178,4 @@ class Text extends Component {
     }
 }
 
-export default Text
+export default TextEdit

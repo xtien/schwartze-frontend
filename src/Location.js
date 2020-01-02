@@ -237,7 +237,7 @@ class Location extends Component {
                                             pathname: '/edit_text/',
                                             location_id: location.id
                                         }}>
-                                            Edit text
+                                            Edit tekst
                                         </Link>
                                     </div>
 
@@ -339,9 +339,7 @@ class EditLinkForm extends React.Component {
         const redirectTo = '/get_location_details/' + this.state.location_id;
 
         if (this.state.linkEditDone === true) {
-            if (this.state.linkEditDone === true) {
-                return <Redirect to={redirectTo}/>
-            }
+            return <Redirect to={redirectTo}/>
         }
 
         return (

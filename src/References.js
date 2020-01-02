@@ -235,17 +235,12 @@ class EditLinkForm extends React.Component {
         this.setState({link_url: event.target.value});
     }
 
-    editDone() {
-        this.props.togglelinkEditDone();
-    }
-
     render() {
 
         const redirectTo = '/references/';
 
         if (this.state.linkEditDone === true) {
-            this.editDone()
-            return <Redirect to={redirectTo}/>
+             return <Redirect to={redirectTo}/>
         }
 
         return (
