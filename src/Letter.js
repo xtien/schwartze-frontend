@@ -68,7 +68,7 @@ class Letter extends Component {
 
     edit(event) {
 
-        var letterNumber = event.target.value;
+        let letterNumber = event.target.value;
         const letter = this.state.letter;
         this.setState({
             showEdit: true,
