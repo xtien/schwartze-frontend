@@ -203,7 +203,8 @@ class Location extends Component {
                     <div className='textpage mt-5 ml-5'>
                         {location.text != null && Util.isNotEmpty(location.text.text_string) ?
                             <div>
-                                <p>  {location.text.text_string.substr(0, 300)}</p>
+                                 {/* TODO: this needs to change when others than myself get access to data entry */}
+                                <p><div dangerouslySetInnerHTML={{__html: location.text.text_string.substr(0, 300)}}/></p>
                                 {location.text.text_string.length > 300 ?
                                     <p>
                                         <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
@@ -270,7 +271,6 @@ class Location extends Component {
                                                         className="btn btn-outline-danger mybutton"
                                                         value="Verwijderen"
                                                     />
-
                                                 </form>
                                             </td>
                                         </tr>
@@ -281,8 +281,6 @@ class Location extends Component {
                         </div>
                         : null}
                 </div>
-
-
             </div>
         )
     }

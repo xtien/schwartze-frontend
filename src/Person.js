@@ -292,7 +292,11 @@ class Person extends Component {
                                 <div className='textpage mt-5 ml-5'>
                                     {person.text != null && Util.isNotEmpty(person.text.text_string) ?
                                         <div>
-                                            <p>  {person.text.text_string.substr(0, 300)}</p>
+                                            {/* TODO: this needs to change when others than myself get access to data entry */}
+                                            <p>
+                                                <div
+                                                    dangerouslySetInnerHTML={{__html: person.text.text_string.substr(0, 300)}}/>
+                                            </p>
                                             {person.text.text_string.length > 300 ?
                                                 <p>
                                                     <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
@@ -319,6 +323,8 @@ class Person extends Component {
                             first_name={this.state.person.first_name}
                             middle_name={this.state.person.middle_name}
                             last_name={this.state.person.last_name}
+                            date_of_birth={this.state.person.date_of_birth}
+                            date_of_death={this.state.person.date_of_death}
                             image_url={this.state.person.image_url}
                             image_caption={this.state.person.image_caption}
                             person={this.state.person}
@@ -462,8 +468,17 @@ class EditPersonForm extends React.Component {
     handleDoBChange(event) {
         this.setState({date_of_birth: event.target.value});
     }
+
     handleDoDChange(event) {
         this.setState({date_of_death: event.target.value});
+    }
+
+    handleCancel(event) {
+        event.preventDefault();
+
+        this.setState(
+            {cancel: true}
+        )
     }
 
     handleSubmit(event) {
@@ -509,105 +524,115 @@ class EditPersonForm extends React.Component {
         }
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div><p>{this.state.person.first_name} {this.state.person.last_name}</p></div>
-                <div className="form-group">
-                    <label htmlFor="status">First name</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="first_name"
-                        value={this.state.first_name}
-                        onChange={this.handleFirstNameChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="status">Middle name</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="middle_name"
-                        value={this.state.middle_name}
-                        onChange={this.handleMiddleNameChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="status">Last name</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="last_name"
-                        value={this.state.last_name}
-                        onChange={this.handleLastNameChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="status">Geboren</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="last_name"
-                        value={this.state.date_of_birth}
-                        onChange={this.handleDoBChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="status">Overleden</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="last_name"
-                        value={this.state.date_of_death}
-                        onChange={this.handleDoDChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="status">Opmerkingen</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="comments"
-                        value={this.state.comment}
-                        onChange={this.handlecommentChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="status">Image URL</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="image_url"
-                        value={this.state.image_url}
-                        onChange={this.handleImageUrlChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="status">Image caption</label>
-                    <textarea
-                        type="text"
-                        className="form-control textarea"
-                        id="image_caption"
-                        value={this.state.image_caption}
-                        onChange={this.handleImageCaptionChange}
-                    />
-                </div>
-                <table><tbody><tr><td></td>
-                <input
-                    type="submit"
-                    className="btn btn-outline-success mybutton"
-                    value="Submit"
-                />
-                <td>
-                    <button
-                        type="button"
-                        className="btn btn-outline-danger mybutton ml-1"
-                        onClick={() => {
-                            this.props.history.push(redirectTo)
-                        }}>
-                        Cancel
-                    </button>
-                </td></tr></tbody></table>
-            </form>
+            <div>
+                {this.state.cancel === true ?
+                    <Redirect to={redirectTo}/> : null
+                }
+
+                <form onSubmit={this.handleSubmit}>
+                    <div><p>{this.state.person.first_name} {this.state.person.last_name}</p></div>
+                    <div className="form-group">
+                        <label htmlFor="status">First name</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="first_name"
+                            value={this.state.first_name}
+                            onChange={this.handleFirstNameChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Middle name</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="middle_name"
+                            value={this.state.middle_name}
+                            onChange={this.handleMiddleNameChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Last name</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="last_name"
+                            value={this.state.last_name}
+                            onChange={this.handleLastNameChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Geboren</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="last_name"
+                            value={this.state.date_of_birth}
+                            onChange={this.handleDoBChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Overleden</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="last_name"
+                            value={this.state.date_of_death}
+                            onChange={this.handleDoDChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Opmerkingen</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="comments"
+                            value={this.state.comment}
+                            onChange={this.handlecommentChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Image URL</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="image_url"
+                            value={this.state.image_url}
+                            onChange={this.handleImageUrlChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Image caption</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="image_caption"
+                            value={this.state.image_caption}
+                            onChange={this.handleImageCaptionChange}
+                        />
+                    </div>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <input
+                                type="submit"
+                                className="btn btn-outline-success mybutton"
+                                value="Submit"
+                            />
+                            <td>
+                                <input
+                                    type="button"
+                                    onClick={this.handleCancel}
+                                    className="btn btn-outline-danger mybutton"
+                                    value="Cancel"
+                                />
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
         );
     }
 }

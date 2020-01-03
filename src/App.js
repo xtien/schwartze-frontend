@@ -22,7 +22,7 @@ import Signup from "./Signup";
 import Admin from "./Admin";
 import Locations from "./Locations"
 import People from "./People"
-import AuthenticationService from "./service/AuthenticationService";
+import Subjects from "./Subjects"
 import References from "./References";
 import twitli from './images/logo64.png'
 
@@ -60,7 +60,8 @@ class App extends Component {
                                         <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
                                         <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
                                         <p className="navbar-nav"><Link to='/references/'>Referenties</Link></p>
-                                            <p className="navbar-nav"><Link to={'/admin/' + this.refreshMe}>Admin</Link>
+                                        <p className="navbar-nav"><Link to='/subjects/'>Onderwerpen</Link></p>
+                                        <p className="navbar-nav"><Link to={'/admin/' + this.refreshMe}>Admin</Link>
                                             </p>
                                             <p className="navbar-nav"><Link to={'/login/' + this.refreshMe}>Login</Link>
                                             </p>
@@ -94,6 +95,7 @@ class App extends Component {
                         <Route path="/get_locations/" component={Locations}/>
                         <Route path="/get_people/" component={People}/>
                         <Route path="/references/" component={References}/>
+                        <Route path="/subjects/" component={Subjects}/>
                     </div>
                 </div>
             </Router>

@@ -80,9 +80,6 @@ class Letter extends Component {
     render() {
 
         let linkTo = '';
-        if (letter != null) {
-            linkTo = '/get_text/letter/' + letter.id;
-        }
 
         const letter = this.state.letter;
         const images = this.state.imageData;
@@ -104,6 +101,10 @@ class Letter extends Component {
         const recipient_locations = this.state.recipient_locations;
         const recipientLocationList = recipient_locations.map((s) => <span><Link
             to={`/get_location_details/${s.id}`}>{s.location_name} </Link> </span>);
+
+        if (letter != null) {
+            linkTo = '/get_text/letter/' + letter.id;
+        }
 
         return (
             <div className='container'>
@@ -177,7 +178,8 @@ class Letter extends Component {
                 <div className='textpage mt-5 ml-5'>
                     {letter.text != null && Util.isNotEmpty(letter.text.text_string) ?
                         <div>
-                            <p>  {letter.text.text_string.substr(0, 300)}</p>
+                            {/* TODO: this needs to change when others than myself get access to data entry */}
+                            <p><div dangerouslySetInnerHTML={{__html: letter.text.text_string.substr(0, 300)}}/></p>
                             {letter.text.text_string.length > 300 ?
                                 <p>
                                     <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
