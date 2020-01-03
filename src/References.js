@@ -133,7 +133,7 @@ class References extends Component {
             <div className='container letter'>
                 <h3>Referenties</h3>
 
-                <div>
+                <div className='mt-5'>
                     <div id='linkContainer'>
                         {links}
                     </div>
@@ -235,7 +235,7 @@ class EditLinkForm extends React.Component {
         const redirectTo = '/references/';
 
         if (this.state.linkEditDone === true) {
-             return <Redirect to={redirectTo}/>
+            return <Redirect to={redirectTo}/>
         }
 
         return (

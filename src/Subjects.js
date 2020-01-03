@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import {Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
 
 class Subjects extends Component {
@@ -11,67 +11,89 @@ class Subjects extends Component {
         this.state = {
             resultCode: -1,
             data: ['a', 'b'],
-            subjects: [{}]
+            subjects: [{}],
         }
 
-        this.add_link = this.add_link.bind(this);
+        this.delete_subject = this.delete_subject.bind(this);
+        this.add_subject = this.add_subject.bind(this);
+        this.edit_subject = this.edit_subject.bind(this);
+
+        axios.get(process.env.REACT_APP_API_URL + '/get_subjects/',
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response =>
+                this.setState({
+                    subjects: response.data.subjects
+                })
+            )
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    add_subject() {
+        this.setState({
+            show_add_subject: true
+        })
+    }
+
+    delete_subject(id) {
 
         let postData = {
-            requestCode: 0
+            subject_id: id,
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/get_subjects/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/remove_subject/',
             postData,
             AuthenticationService.getAxiosConfig()
         )
             .then(response =>
                 this.setState({
-                    texts: response.data.texts
+                    subjects: response.data.subjects
                 })
             )
+            .catch(error => {
+                console.log(error)
+            });
     }
 
-    add_link(event) {
-        event.preventDefault();
+    edit_subject(id) {
 
-        this.setState(
-            {
-                showLinkEdit: true,
-                link_name: '',
-                link_url: '',
-                link_id: ''
-            }
-        )
+        this.setState({
+            edit_subject: true,
+            subject_id: id
+        })
     }
 
     render() {
 
         const subjects = this.state.subjects;
-        const edit_link = this.edit_link;
-        const delete_link = this.delete_link;
+        const delete_subject = this.delete_subject;
+        const edit_subject = this.edit_subject;
 
         let links = []
-        if (subjects.links != null) {
-            links = subjects.links.map(function (link, i) {
+        if (subjects != null) {
+            links = subjects.map(function (subject, i) {
                 return (
                     <div key={i}>
                         <table width="100%">
+                            <tbody>
                             <tr>
                                 <td>
-                                    <a href={link.link_url}>{link.link_name}</a>
+                                    <Link to={'/get_text/subject/' + subject.id}> {subject.name} </Link>
                                 </td>
                                 <td width="20%">
                                     {AuthenticationService.isAdmin() === "true" ?
                                         <div>
                                             <button
                                                 className="btn btn-outline-success mybutton ml-2 mt-2"
-                                                onClick={edit_link.bind(this, link.id)}
+                                                onClick={edit_subject.bind(this, subject.id)}
                                             >
                                                 Edit
                                             </button>
                                             <button
                                                 className="btn btn-outline-danger mybutton ml-2 mt-2"
-                                                onClick={delete_link.bind(this, link.id)}
+                                                onClick={delete_subject.bind(this, subject.id)}
                                             >
                                                 Delete
                                             </button>
@@ -79,6 +101,7 @@ class Subjects extends Component {
                                         : null}
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 );
@@ -86,113 +109,89 @@ class Subjects extends Component {
         }
 
         return (
-
             <div className='container letter'>
-                <h3>Onderwerpen</h3>
+                <h3>Subjects</h3>
 
-                <div>
+                <div className='mt-5'>
                     <div id='linkContainer'>
                         {links}
                     </div>
-                    {this.state.showLinkEdit ? (
-                            <EditLinkForm
-                                  togglelinkEditDone={this.togglelinkEditDone}
-                            />
-                        )
-                        :
-                        <div>
-                            {
-                                AuthenticationService.isAdmin() === "true" ?
 
-                                    <div>
-
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td>
-                                                    <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
-                                                        <input
-                                                            type="submit"
-                                                            className="btn btn-outline-success mybutton"
-                                                            value="Link toevoegen"
-                                                        />
-
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    : null
-                            }
-                        </div>
+                    {this.state.show_add_subject ?
+                        <AddSubjectForm
+                            subjects={this.state.subjects}
+                        />
+                        : null
                     }
+
+                    <div>
+                        {
+                            AuthenticationService.isAdmin() === "true" ?
+                                <div>
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <form onSubmit={this.add_subject} className='mt-5 ml-5 mb-5'>
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-outline-success mybutton"
+                                                        value="Onderwerp toevoegen"
+                                                    />
+
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                : null
+                        }
+                    </div>
+
                 </div>
             </div>
         )
-
     }
 }
 
-class EditLinkForm extends React.Component {
+class AddSubjectForm extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            link_name: this.props.link_name,
-         };
+            subject_name: this.props.subject_name,
+            subjects: this.props.subjects,
+        };
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
-     }
+    }
 
     handleLinkSubmit(event) {
         event.preventDefault();
-
-        let postData = {
-            link_id: this.state.link_id,
-            link_name: this.state.link_name,
-            link_url: this.state.link_url,
-            type: this.state.type
-        };
-
-        axios.post(process.env.REACT_APP_API_URL + '/admin/add_subject/',
-            postData,
-            AuthenticationService.getAxiosConfig()
-        )
-            .then(response =>
-                this.setState({
-                    linkEditDone: true
-                })
-            );
     }
 
     handleNameChange(event) {
-        this.setState({link_name: event.target.value});
+        this.setState({subject_name: event.target.value});
     }
 
     render() {
 
-        const redirectTo = '/subjects/';
-
-        if (this.state.linkEditDone === true) {
-            return <Redirect to={redirectTo}/>
-        }
-
         return (
             <form onSubmit={this.handleLinkSubmit}>
                 <div className="form-group">
-                    <label htmlFor="status">Link naam</label>
+                    <label htmlFor="status">Onderwerp naam</label>
                     <textarea
                         type="text"
                         className="form-control textarea"
                         id="link_name"
-                        value={this.state.link_name}
+                        value={this.state.subject_name}
                         onChange={this.handleNameChange}
                     />
                 </div>
-                  <input
+                <input
                     type="submit"
                     className="btn btn-outline-success mybutton"
                     value="Submit"
@@ -201,4 +200,5 @@ class EditLinkForm extends React.Component {
         );
     }
 }
+
 export default Subjects

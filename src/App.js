@@ -23,7 +23,6 @@ import Admin from "./Admin";
 import Locations from "./Locations"
 import People from "./People"
 import Subjects from "./Subjects"
-import AuthenticationService from "./service/AuthenticationService";
 import References from "./References";
 import twitli from './images/logo64.png'
 

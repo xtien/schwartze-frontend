@@ -80,9 +80,6 @@ class Letter extends Component {
     render() {
 
         let linkTo = '';
-        if (letter != null) {
-            linkTo = '/get_text/letter/' + letter.id;
-        }
 
         const letter = this.state.letter;
         const images = this.state.imageData;
@@ -104,6 +101,10 @@ class Letter extends Component {
         const recipient_locations = this.state.recipient_locations;
         const recipientLocationList = recipient_locations.map((s) => <span><Link
             to={`/get_location_details/${s.id}`}>{s.location_name} </Link> </span>);
+
+        if (letter != null) {
+            linkTo = '/get_text/letter/' + letter.id;
+        }
 
         return (
             <div className='container'>
