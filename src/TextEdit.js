@@ -9,6 +9,12 @@ class TextEdit extends Component {
     constructor(props) {
         super(props)
 
+        let s_id = null;
+        const pathVars = props.location.pathname.split('/');
+        if (pathVars[1] = 'subject') {
+            s_id = pathVars[3]
+        }
+
         this.state = {
             person_id: props.location.person_id,
             location_id: props.location.location_id,
@@ -17,10 +23,14 @@ class TextEdit extends Component {
             person: {},
             location: {},
             letter: {},
+            subject: {},
             text: {},
             text_string: '',
-            cancel: false
+            cancel: false,
+            path: props.location.pathname,
+            subject_id: s_id
         }
+
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -30,7 +40,8 @@ class TextEdit extends Component {
             id: this.state.id,
             location_id: this.state.location_id,
             person_id: this.state.person_id,
-            letter_id: this.state.letter_id
+            letter_id: this.state.letter_id,
+            subject_id: this.state.subject_id
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_text/',
@@ -42,12 +53,17 @@ class TextEdit extends Component {
                     resultCode: response.data.resultCode,
                     text_string: (response.data.letter != null && response.data.letter.text != null) ? response.data.letter.text.text_string : (
                         (response.data.location != null && response.data.location.text != null) ? response.data.location.text.text_string : (
-                            (response.data.person != null && response.data.person.text != null) ? response.data.person.text.text_string : null
+                            (response.data.person != null && response.data.person.text != null) ? response.data.person.text.text_string : (
+                                (response.data.subject != null && response.data.subject.text != null) ? response.data.subject.text.text_string : (
+                                    null
+                                )
+                            )
                         )
                     ),
                     location: response.data.location,
                     person: response.data.person,
-                    letter: response.data.letter
+                    letter: response.data.letter,
+                    subject: response.data.subject
                 })
             )
     }
@@ -72,6 +88,7 @@ class TextEdit extends Component {
             person_id: this.state.person_id,
             letter_id: this.state.letter_id,
             text_id: this.state.text_id,
+            subject_id: this.state.subject_id,
             text_string: this.state.text_string,
         };
 
@@ -105,7 +122,8 @@ class TextEdit extends Component {
         const redirectTo =
             (letter != null && letter.text != null) ? '/get_letter_details/' + letter.number : (
                 (location != null && location.text != null) ? '/get_location_details/' + location.id : (
-                    (person != null) ? '/get_person_details/' + person.id : ''));
+                    (person != null) ? '/get_person_details/' + person.id : (
+                        '/subjects/')));
 
         if (this.state.editDone === true) {
             return <Redirect to={redirectTo}/>
@@ -137,6 +155,12 @@ class TextEdit extends Component {
                                     {this.state.letter != null ?
                                         <Link to={'get_letter_details' + letter.id}><h3> Brief {letter.id}</h3>
                                         </Link>
+                                        : null
+                                    }
+                                </div>
+                                <div>
+                                    {this.state.subject != null ?
+                                        <h3> {this.state.subject.name}</h3>
                                         : null
                                     }
                                 </div>

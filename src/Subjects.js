@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import {Redirect} from "react-router-dom";
+import {Redirect, Link} from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
 
 class Subjects extends Component {
@@ -64,27 +64,26 @@ class Subjects extends Component {
 
     edit_link(id) {
 
-        const link = this.state.subjects.links.find(link => {
-            return link.id === id
-        });
-
         this.setState(
             {
-                showLinkEdit: true,
-                subject_name: link.subject_name,
-                link_url: link.link_url,
-                link_id: link.id
+                editLink: true,
+                subject_id: id,
             }
         )
     }
 
-    toggleLinkEditDone() {
+    setSubjects = (subjects) => {
         this.setState({
-            linkEditDone: true
+            showLinkEdit: false,
+            subjects: subjects
         })
     }
 
     render() {
+
+         if (this.state.editLink) {
+           return <Redirect to={'/edit_text/subject/' + this.state.subject_id}/>
+        }
 
         const subjects = this.state.subjects;
         const edit_link = this.edit_link;
@@ -99,7 +98,7 @@ class Subjects extends Component {
                             <tbody>
                             <tr>
                                 <td>
-                                    {link.name}
+                                    <Link to={'/get_text/subject/' +link.id}>  {link.name}</Link>
                                 </td>
                                 <td width="20%">
                                     {AuthenticationService.isAdmin() === "true" ?
@@ -140,7 +139,7 @@ class Subjects extends Component {
                             <EditLinkForm
                                 subject_name={this.state.subject_name}
                                 subjects={this.state.subjects}
-                                togglelinkEditDone={this.togglelinkEditDone}
+                                setSubjects={this.setSubjects}
                             />
                         )
                         : null}
@@ -183,7 +182,7 @@ class EditLinkForm extends React.Component {
         this.state = {
             subject_name: this.props.subject_name,
             subjects: this.props.subjects,
-         };
+        };
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -201,13 +200,12 @@ class EditLinkForm extends React.Component {
             AuthenticationService.getAxiosConfig()
         )
             .then(response => {
-                    this.setState({
-                        resultCode: response.data.resultCode,
-                        subjects: response.data.subjects,
-                        linkEditDone: true,
-                    });
-                 }
-            );
+                    this.props.setSubjects(response.data.subjects)
+                }
+            )
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     handleNameChange(event) {

@@ -59,8 +59,7 @@ class References extends Component {
         )
             .then(response =>
                 this.setState({
-                    resultCode: response.data.resultCode,
-                    location: response.data.location
+                    references: response.data.references
                 })
             )
     }
@@ -81,9 +80,10 @@ class References extends Component {
         )
     }
 
-    toggleLinkEditDone() {
+    setReferences = (references) => {
         this.setState({
-            linkEditDone: true
+            showLinkEdit: false,
+            references: references
         })
     }
 
@@ -134,16 +134,18 @@ class References extends Component {
                 <h3>Referenties</h3>
 
                 <div className='mt-5'>
-                    <div id='linkContainer'>
-                        {links}
-                    </div>
+                    {this.state.showLinkEdit ? null :
+                        <div id='linkContainer'>
+                            {links}
+                        </div>
+                    }
                     {this.state.showLinkEdit ? (
                             <EditLinkForm
                                 type={this.state.references.type}
                                 link_id={this.state.link_id}
                                 link_name={this.state.link_name}
                                 link_url={this.state.link_url}
-                                togglelinkEditDone={this.togglelinkEditDone}
+                                setReferences={this.setReferences}
                             />
                         )
                         :
@@ -196,7 +198,7 @@ class EditLinkForm extends React.Component {
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleUrlChange = this.handleUrlChange.bind(this);
-     }
+    }
 
     handleLinkSubmit(event) {
         event.preventDefault();
@@ -212,13 +214,13 @@ class EditLinkForm extends React.Component {
             postData,
             AuthenticationService.getAxiosConfig()
         )
-            .then(response =>
-                this.setState({
-                    resultCode: response.data.resultCode,
-                    references: response.data.references,
-                    linkEditDone: true
-                })
-            );
+            .then(response => {
+                    this.props.setReferences(response.data.references)
+                }
+            )
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     handleNameChange(event) {
