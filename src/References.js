@@ -196,8 +196,7 @@ class EditLinkForm extends React.Component {
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleUrlChange = this.handleUrlChange.bind(this);
-        this.handleUrlChange = this.handleUrlChange.bind(this);
-    }
+     }
 
     handleLinkSubmit(event) {
         event.preventDefault();
@@ -231,12 +230,6 @@ class EditLinkForm extends React.Component {
     }
 
     render() {
-
-        const redirectTo = '/references/';
-
-        if (this.state.linkEditDone === true) {
-            return <Redirect to={redirectTo}/>
-        }
 
         return (
             <form onSubmit={this.handleLinkSubmit}>
