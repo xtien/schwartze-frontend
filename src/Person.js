@@ -67,6 +67,12 @@ class Person extends Component {
         })
     }
 
+    toggleEditDone = () => {
+        this.setState({
+            showEdit: false,
+         })
+    }
+
     setPerson = (person) => {
         this.setState({
             showLinkEdit: false,
@@ -435,6 +441,7 @@ class EditPersonForm extends React.Component {
         this.handleImageCaptionChange = this.handleImageCaptionChange.bind(this);
         this.handleDoBChange = this.handleDoBChange.bind(this);
         this.handleDoDChange = this.handleDoDChange.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     handlecommentChange(event) {
@@ -477,8 +484,8 @@ class EditPersonForm extends React.Component {
         event.preventDefault();
 
         this.setState(
-            {cancel: true}
-        )
+            { cancel: true }
+    )
     }
 
     handleSubmit(event) {
@@ -514,7 +521,7 @@ class EditPersonForm extends React.Component {
 
     render() {
 
-        const redirectTo = '/get_person/' + this.state.person_id;
+        const redirectTo = '/get_person_details/' + this.state.id;
 
         if (this.state.editDone === true) {
             this.setState({
@@ -522,14 +529,16 @@ class EditPersonForm extends React.Component {
             })
             this.props.toggleEditDone(this.state.person);
         }
+        if (this.state.cancel === true) {
+            this.setState({
+                editDone: false
+            })
+            this.props.toggleEditDone();
+        }
 
         return (
             <div>
-                {this.state.cancel === true ?
-                    <Redirect to={redirectTo}/> : null
-                }
-
-                <form onSubmit={this.handleSubmit}>
+                 <form onSubmit={this.handleSubmit}>
                     <div><p>{this.state.person.first_name} {this.state.person.last_name}</p></div>
                     <div className="form-group">
                         <label htmlFor="status">First name</label>

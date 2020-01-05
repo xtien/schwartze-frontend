@@ -25,24 +25,27 @@ import People from "./People"
 import Subjects from "./Subjects"
 import References from "./References";
 import twitli from './images/logo64.png'
+import AuthenticationService from "./service/AuthenticationService";
 
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            refresh: false
+            refreshPage: this.refreshPage,
+            refresh: false,
         }
     }
 
-
-    refreshMe() {
+    refreshPage = () => {
         this.setState({
-            refresh: this.state.refresh === true ? false : true
+            refresh: true
         })
     }
 
     render() {
+
+        const refreshPage = this.refreshPage;
 
         return (
 
@@ -61,11 +64,18 @@ class App extends Component {
                                         <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
                                         <p className="navbar-nav"><Link to='/references/'>Referenties</Link></p>
                                         <p className="navbar-nav"><Link to='/subjects/'>Onderwerpen</Link></p>
-                                        <p className="navbar-nav"><Link to={'/admin/' + this.refreshMe}>Admin</Link>
+                                        {/* Admin should only be visible after login. toggle enables Login.js
+                                               to render App.js by setting its state  */}
+                                        {AuthenticationService.isAdmin() === 'true' ?
+                                            <p className="navbar-nav"><Link to={'/admin/'}>Admin</Link>
                                             </p>
-                                            <p className="navbar-nav"><Link to={'/login/' + this.refreshMe}>Login</Link>
-                                            </p>
-                                     </nav>
+                                            : null}
+                                        <p className="navbar-nav"><Link to={{
+                                            pathname: '/login/',
+                                            toggle: refreshPage
+                                        }}>Login</Link>
+                                        </p>
+                                    </nav>
                                 </td>
                                 <td valign="top">
                                     <img src={twitli} alt="logo"/>
@@ -76,8 +86,8 @@ class App extends Component {
                     </div>
                     <div>
                         <Route exact path="/" component={Landing}/>
-                        <Route path="/admin/:refresh" component={Admin}/>
-                        <Route path="/login/:refresh" component={Login}/>
+                        <Route path="/admin/" component={Admin}/>
+                        <Route path="/login/" component={Login}/>
                         <Route path="/signup/" component={Signup}/>
                         <Route path="/get_letters/" component={Letters}/>
                         <Route path="/add_person/" component={AddPerson}/>

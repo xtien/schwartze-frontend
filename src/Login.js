@@ -13,8 +13,7 @@ class Login extends React.Component {
             username: '',
             password: '',
             auth: false,
-            refreshMe : props.match.params.refreshMe
-        }
+         }
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
         this.handleUserNameChange = this.handleUserNameChange.bind(this);
@@ -37,7 +36,7 @@ class Login extends React.Component {
                     auth: true
                 })
 
-                self.state.refreshMe()
+                this.props.location.state.toggle()
 
             })
             .catch(error => {
@@ -56,6 +55,9 @@ class Login extends React.Component {
     render() {
 
         if (this.state.auth === true) {
+            {/*  toggle is used to render App.js to make the Admin menu option show  */}
+            this.props.location.toggle()
+
             return (
                 <Redirect to={"/get_letters/"}/>
             )
