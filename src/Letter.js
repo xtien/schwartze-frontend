@@ -5,6 +5,7 @@ import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
 import {Link} from "react-router-dom";
 import Util from "./service/Util";
+import {Redirect} from "react-router";
 
 class Letter extends Component {
 
@@ -21,10 +22,12 @@ class Letter extends Component {
             recipients: [],
             imageData: [],
             sender_locations: [],
-            recipient_locations: []
+            recipient_locations: [],
+            edit_letter: false
         }
 
-        this.edit = this.edit.bind(this);
+        this.editLetter = this.editLetter.bind(this);
+        this.editComment = this.editComment.bind(this);
 
         let postData = {
             number: props.match.params.number
@@ -66,7 +69,7 @@ class Letter extends Component {
         })
     }
 
-    edit(event) {
+    editComment(event) {
 
         let letterNumber = event.target.value;
         const letter = this.state.letter;
@@ -74,6 +77,12 @@ class Letter extends Component {
             showEdit: true,
             letter: letter,
             letterNumber: letterNumber
+        })
+    }
+
+    editLetter(event) {
+        this.setState({
+            edit_letter: true
         })
     }
 
@@ -106,6 +115,10 @@ class Letter extends Component {
             linkTo = '/get_text/letter/' + letter.id;
         }
 
+        if (this.state.edit_letter === true) {
+            return <Redirect to={'/edit_letter/' + letter.number}/>
+        }
+
         return (
             <div className='container'>
                 {this.state.showEdit ? null : (
@@ -119,9 +132,19 @@ class Letter extends Component {
                                 AuthenticationService.isAdmin() === "true" ?
                                     <button
                                         className="btn btn-outline-success mybutton"
-                                        onClick={this.edit}
+                                        onClick={this.editComment}
                                         value={letterNumber}>
-                                        edit
+                                        Edit comment
+                                    </button> : null}
+                        </div>
+                        <div>
+                            {
+                                AuthenticationService.isAdmin() === "true" ?
+                                    <button
+                                        className="btn btn-outline-warning mybutton"
+                                        onClick={this.editLetter}
+                                        value={letterNumber}>
+                                        Edit brief
                                     </button> : null}
                         </div>
                     </div>
@@ -179,7 +202,9 @@ class Letter extends Component {
                     {letter.text != null && Util.isNotEmpty(letter.text.text_string) ?
                         <div>
                             {/* TODO: this needs to change when others than myself get access to data entry */}
-                            <p><div dangerouslySetInnerHTML={{__html: letter.text.text_string.substr(0, 300)}}/></p>
+                            <p>
+                                <div dangerouslySetInnerHTML={{__html: letter.text.text_string.substr(0, 300)}}/>
+                            </p>
                             {letter.text.text_string.length > 300 ?
                                 <p>
                                     <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
@@ -239,7 +264,7 @@ class CommentForm extends React.Component {
             date: this.state.date
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/admin/update_letter_details/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/update_letter_comment/',
             postData,
             AuthenticationService.getAxiosConfig()
         )

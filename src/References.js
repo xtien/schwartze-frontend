@@ -99,6 +99,7 @@ class References extends Component {
                 return (
                     <div key={i}>
                         <table width="100%">
+                            <tbody>
                             <tr>
                                 <td>
                                     <a href={link.link_url}>{link.link_name}</a>
@@ -122,6 +123,7 @@ class References extends Component {
                                         : null}
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 );
