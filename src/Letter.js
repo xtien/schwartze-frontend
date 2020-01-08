@@ -57,7 +57,6 @@ class Letter extends Component {
                 this.setState({
                     resultCode: response.data.resultCode,
                     imageData: response.data.images
-
                 })
             )
     }

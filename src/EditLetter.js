@@ -19,15 +19,9 @@ class EditLetter extends Component {
             recipients: [{}]
         }
 
-        this.handleSenderFirstname = this.handleSenderFirstname.bind(this);
-        this.handleSenderMiddlename = this.handleSenderMiddlename.bind(this);
-        this.handleSenderLastname = this.handleSenderLastname.bind(this);
         this.handleSenderId = this.handleSenderId.bind(this);
         this.handleRecipientId = this.handleRecipientId.bind(this);
-        this.handleRecipientFirstname = this.handleRecipientFirstname.bind(this);
-        this.handleRecipientMiddlename = this.handleRecipientMiddlename.bind(this);
-        this.handleRecipientLastname = this.handleRecipientLastname.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+         this.handleSubmit = this.handleSubmit.bind(this);
 
         let postData = {
             number: props.match.params.number
@@ -40,8 +34,6 @@ class EditLetter extends Component {
             .then(response =>
                 this.setState({
                     letter: response.data.letter,
-                    senders: response.data.letter.senders,
-                    recipients: response.data.letter.recipients,
                     sender: response.data.letter.senders[0],
                     recipient: response.data.letter.recipients[0]
                 })
@@ -61,62 +53,14 @@ class EditLetter extends Component {
         }))
     }
 
-    handleSenderFirstname(event) {
-        const value = event.target.value;
-        this.setState(prevState => ({
-            sender: {
-                ...prevState.sender,
-                first_name: value
-            }
-        }))
-    }
-
-    handleSenderMiddlename(event) {
-        const value = event.target.value;
-        this.setState(prevState => ({
-            sender: {
-                ...prevState.sender,
-                middle_name: value
-            }
-        }))
-    }
-
-    handleSenderLastname(event) {
-        const value = event.target.value;
-        this.setState(prevState => ({
-            sender: {
-                ...prevState.sender,
-                last_name: value
-            }
-        }))
-    }
-
     handleRecipientId(event) {
         const value = event.target.value;
-        this.setState({
-            recipient: value
-        })
-    }
-
-    handleRecipientFirstname(event) {
-        const value = event.target.value;
-        this.setState({
-            recipient: value
-        })
-    }
-
-    handleRecipientMiddlename(event) {
-        const value = event.target.value;
-        this.setState({
-            recipient: value
-        })
-    }
-
-    handleRecipientLastname(event) {
-        const value = event.target.value;
-        this.setState({
-            recipient: value
-        })
+        this.setState(prevState => ({
+            recipient: {
+                ...prevState.recipient,
+                id: value
+            }
+        }))
     }
 
     handleSubmit(event) {
@@ -146,7 +90,7 @@ class EditLetter extends Component {
     render() {
 
         if (this.state.editDone === true) {
-            return <Redirect to={'/get_letter_details/1'}></Redirect>
+            return <Redirect to={'/get_letter_details/' + this.state.letter.number}></Redirect>
         }
 
         return (
@@ -155,6 +99,7 @@ class EditLetter extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="status">Afzender</label>
+                        <p>{this.state.sender.id} {this.state.sender.first_name} {this.state.sender.middle_name} {this.state.sender.last_name}</p>
                         <textarea
                             type="text"
                             className="form-control textarea mt-1"
@@ -162,30 +107,10 @@ class EditLetter extends Component {
                             value={this.state.sender.id}
                             onChange={this.handleSenderId}
                         />
-                        <textarea
-                            type="text"
-                            className="form-control textarea mt-1"
-                            id="senderfirst_name"
-                            value={this.state.sender.first_name}
-                            onChange={this.handleSenderFirstname}
-                        />
-                        <textarea
-                            type="text"
-                            className="form-control textarea mt-1"
-                            id="sendermiddle_name"
-                            value={this.state.sender.middle_name}
-                            onChange={this.handleSenderMiddlename}
-                        />
-                        <textarea
-                            type="text"
-                            className="form-control textarea mt-1"
-                            id="senderlast_name"
-                            value={this.state.sender.last_name}
-                            onChange={this.handleSenderLastname}
-                        />
-                    </div>
+                     </div>
                     <div className="form-group mt-5">
                         <label htmlFor="status">Ontvanger</label>
+                        <p>{this.state.recipient.id} {this.state.recipient.first_name} {this.state.recipient.middle_name} {this.state.recipient.last_name}</p>
                         <textarea
                             type="text"
                             className="form-control textarea mt-1"
@@ -193,28 +118,7 @@ class EditLetter extends Component {
                             value={this.state.recipient.id}
                             onChange={this.handleRecipientId}
                         />
-                        <textarea
-                            type="text"
-                            className="form-control textarea mt-1"
-                            id="recipientfirst_name"
-                            value={this.state.recipient.first_name}
-                            onChange={this.handleRecipientFirstname}
-                        />
-                        <textarea
-                            type="text"
-                            className="form-control textarea mt-1"
-                            id="recipientmiddle_name"
-                            value={this.state.recipient.middle_name}
-                            onChange={this.handleRecipientMiddlename}
-                        />
-                        <textarea
-                            type="text"
-                            className="form-control textarea mt-1"
-                            id="recipientlast_name"
-                            value={this.state.recipient.last_name}
-                            onChange={this.handleRecipientLastname}
-                        />
-                    </div>
+                     </div>
                     <input
                         type="submit"
                         className="btn btn-outline-success mybutton"
