@@ -126,6 +126,7 @@ class Letter extends Component {
                         <div className='space'>
                             {remarks}
                         </div>
+                        <table><tbody><tr><td>
                         <div>
                             {
                                 AuthenticationService.isAdmin() === "true" ?
@@ -133,19 +134,21 @@ class Letter extends Component {
                                         className="btn btn-outline-success mybutton"
                                         onClick={this.editComment}
                                         value={letterNumber}>
-                                        Edit comment
+                                        Edit commentaarregel
                                     </button> : null}
                         </div>
+                        </td><td>
                         <div>
                             {
                                 AuthenticationService.isAdmin() === "true" ?
                                     <button
-                                        className="btn btn-outline-warning mybutton"
+                                        className="btn btn-outline-warning mybutton ml-2"
                                         onClick={this.editLetter}
                                         value={letterNumber}>
-                                        Edit brief
+                                        Edit afzender/ontvanger
                                     </button> : null}
                         </div>
+                        </td></tr></tbody></table>
                     </div>
                 )}
                 <div>

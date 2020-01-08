@@ -55,7 +55,7 @@ class Login extends React.Component {
     render() {
 
         if (this.state.auth === true) {
-            {/*  toggle is used to render App.js to make the Admin menu option show  */}
+            /*  toggle is used to render App.js to make the Admin menu option show  */
             this.props.location.toggle()
 
             return (
