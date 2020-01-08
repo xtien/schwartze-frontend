@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Link, Route} from "react-router-dom";
 import Person from './Person'
 import AddPerson from './AddPerson'
 import AddLetter from './AddLetter'
+import EditLetter from './EditLetter'
 import AddLocation from './AddLocation'
 import Letters from './Letters'
 import Letter from './Letter'
@@ -92,6 +93,7 @@ class App extends Component {
                         <Route path="/get_letters/" component={Letters}/>
                         <Route path="/add_person/" component={AddPerson}/>
                         <Route path="/add_letter/" component={AddLetter}/>
+                        <Route path="/edit_letter/:number" component={EditLetter}/>
                         <Route path="/add_location/" component={AddLocation}/>
                         <Route path="/combine_person/:id" component={CombinePerson}/>
                         <Route path="/combine_location/:id" component={CombineLocation}/>

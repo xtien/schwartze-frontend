@@ -73,7 +73,7 @@ class Text extends Component {
                 </div>
                 <div>
                     {this.state.letter != null ?
-                        <h3><Link to={'get_letter_details' + letter.id}> Brief {letter.number}</Link></h3>
+                        <h3><Link to={'get_letter_details' + letter.number}> Brief {letter.number}</Link></h3>
                         : null
                     }
                 </div>

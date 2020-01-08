@@ -521,8 +521,6 @@ class EditPersonForm extends React.Component {
 
     render() {
 
-        const redirectTo = '/get_person_details/' + this.state.id;
-
         if (this.state.editDone === true) {
             this.setState({
                 editDone: false

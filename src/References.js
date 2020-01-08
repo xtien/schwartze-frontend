@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import {Redirect} from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
 
 class References extends Component {
@@ -99,6 +98,7 @@ class References extends Component {
                 return (
                     <div key={i}>
                         <table width="100%">
+                            <tbody>
                             <tr>
                                 <td>
                                     <a href={link.link_url}>{link.link_name}</a>
@@ -122,6 +122,7 @@ class References extends Component {
                                         : null}
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 );

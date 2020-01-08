@@ -11,7 +11,7 @@ class TextEdit extends Component {
 
         let s_id = null;
         const pathVars = props.location.pathname.split('/');
-        if (pathVars[1] = 'subject') {
+        if (pathVars[1] === 'subject') {
             s_id = pathVars[3]
         }
 

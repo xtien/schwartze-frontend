@@ -67,7 +67,7 @@ class AddLetter extends Component {
             .then(response =>
                 this.setState({
                     editDone: true,
-                    id: response.data.letter.id
+                    number: response.data.letter.number
                 })
             );
     }
@@ -76,7 +76,7 @@ class AddLetter extends Component {
 
         if (this.state.editDone === true) {
             return (
-                <Redirect to={"/get_letter_details/" + this.state.id}/>
+                <Redirect to={"/get_letter_details/" + this.state.number}/>
             )
         }
 
