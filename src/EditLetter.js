@@ -140,7 +140,7 @@ class EditLetter extends Component {
             id: 0,
             location_name: ''
         }
-        const recipient_location = this.state.sender_location !=null ? this.state.recipient_location : {
+        const recipient_location = this.state.recipient_location !=null ? this.state.recipient_location : {
             id: 0,
             location_name: ''
         }
