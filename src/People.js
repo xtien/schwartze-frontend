@@ -11,23 +11,43 @@ class People extends Component {
 
         this.state = {
             resultCode: -1,
-            people: [{}]
+            people: [{}],
+            order_by: 'firstname',
         }
 
+        this.sort = this.sort.bind(this);
+
+        this.apiCall();
+    }
+
+    sort(event) {
+        event.preventDefault();
+        this.apiCall()
+    }
+
+    apiCall() {
         let postData = {
             requestCode: 0
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/get_people/',
+        let axiosConfig = AuthenticationService.getAxiosConfig();
+
+        const url = process.env.REACT_APP_API_URL + (this.state.order_by === 'lastname' ? '/get_people_by_lastname/' : '/get_people/');
+        const a = this.state.order_by;
+
+        axios.post(url,
             postData,
-            AuthenticationService.getAxiosConfig()
+            axiosConfig
         )
             .then(response =>
                 this.setState({
-                    resultCode: response.data.resultCode,
-                    people: response.data.people
+                    people: response.data.people,
+                    order_by: a === 'lastname' ? 'firstname' : 'lastname'
                 })
             )
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     render() {
@@ -41,6 +61,7 @@ class People extends Component {
                 const id = data.id;
                 const name = (data.first_name != null ? data.first_name : '') + " "
                     + (data.middle_name != null ? data.middle_name : '') + " "
+                    + (data.tussenvoegsel != null ? data.tussenvoegsel : '') + " "
                     + (data.last_name != null ? data.last_name : '');
                 const linkto = '/get_person_details/' + id;
                 let result = <Link to={linkto}>{name}</Link>
@@ -54,15 +75,24 @@ class People extends Component {
         }]
 
         return (
-            <div className='container'>
-                <ReactTable
-                    data={this.state.people}
-                    columns={columns}
-                />
+
+            <div>
+                <form onSubmit={this.sort} className='ml-5 mb-2'>
+                    <input
+                        type="submit"
+                        className="btn btn-outline-secondary mybutton"
+                        value={this.state.order_by === 'lastname' ? 'op voornaam' : 'op achternaam'}
+                    />
+
+                </form>
+                <div className='container'>
+                    <ReactTable
+                        data={this.state.people}
+                        columns={columns}
+                    />
+                </div>
             </div>
         )
-
-
     }
 }
 

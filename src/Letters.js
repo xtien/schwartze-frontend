@@ -52,8 +52,8 @@ class Letters extends Component {
 
         let axiosConfig = AuthenticationService.getAxiosConfig();
 
-        const url = process.env.REACT_APP_API_URL + (this.state.order_by === 'date' ? '/get_letters_by_date/' : '/get_letters/')
-        const a = this.state.order_by
+        const url = process.env.REACT_APP_API_URL + (this.state.order_by === 'date' ? '/get_letters_by_date/' : '/get_letters/');
+        const a = this.state.order_by;
 
         axios.post(url,
             postData,
@@ -163,7 +163,7 @@ class Letters extends Component {
                     <input
                         type="submit"
                         className="btn btn-outline-secondary mybutton"
-                        value={this.state.order_by === 'date' ? 'op datum' : 'op nummer'}
+                        value={this.state.order_by === 'date' ? 'op nummer' : 'op datum'}
                     />
 
                 </form>

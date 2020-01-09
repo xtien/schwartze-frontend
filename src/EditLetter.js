@@ -33,14 +33,15 @@ class EditLetter extends Component {
             postData,
             AuthenticationService.getAxiosConfig()
         )
-            .then(response =>
-                this.setState({
-                    letter: response.data.letter,
-                    sender: response.data.letter.senders[0],
-                    recipient: response.data.letter.recipients[0],
-                    sender_location: response.data.letter.sender_location[0],
-                    recipient_location: response.data.letter.recipient_location[0]
-                })
+            .then(response => {
+                    this.setState({
+                        letter: response.data.letter,
+                        sender: response.data.letter.senders[0],
+                        recipient: response.data.letter.recipients[0],
+                        sender_location: response.data.letter.sender_location[0],
+                        recipient_location: response.data.letter.recipient_location[0]
+                    })
+                }
             )
             .catch(error => {
                 console.log(error)
@@ -120,55 +121,115 @@ class EditLetter extends Component {
             return <Redirect to={'/get_letter_details/' + this.state.letter.number}></Redirect>
         }
 
+        const sender = this.state.sender != null ? this.state.sender : {
+            id: 0,
+            first_name: '',
+            middle_name: '',
+            tussenvoegsel: '',
+            last_name: ''
+        };
+        const recipient = this.state.recipient != null ? this.state.recipient : {
+            id: 0,
+            first_name: '',
+            middle_name: '',
+            tussenvoegsel: '',
+            last_name: ''
+        };
+        const senderIn = this.state.sender_location !=null ? 'in':'';
+        const sender_location = this.state.sender_location !=null ? this.state.sender_location : {
+            id: 0,
+            location_name: ''
+        }
+        const recipient_location = this.state.sender_location !=null ? this.state.recipient_location : {
+            id: 0,
+            location_name: ''
+        }
+        const recipientIn = this.state.recipient_location !=null ? 'in' : '';
+
+
         return (
             <div>
                 <h3>Brief nummer {this.state.letter.number}</h3>
+
                 <form onSubmit={this.handleSubmit}>
                     <div className='form-group mt-5'>
-                        <table width="600px"><tbody><tr><td width="150px">
-                            Afzender:</td><td>{this.state.sender.first_name} {this.state.sender.middle_name} {this.state.sender.last_name} in {this.state.sender_location.name}</td></tr>
-                        <tr><td>
-                            <label className='mr-3' htmlFor="status">Persoon id</label>
-                        </td><td>
+                        <table width="600px">
+                            <tbody>
+                            <tr>
+                                <td width="150px">
+                                    Afzender:
+                                </td>
+                                <td>
+                                    {sender.first_name} {sender.middle_name} {sender.last_name} in {sender_location.name}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label className='mr-3' htmlFor="status">Persoon id</label>
+                                </td>
+                                <td>
                         <textarea
                             type="text"
                             className='form-control textarea mt-1 w-25'
                             id="sender.id"
-                            value={this.state.sender.id}
+                            value={sender.id}
                             onChange={this.handleSenderId}
                         />
-                        </td></tr>
-                        <tr><td><label htmlFor="status">Locatie id</label></td><td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="status">Locatie id</label></td>
+                                <td>
                         <textarea
                             type="text"
                             className='form-control textarea mt-1 w-25'
                             id="sender_location.id"
-                            value={this.state.sender_location.id}
+                            value={sender_location.id}
                             onChange={this.handleSenderLocation}
                         />
-                        </td></tr></tbody></table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
+
                     <div className='form-group mt-5'>
-                        <table width="600px"><tbody><tr><td width="150px">
-                        Ontvanger</td><td>
-                        {this.state.recipient.id}: {this.state.recipient.first_name} {this.state.recipient.middle_name} {this.state.recipient.last_name} in {this.state.recipient_location.name}</td></tr>
-                        <tr><td><label htmlFor="status">Persoon id</label></td><td>
+                        <table width="600px">
+                            <tbody>
+                            <tr>
+                                <td width="150px">
+                                    Ontvanger
+                                </td>
+                                <td>
+                                    {recipient.first_name} {recipient.middle_name} {recipient.last_name} in {recipient_location.name}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="status">Persoon id</label></td>
+                                <td>
                        <textarea
-                            type="text"
-                            className='form-control textarea mt-1 w-25'
-                            id="recipientid"
-                            value={this.state.recipient.id}
-                            onChange={this.handleRecipientId}
-                        />
-                        </td></tr><tr><td><label htmlFor="status">Locatie id</label></td><td>
+                           type="text"
+                           className='form-control textarea mt-1 w-25'
+                           id="recipientid"
+                           value={recipient.id}
+                           onChange={this.handleRecipientId}
+                       />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="status">Locatie id</label></td>
+                                <td>
                         <textarea
                             type="text"
                             className='form-control textarea mt-1 w-25'
                             id="recipient_location.id"
-                            value={this.state.recipient_location.id}
+                            value={recipient_location.id}
                             onChange={this.handleREcipientLocation}
                         />
-                        </td></tr></tbody></table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <input
                         type="submit"
