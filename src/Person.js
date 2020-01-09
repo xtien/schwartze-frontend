@@ -328,6 +328,7 @@ class Person extends Component {
                             id={this.state.person.id}
                             first_name={this.state.person.first_name}
                             middle_name={this.state.person.middle_name}
+                            tussenvoegsel={this.state.person.tussenvoegsel}
                             last_name={this.state.person.last_name}
                             date_of_birth={this.state.person.date_of_birth}
                             date_of_death={this.state.person.date_of_death}
@@ -420,6 +421,7 @@ class EditPersonForm extends React.Component {
             id: this.props.id,
             first_name: this.props.first_name,
             middle_name: this.props.middle_name,
+            tussenvoegsel: this.props.tussenvoegsel,
             last_name: this.props.last_name,
             date_of_birth: this.props.date_of_birth,
             date_of_death: this.props.date_of_death,
@@ -433,6 +435,7 @@ class EditPersonForm extends React.Component {
 
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleMiddleNameChange = this.handleMiddleNameChange.bind(this);
+        this.handleTussenvoegselChange = this.handleTussenvoegselChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
         this.handlecommentChange = this.handlecommentChange.bind(this);
         this.handleLinksChange = this.handleLinksChange.bind(this);
@@ -462,6 +465,10 @@ class EditPersonForm extends React.Component {
 
     handleMiddleNameChange(event) {
         this.setState({middle_name: event.target.value});
+    }
+
+    handleTussenvoegselChange(event) {
+        this.setState({tussenvoegsel: event.target.value});
     }
 
     handleLastNameChange(event) {
@@ -496,6 +503,7 @@ class EditPersonForm extends React.Component {
                 id: this.state.id,
                 first_name: this.state.first_name,
                 middle_name: this.state.middle_name,
+                tussenvoegsel: this.state.tussenvoegsel,
                 last_name: this.state.last_name,
                 comment: this.state.comment,
                 image_url: this.state.image_url,
@@ -537,7 +545,7 @@ class EditPersonForm extends React.Component {
         return (
             <div>
                  <form onSubmit={this.handleSubmit}>
-                    <div><p>{this.state.person.first_name} {this.state.person.last_name}</p></div>
+                    <div><p>{this.state.person.first_name} {this.state.person.tussenvoegsel} {this.state.person.last_name}</p></div>
                     <div className="form-group">
                         <label htmlFor="status">First name</label>
                         <textarea
@@ -558,17 +566,27 @@ class EditPersonForm extends React.Component {
                             onChange={this.handleMiddleNameChange}
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="status">Last name</label>
-                        <textarea
-                            type="text"
-                            className="form-control textarea"
-                            id="last_name"
-                            value={this.state.last_name}
-                            onChange={this.handleLastNameChange}
-                        />
-                    </div>
-                    <div className="form-group">
+                     <div className="form-group">
+                         <label htmlFor="status">Tussenvoegsel</label>
+                         <textarea
+                             type="text"
+                             className="form-control textarea"
+                             id="tussenvoegsel"
+                             value={this.state.tussenvoegsel}
+                             onChange={this.handleTussenvoegselChange}
+                         />
+                     </div>
+                     <div className="form-group">
+                         <label htmlFor="status">Last name</label>
+                         <textarea
+                             type="text"
+                             className="form-control textarea"
+                             id="last_name"
+                             value={this.state.last_name}
+                             onChange={this.handleLastNameChange}
+                         />
+                     </div>
+                     <div className="form-group">
                         <label htmlFor="status">Geboren</label>
                         <textarea
                             type="text"

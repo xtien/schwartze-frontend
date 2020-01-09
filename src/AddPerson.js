@@ -14,6 +14,7 @@ class AddPerson extends Component {
             id: 0,
             first_name: this.props.first_name,
             middle_name: this.props.middle_name,
+            tussenvoegsel: this.props.tussenvoegsel,
             last_name: this.props.last_name,
             comment: this.props.comment,
             links: this.props.links,
@@ -22,6 +23,7 @@ class AddPerson extends Component {
 
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleMiddleNameChange = this.handleMiddleNameChange.bind(this);
+        this.handleTussenvoegselChange = this.handleTussenvoegselChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
         this.handleCommentChange = this.handleCommentChange.bind(this);
         this.handleLinksChange = this.handleLinksChange.bind(this);
@@ -40,6 +42,10 @@ class AddPerson extends Component {
         this.setState({middle_name: event.target.value});
     }
 
+    handleTussenvoegselChange(event) {
+        this.setState({tussenvoegsel: event.target.value});
+    }
+
     handleLastNameChange(event) {
         this.setState({last_name: event.target.value});
     }
@@ -55,6 +61,7 @@ class AddPerson extends Component {
             person: {
                 first_name: this.state.first_name,
                 middle_name: this.state.middle_name,
+                tussenvoegsel: this.state.tussenvoegsel,
                 last_name: this.state.last_name,
                 comment: this.state.comment,
                 links: this.state.links,
@@ -109,6 +116,16 @@ class AddPerson extends Component {
                         id="middle_name"
                         value={this.state.middle_name}
                         onChange={this.handleMiddleNameChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="status">Tussenvoegsel</label>
+                    <textarea
+                        type="text"
+                        className="form-control textarea"
+                        id="middle_name"
+                        value={this.state.tussenvoegsel}
+                        onChange={this.handleTussenvoegselChange}
                     />
                 </div>
                 <div className="form-group">
