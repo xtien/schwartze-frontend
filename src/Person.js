@@ -280,7 +280,7 @@ class Person extends Component {
                                     </table>
                                 </div>
                                 <p>
-                                    {person.id} {person.first_name} {person.middle_name} {person.last_name}
+                                    {person.id} {person.first_name} {person.middle_name} {person.tussenvoegsel} {person.last_name}
                                 </p>
                                 <p>Geboren: {person.date_of_birth}</p>
                                 <p>Overleden: {person.date_of_death}</p>

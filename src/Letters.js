@@ -91,7 +91,7 @@ class Letters extends Component {
                 let names = [];
                 let cell_ids = [];
                 _.map(data.senders, sender => {
-                    names.push(sender.first_name + ' ' + sender.last_name);
+                    names.push(sender.first_name + ' ' + (sender.tussenvoegsel != null ? (sender.tussenvoegsel + ' ') : '') + sender.last_name);
                     cell_ids.push(sender.id);
                 });
                 const name_content = names[0];
@@ -123,7 +123,7 @@ class Letters extends Component {
                 let names = [];
                 let cell_ids = [];
                 _.map(data.recipients, recipient => {
-                    names.push(recipient.first_name + ' ' + recipient.last_name);
+                    names.push(recipient.first_name + ' ' + (recipient.tussenvoegsel != null ? (recipient.tussenvoegsel + ' ') : '') + recipient.last_name);
                     cell_ids.push(recipient.id);
                 });
                 const name_content = names.join(', ');

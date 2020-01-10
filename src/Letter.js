@@ -101,7 +101,7 @@ class Letter extends Component {
         const senderList = senders.map((s) => <span><Link
             to={`/get_person_details/${s.id}`}>{s.first_name} {s.tussenvoegsel} {s.last_name} </Link> </span>);
         const recipientList = recipients.map((r) => <span><Link
-            to={`/get_person_details/${r.id}`}>{r.first_name} {r.last_name} </Link> </span>);
+            to={`/get_person_details/${r.id}`}>{r.first_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
 
         const sender_locations = this.state.sender_locations;
         const senderLocationList = sender_locations.map((s) => <span><Link
