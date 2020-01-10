@@ -99,7 +99,7 @@ class Letter extends Component {
         const senders = this.state.senders;
         const recipients = this.state.recipients;
         const senderList = senders.map((s) => <span><Link
-            to={`/get_person_details/${s.id}`}>{s.first_name} {s.last_name} </Link> </span>);
+            to={`/get_person_details/${s.id}`}>{s.first_name} {s.tussenvoegsel} {s.last_name} </Link> </span>);
         const recipientList = recipients.map((r) => <span><Link
             to={`/get_person_details/${r.id}`}>{r.first_name} {r.last_name} </Link> </span>);
 
