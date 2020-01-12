@@ -48,6 +48,9 @@ class Letter extends Component {
                     recipient_locations: response.data.letter.recipient_location
                 })
             )
+            .catch(error => {
+                console.log(error)
+            });
 
         axios.post(process.env.REACT_APP_API_URL + '/get_letter_images/',
             postData,
@@ -86,6 +89,13 @@ class Letter extends Component {
     }
 
     render() {
+
+        const search_term = this.state.search_term;
+        const search_letters ='/search_letters/' + search_term;
+
+        if (this.state.go_search === true) {
+            return <Redirect to={search_letters}/>
+        }
 
         let linkTo = '';
 
@@ -277,7 +287,6 @@ class CommentForm extends React.Component {
                     editDone: true
                 })
             )
-
     }
 
     render() {

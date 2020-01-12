@@ -27,6 +27,7 @@ import Subjects from "./Subjects"
 import References from "./References";
 import twitli from './images/logo64.png'
 import AuthenticationService from "./service/AuthenticationService";
+import SearchLetters from "./SearchLetters";
 
 class App extends Component {
 
@@ -36,7 +37,7 @@ class App extends Component {
             refreshPage: this.refreshPage,
             refresh: false,
         }
-    }
+     }
 
     refreshPage = () => {
         this.setState({
@@ -44,10 +45,10 @@ class App extends Component {
         })
     }
 
+
     render() {
 
         const refreshPage = this.refreshPage;
-
         return (
 
             <Router>
@@ -80,7 +81,7 @@ class App extends Component {
                                 </td>
                                 <td valign="top">
                                     <img src={twitli} alt="logo"/>
-                                </td>
+                                 </td>
                             </tr>
                             </tbody>
                         </table>
@@ -108,6 +109,7 @@ class App extends Component {
                         <Route path="/get_people/" component={People}/>
                         <Route path="/references/" component={References}/>
                         <Route path="/subjects/" component={Subjects}/>
+                        <Route path="/search_letters/:search_term" component={SearchLetters}/>
                     </div>
                 </div>
             </Router>

@@ -4,6 +4,7 @@ import _ from "lodash";
 import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 import AuthenticationService from "./service/AuthenticationService";
+import {Redirect} from "react-router";
 
 class Letters extends Component {
 
@@ -15,9 +16,13 @@ class Letters extends Component {
             data: ['a', 'b'],
             letters: [{}],
             order_by: 'number',
+            search_term: '',
+            go_search: false
         }
 
         this.sort = this.sort.bind(this);
+        this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
+        this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
 
         let postData = {
             requestCode: 0
@@ -71,7 +76,30 @@ class Letters extends Component {
             });
     }
 
+    handleSearchTermChange(event) {
+        this.setState({search_term: event.target.value});
+    }
+
+    handleSearchSubmit(event) {
+        event.preventDefault();
+
+        this.setState({
+            go_search: true
+        })
+
+    }
+
     render() {
+
+        const search_term = this.state.search_term;
+        const search_letters = '/search_letters/' + search_term;
+
+        if (this.state.go_search === true) {
+            this.setState({
+                go_search: false
+            })
+            return <Redirect to={search_letters}/>
+        }
 
         const columns = [{
             id: 'number',
@@ -159,15 +187,50 @@ class Letters extends Component {
         return (
 
             <div>
-                <form onSubmit={this.sort} className='ml-5 mb-2'>
-                    <input
-                        type="submit"
-                        className="btn btn-outline-secondary mybutton"
-                        value={this.state.order_by === 'date' ? 'op nummer' : 'op datum'}
-                    />
+                <table width="100%">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <form onSubmit={this.sort} className='ml-5 mb-2'>
+                                <input
+                                    type="submit"
+                                    className="btn btn-outline-secondary mybutton"
+                                    value={this.state.order_by === 'date' ? 'op nummer' : 'op datum'}
+                                />
 
-                </form>
+                            </form>
+                        </td>
+                        <td align="right">
+                            <form onSubmit={this.handleSearchSubmit}>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                        <div className='form-group searchfield mb-2 mr-2'>
+                                             <input
+                                                 type="text"
+                                                 id="text"
+                                                 value={this.state.text}
+                                                 onChange={this.handleSearchTermChange}
+                                                 className="form-control textarea"
+                                             />
+                                </div>
+                                        </td>
+                                        <td>
+                                        <input
+                                    type="submit"
+                                    className='btn btn-outline-success mybutton mb-2 mr-5'
+                                    value="Zoek"
+                                 />                      </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
                 <div className='container'>
                     <ReactTable
