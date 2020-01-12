@@ -111,6 +111,10 @@ text {
   width: 800px;
 }
 
+.searchfield {
+  width: 200px;
+}
+
 .extratextarea {
   width: 800px;
   min-height: 800px;

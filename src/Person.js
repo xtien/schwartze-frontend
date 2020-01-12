@@ -36,6 +36,7 @@ class Person extends Component {
         this.add_link = this.add_link.bind(this);
         this.edit_link = this.edit_link.bind(this);
         this.delete_link = this.delete_link.bind(this);
+        this.post = this.post.bind(this);
 
         let id;
 
@@ -43,8 +44,18 @@ class Person extends Component {
             id = props.match.params.id;
         }
 
+        this.post(id)
+    }
+
+    toggleEditDone = (person) => {
+        this.setState({
+            showEdit: false,
+        })
+        this.post(person.id)
+    }
+
+    post(id) {
         let postData = {
-            requestCode: 0,
             id: id
         };
 
@@ -54,23 +65,16 @@ class Person extends Component {
         )
             .then(response =>
                 this.setState({
-                    resultCode: response.data.resultCode,
                     person: response.data.person
                 })
             )
-    }
 
-    toggleEditDone = (person) => {
-        this.setState({
-            showEdit: false,
-            person: person
-        })
     }
 
     toggleEditDone = () => {
         this.setState({
             showEdit: false,
-         })
+        })
     }
 
     setPerson = (person) => {
@@ -195,6 +199,18 @@ class Person extends Component {
             linkTo = '/get_text/person/' + person.id;
         }
 
+        let brievenVan = '';
+        if(person.brieven_van === true){
+            brievenVan = <Link
+                to={`/get_letters_from_person/${person.id}`}> Brieven
+                van {person.first_name} </Link>
+        }
+        let brievenAan = '';
+        if(person.brieven_aan === true){
+            brievenAan = <Link to={`/get_letters_to_person/${person.id}`}> Brieven
+                aan {person.first_name} </Link>
+        }
+
         if (this.state.combine === true) {
             return <Redirect to={'/combine_person/' + person.id}/>
         }
@@ -264,16 +280,15 @@ class Person extends Component {
                                     </table>
                                 </div>
                                 <p>
-                                    {person.id} {person.first_name} {person.middle_name} {person.last_name}
+                                    {person.id} {person.first_name} {person.middle_name} {person.tussenvoegsel} {person.last_name}
                                 </p>
                                 <p>Geboren: {person.date_of_birth}</p>
                                 <p>Overleden: {person.date_of_death}</p>
                                 <p>{person.comment}</p>
-                                <p className='mt-5'><Link to={`/get_letters_from_person/${person.id}`}> Brieven
-                                    van {person.first_name} </Link>
+                                <p className='mt-5'>
+                                    {brievenVan}
                                 </p>
-                                <p><Link to={`/get_letters_to_person/${person.id}`}> Brieven
-                                    aan {person.first_name} </Link>
+                                <p>{brievenAan}
                                 </p>
                                 {
                                     AuthenticationService.isAdmin() === "true" ?
@@ -491,8 +506,8 @@ class EditPersonForm extends React.Component {
         event.preventDefault();
 
         this.setState(
-            { cancel: true }
-    )
+            {cancel: true}
+        )
     }
 
     handleSubmit(event) {
@@ -544,8 +559,10 @@ class EditPersonForm extends React.Component {
 
         return (
             <div>
-                 <form onSubmit={this.handleSubmit}>
-                    <div><p>{this.state.person.first_name} {this.state.person.tussenvoegsel} {this.state.person.last_name}</p></div>
+                <form onSubmit={this.handleSubmit}>
+                    <div>
+                        <p>{this.state.person.first_name} {this.state.person.tussenvoegsel} {this.state.person.last_name}</p>
+                    </div>
                     <div className="form-group">
                         <label htmlFor="status">First name</label>
                         <textarea
@@ -566,27 +583,27 @@ class EditPersonForm extends React.Component {
                             onChange={this.handleMiddleNameChange}
                         />
                     </div>
-                     <div className="form-group">
-                         <label htmlFor="status">Tussenvoegsel</label>
-                         <textarea
-                             type="text"
-                             className="form-control textarea"
-                             id="tussenvoegsel"
-                             value={this.state.tussenvoegsel}
-                             onChange={this.handleTussenvoegselChange}
-                         />
-                     </div>
-                     <div className="form-group">
-                         <label htmlFor="status">Last name</label>
-                         <textarea
-                             type="text"
-                             className="form-control textarea"
-                             id="last_name"
-                             value={this.state.last_name}
-                             onChange={this.handleLastNameChange}
-                         />
-                     </div>
-                     <div className="form-group">
+                    <div className="form-group">
+                        <label htmlFor="status">Tussenvoegsel</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="tussenvoegsel"
+                            value={this.state.tussenvoegsel}
+                            onChange={this.handleTussenvoegselChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Last name</label>
+                        <textarea
+                            type="text"
+                            className="form-control textarea"
+                            id="last_name"
+                            value={this.state.last_name}
+                            onChange={this.handleLastNameChange}
+                        />
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="status">Geboren</label>
                         <textarea
                             type="text"

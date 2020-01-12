@@ -48,6 +48,9 @@ class Letter extends Component {
                     recipient_locations: response.data.letter.recipient_location
                 })
             )
+            .catch(error => {
+                console.log(error)
+            });
 
         axios.post(process.env.REACT_APP_API_URL + '/get_letter_images/',
             postData,
@@ -87,6 +90,13 @@ class Letter extends Component {
 
     render() {
 
+        const search_term = this.state.search_term;
+        const search_letters ='/search_letters/' + search_term;
+
+        if (this.state.go_search === true) {
+            return <Redirect to={search_letters}/>
+        }
+
         let linkTo = '';
 
         const letter = this.state.letter;
@@ -99,9 +109,9 @@ class Letter extends Component {
         const senders = this.state.senders;
         const recipients = this.state.recipients;
         const senderList = senders.map((s) => <span><Link
-            to={`/get_person_details/${s.id}`}>{s.first_name} {s.last_name} </Link> </span>);
+            to={`/get_person_details/${s.id}`}>{s.first_name} {s.tussenvoegsel} {s.last_name} </Link> </span>);
         const recipientList = recipients.map((r) => <span><Link
-            to={`/get_person_details/${r.id}`}>{r.first_name} {r.last_name} </Link> </span>);
+            to={`/get_person_details/${r.id}`}>{r.first_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
 
         const sender_locations = this.state.sender_locations;
         const senderLocationList = sender_locations.map((s) => <span><Link
@@ -277,7 +287,6 @@ class CommentForm extends React.Component {
                     editDone: true
                 })
             )
-
     }
 
     render() {
