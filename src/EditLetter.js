@@ -224,7 +224,7 @@ class EditLetter extends Component {
                             className='form-control textarea mt-1 w-25'
                             id="recipient_location.id"
                             value={recipient_location.id}
-                            onChange={this.handleREcipientLocation}
+                            onChange={this.handleRecipientLocation}
                         />
                                 </td>
                             </tr>
