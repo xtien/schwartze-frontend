@@ -24,6 +24,7 @@ class EditLetter extends Component {
         this.handleSenderLocation = this.handleSenderLocation.bind(this);
         this.handleRecipientLocation = this.handleRecipientLocation.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDate = this.handleDate.bind(this);
 
         let postData = {
             number: props.match.params.number
@@ -88,6 +89,16 @@ class EditLetter extends Component {
         }))
     }
 
+    handleDate(event) {
+        const value = event.target.value;
+        this.setState(prevState => ({
+            letter: {
+                ...prevState.letter,
+                date: value
+            }
+        }))
+    }
+
     handleSubmit(event) {
         event.preventDefault();
 
@@ -107,7 +118,8 @@ class EditLetter extends Component {
         )
             .then(response =>
                 this.setState({
-                    editDone: true
+                    editDone: true,
+                    letter: response.data.letter
                 })
             )
             .catch(error => {
@@ -121,6 +133,7 @@ class EditLetter extends Component {
             return <Redirect to={'/get_letter_details/' + this.state.letter.number}></Redirect>
         }
 
+        const date = this.state.letter !=null ? this.state.letter.date : '';
         const sender = this.state.sender != null ? this.state.sender : {
             id: 0,
             first_name: '',
@@ -135,16 +148,16 @@ class EditLetter extends Component {
             tussenvoegsel: '',
             last_name: ''
         };
-        const senderIn = this.state.sender_location !=null ? 'in':'';
-        const sender_location = this.state.sender_location !=null ? this.state.sender_location : {
+        const senderIn = this.state.sender_location != null ? 'in' : '';
+        const sender_location = this.state.sender_location != null ? this.state.sender_location : {
             id: 0,
             location_name: ''
         }
-        const recipient_location = this.state.recipient_location !=null ? this.state.recipient_location : {
+        const recipient_location = this.state.recipient_location != null ? this.state.recipient_location : {
             id: 0,
             location_name: ''
         }
-        const recipientIn = this.state.recipient_location !=null ? 'in' : '';
+        const recipientIn = this.state.recipient_location != null ? 'in' : '';
 
 
         return (
@@ -156,6 +169,21 @@ class EditLetter extends Component {
                         <table width="600px">
                             <tbody>
                             <tr>
+                                <td width="150px"><div className='mb-5'>
+                                    Datum:
+                                </div>
+                                </td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        className='form-control textarea mt-1 w-25 mb-5'
+                                        id="sender.id"
+                                        value={date}
+                                        onChange={this.handleDate}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
                                 <td width="150px">
                                     Afzender:
                                 </td>
@@ -163,30 +191,30 @@ class EditLetter extends Component {
                                     {sender.first_name} {sender.middle_name} {sender.last_name} in {sender_location.name}
                                 </td>
                             </tr>
-                            <tr>
+                             <tr>
                                 <td>
                                     <label className='mr-3' htmlFor="status">Persoon id</label>
                                 </td>
                                 <td>
-                        <textarea
-                            type="text"
-                            className='form-control textarea mt-1 w-25'
-                            id="sender.id"
-                            value={sender.id}
-                            onChange={this.handleSenderId}
-                        />
+                                    <input
+                                        type="text"
+                                        className='form-control textarea mt-1 w-25'
+                                        id="sender.id"
+                                        value={sender.id}
+                                        onChange={this.handleSenderId}
+                                    />
                                 </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="status">Locatie id</label></td>
                                 <td>
-                        <textarea
-                            type="text"
-                            className='form-control textarea mt-1 w-25'
-                            id="sender_location.id"
-                            value={sender_location.id}
-                            onChange={this.handleSenderLocation}
-                        />
+                                    <input
+                                        type="text"
+                                        className='form-control textarea mt-1 w-25'
+                                        id="sender_location.id"
+                                        value={sender_location.id}
+                                        onChange={this.handleSenderLocation}
+                                    />
                                 </td>
                             </tr>
                             </tbody>
@@ -207,25 +235,25 @@ class EditLetter extends Component {
                             <tr>
                                 <td><label htmlFor="status">Persoon id</label></td>
                                 <td>
-                       <textarea
-                           type="text"
-                           className='form-control textarea mt-1 w-25'
-                           id="recipientid"
-                           value={recipient.id}
-                           onChange={this.handleRecipientId}
-                       />
+                                    <input
+                                        type="text"
+                                        className='form-control textarea mt-1 w-25'
+                                        id="recipientid"
+                                        value={recipient.id}
+                                        onChange={this.handleRecipientId}
+                                    />
                                 </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="status">Locatie id</label></td>
                                 <td>
-                        <textarea
-                            type="text"
-                            className='form-control textarea mt-1 w-25'
-                            id="recipient_location.id"
-                            value={recipient_location.id}
-                            onChange={this.handleRecipientLocation}
-                        />
+                                    <input
+                                        type="text"
+                                        className='form-control textarea mt-1 w-25'
+                                        id="recipient_location.id"
+                                        value={recipient_location.id}
+                                        onChange={this.handleRecipientLocation}
+                                    />
                                 </td>
                             </tr>
                             </tbody>

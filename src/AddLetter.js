@@ -84,7 +84,7 @@ class AddLetter extends Component {
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="status">Afzender</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="first_name"
@@ -94,7 +94,7 @@ class AddLetter extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="status">Locatie afzender</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="middle_name"
@@ -104,7 +104,7 @@ class AddLetter extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="status">Ontvanger</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="last_name"
@@ -114,7 +114,7 @@ class AddLetter extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="status">Locatie ontvanger</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="comments"
@@ -124,7 +124,7 @@ class AddLetter extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="header">Datum</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="links"

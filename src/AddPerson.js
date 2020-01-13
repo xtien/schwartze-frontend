@@ -100,7 +100,7 @@ class AddPerson extends Component {
                 <div><p>{this.state.person.first_name} {this.state.person.last_name}</p></div>
                 <div className="form-group">
                     <label htmlFor="status">First name</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="first_name"
@@ -110,7 +110,7 @@ class AddPerson extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="status">Middle name</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="middle_name"
@@ -120,7 +120,7 @@ class AddPerson extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="status">Tussenvoegsel</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="middle_name"
@@ -130,7 +130,7 @@ class AddPerson extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="status">Last name</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="last_name"
@@ -140,7 +140,7 @@ class AddPerson extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="status">Text</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="comments"
@@ -150,7 +150,7 @@ class AddPerson extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="header">Links</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="links"

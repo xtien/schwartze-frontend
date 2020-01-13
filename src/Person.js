@@ -14,7 +14,6 @@ class Person extends Component {
         super(props)
 
         this.state = {
-            resultCode: -1,
             data: {},
             showEdit: false,
             showLinkEdit: false,
@@ -146,7 +145,6 @@ class Person extends Component {
         )
             .then(response =>
                 this.setState({
-                    resultCode: response.data.resultCode,
                     person: response.data.person
                 })
             )
@@ -387,7 +385,7 @@ class Person extends Component {
                                             <form onSubmit={this.combine} className="ml-5 mb-5">
                                                 <input
                                                     type="submit"
-                                                    className="btn btn-outline-success mybutton"
+                                                    className="btn btn-outline-success mybutton ml-5"
                                                     value="Combineren"
                                                 />
                                             </form>
@@ -535,7 +533,6 @@ class EditPersonForm extends React.Component {
         )
             .then(response =>
                 this.setState({
-                    resultCode: response.data.resultCode,
                     person: response.data.person,
                     editDone: true
                 })
@@ -565,7 +562,7 @@ class EditPersonForm extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">First name</label>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea"
                             id="first_name"
@@ -575,7 +572,7 @@ class EditPersonForm extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">Middle name</label>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea"
                             id="middle_name"
@@ -585,7 +582,7 @@ class EditPersonForm extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">Tussenvoegsel</label>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea"
                             id="tussenvoegsel"
@@ -595,7 +592,7 @@ class EditPersonForm extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">Last name</label>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea"
                             id="last_name"
@@ -605,7 +602,7 @@ class EditPersonForm extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">Geboren</label>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea"
                             id="last_name"
@@ -615,7 +612,7 @@ class EditPersonForm extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">Overleden</label>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea"
                             id="last_name"
@@ -625,7 +622,7 @@ class EditPersonForm extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">Opmerkingen</label>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea"
                             id="comments"
@@ -635,7 +632,7 @@ class EditPersonForm extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">Image URL</label>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea"
                             id="image_url"
@@ -645,7 +642,7 @@ class EditPersonForm extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">Image caption</label>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea"
                             id="image_caption"

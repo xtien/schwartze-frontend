@@ -6,6 +6,8 @@ import AuthenticationService from './service/AuthenticationService';
 import {Link} from "react-router-dom";
 import Util from "./service/Util";
 import {Redirect} from "react-router";
+import arrow_left from "./images/arrow_left.png";
+import arrow_right from "./images/arrow_right.png";
 
 class Letter extends Component {
 
@@ -23,14 +25,55 @@ class Letter extends Component {
             imageData: [],
             sender_locations: [],
             recipient_locations: [],
-            edit_letter: false
+            edit_letter: false,
+            newNumber: 1
         }
 
         this.editLetter = this.editLetter.bind(this);
         this.editComment = this.editComment.bind(this);
+        this.forward = this.forward.bind(this);
+        this.back = this.back.bind(this);
+        this.post = this.post.bind(this);
+
+        this.post(props.match.params.number)
+    }
+
+    toggleEditDone = (letter) => {
+        this.setState({
+            showEdit: false,
+            letter: letter
+        })
+    }
+
+    editComment(event) {
+
+        let letterNumber = event.target.value;
+        const letter = this.state.letter;
+        this.setState({
+            showEdit: true,
+            letter: letter,
+            letterNumber: letterNumber
+        })
+    }
+
+    editLetter(event) {
+        this.setState({
+            edit_letter: true
+        })
+    }
+
+    forward(event) {
+        this.post(this.state.letter.number + 1)
+    }
+
+    back(event) {
+        this.post(this.state.letter.number > 1 ? this.state.letter.number - 1 : 1)
+    }
+
+    post(number) {
 
         let postData = {
-            number: props.match.params.number
+            number: number
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_letter_details/',
@@ -62,36 +105,13 @@ class Letter extends Component {
                     imageData: response.data.images
                 })
             )
-    }
 
-    toggleEditDone = (letter) => {
-        this.setState({
-            showEdit: false,
-            letter: letter
-        })
-    }
-
-    editComment(event) {
-
-        let letterNumber = event.target.value;
-        const letter = this.state.letter;
-        this.setState({
-            showEdit: true,
-            letter: letter,
-            letterNumber: letterNumber
-        })
-    }
-
-    editLetter(event) {
-        this.setState({
-            edit_letter: true
-        })
     }
 
     render() {
 
         const search_term = this.state.search_term;
-        const search_letters ='/search_letters/' + search_term;
+        const search_letters = '/search_letters/' + search_term;
 
         if (this.state.go_search === true) {
             return <Redirect to={search_letters}/>
@@ -132,38 +152,59 @@ class Letter extends Component {
             <div className='container'>
                 {this.state.showEdit ? null : (
 
-                    <div className='remark'>
-                        <div className='space'>
-                            {remarks}
-                        </div>
-                        <table><tbody><tr><td>
-                        <div>
-                            {
-                                AuthenticationService.isAdmin() === "true" ?
+                    <div>
+                          <table width="100%">
+                            <tbody>
+                            <tr>
+                                <td align='left'>
+                                    <button type="button"
+                                            className='btn btn-link'
+                                            onClick={this.back}>
+                                        <img src={arrow_left} alt="back"/>
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <div>
+                                        {
+                                            AuthenticationService.isAdmin() === "true" ?
+                                                <button
+                                                    className="btn btn-outline-success mybutton"
+                                                    onClick={this.editComment}>
+                                                    Edit commentaarregel
+                                                </button> : null}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {
+                                            AuthenticationService.isAdmin() === "true" ?
+                                                <button
+                                                    className="btn btn-outline-warning mybutton ml-2"
+                                                    onClick={this.editLetter}>
+                                                    Edit afzender/ontvanger
+                                                </button> : null}
+                                    </div>
+                                </td>
+                                <td align="right">
                                     <button
-                                        className="btn btn-outline-success mybutton"
-                                        onClick={this.editComment}
-                                        value={letterNumber}>
-                                        Edit commentaarregel
-                                    </button> : null}
-                        </div>
-                        </td><td>
-                        <div>
-                            {
-                                AuthenticationService.isAdmin() === "true" ?
-                                    <button
-                                        className="btn btn-outline-warning mybutton ml-2"
-                                        onClick={this.editLetter}
-                                        value={letterNumber}>
-                                        Edit afzender/ontvanger
-                                    </button> : null}
-                        </div>
-                        </td></tr></tbody></table>
+                                        className="btn btn-link"
+                                        onClick={this.forward}>
+                                        <img src={arrow_right} alt="back"/>
+                                   </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 )}
+                <div className='remark'>
+                    {remarks}
+                </div>
+
                 <div>
                     {this.state.showEdit ?
-                        <div className='remark'>
+                        <div >
                             <div>
                                 <CommentForm
                                     letter_number={this.state.letter.number}
@@ -178,8 +219,9 @@ class Letter extends Component {
                     <table>
                         <tbody>
                         <tr>
-                            <td>
+                            <td><div className='mb-3'>
                                 Nummer: {this.state.letter.number}
+                            </div>
                             </td>
                         </tr>
                         <tr>
@@ -309,7 +351,7 @@ class CommentForm extends React.Component {
                         className="form-control textarea mb-5"
                         onChange={this.handleChange}/>
                     <label htmlFor="status">Datum</label>
-                    <textarea
+                    <input
                         type="text"
                         id="date"
                         value={this.state.date}
