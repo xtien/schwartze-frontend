@@ -74,7 +74,7 @@ class AddLocation extends Component {
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="status">Location</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="first_name"

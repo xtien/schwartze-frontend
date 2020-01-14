@@ -59,7 +59,7 @@ class Login extends React.Component {
             this.props.location.toggle()
 
             return (
-                <Redirect to={"/get_letters/"}/>
+                <Redirect to={"/get_letters/0"}/>
             )
         }
 
@@ -76,7 +76,7 @@ class Login extends React.Component {
                                     </div>
                                 </td>
                                 <td>
-                        <textarea
+                        <input
                             type="text"
                             className="form-control textarea ml-5"
                             id="username"
@@ -97,7 +97,7 @@ class Login extends React.Component {
                                         <label htmlFor="status">Password</label></div>
                                 </td>
                                 <td>
-                       <textarea
+                       <input
                            type="password"
                            className="form-control textarea ml-5"
                            id="password"

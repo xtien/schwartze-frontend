@@ -222,7 +222,7 @@ class EditLinkForm extends React.Component {
             <form onSubmit={this.handleLinkSubmit}>
                 <div className="form-group">
                     <label htmlFor="status">Link naam</label>
-                    <textarea
+                    <input
                         type="text"
                         className="form-control textarea"
                         id="subject_name"

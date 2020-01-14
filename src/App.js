@@ -61,7 +61,7 @@ class App extends Component {
                                     <h1>Het nichtje van tante Therèse</h1>
                                     <nav className="navbar navbar-expand-lg navbar-light">
                                         <p className="navbar-nav"><Link to='/'>Home</Link></p>
-                                        <p className="navbar-nav"><Link to='/get_letters/'>Brieven</Link></p>
+                                        <p className="navbar-nav"><Link to='/get_letters/0'>Brieven</Link></p>
                                         <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
                                         <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
                                         <p className="navbar-nav"><Link to='/references/'>Referenties</Link></p>
@@ -91,7 +91,7 @@ class App extends Component {
                         <Route path="/admin/" component={Admin}/>
                         <Route path="/login/" component={Login}/>
                         <Route path="/signup/" component={Signup}/>
-                        <Route path="/get_letters/" component={Letters}/>
+                        <Route path="/get_letters/:page" component={Letters}/>
                         <Route path="/add_person/" component={AddPerson}/>
                         <Route path="/add_letter/" component={AddLetter}/>
                         <Route path="/edit_letter/:number" component={EditLetter}/>
@@ -100,7 +100,7 @@ class App extends Component {
                         <Route path="/combine_location/:id" component={CombineLocation}/>
                         <Route path="/get_location_details/:id" component={Location}/>
                         <Route path="/get_person_details/:id" component={Person}/>
-                        <Route path="/get_letter_details/:number" component={Letter}/>
+                        <Route path="/get_letter_details/:number/:pagenumber" component={Letter}/>
                         <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
                         <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
                         <Route path="/get_text/:entity/:id" component={Text}/>

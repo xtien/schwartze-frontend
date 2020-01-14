@@ -49,19 +49,19 @@
 }
 
 .letter {
-  margin-top: 100px;
-  margin-left: 100px;
-  margin-right: 20px;
+  margin-top: 50px;
+  margin-left: 20px;
+  margin-right: 300px;
   margin-bottom: 20px;
   padding: 60px;
   background: #e8e8e8;
 }
 
 .remark {
-  margin-top: 100px;
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-bottom: 100px;
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 10px;
 }
 
 .letter td {
