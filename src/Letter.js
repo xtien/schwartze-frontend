@@ -26,7 +26,7 @@ class Letter extends Component {
             sender_locations: [],
             recipient_locations: [],
             edit_letter: false,
-            newNumber: 1
+            pageNumber: props.match.params.pagenumber
         }
 
         this.editLetter = this.editLetter.bind(this);
@@ -34,6 +34,7 @@ class Letter extends Component {
         this.forward = this.forward.bind(this);
         this.back = this.back.bind(this);
         this.post = this.post.bind(this);
+        this.back_to_letters = this.back_to_letters.bind(this);
 
         this.post(props.match.params.number)
     }
@@ -68,6 +69,13 @@ class Letter extends Component {
 
     back(event) {
         this.post(this.state.letter.number > 1 ? this.state.letter.number - 1 : 1)
+    }
+
+    back_to_letters(event) {
+        this.setState({
+            back_to_letters: true
+        })
+
     }
 
     post(number) {
@@ -112,9 +120,14 @@ class Letter extends Component {
 
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
+        const pageNumber = this.state.pageNumber;
+        const go_to_letters = '/get_letters/' + (pageNumber !='undefined' ? pageNumber : 0);
 
         if (this.state.go_search === true) {
             return <Redirect to={search_letters}/>
+        }
+        if(this.state.back_to_letters === true){
+            return <Redirect to={go_to_letters}/>
         }
 
         let linkTo = '';
@@ -153,18 +166,25 @@ class Letter extends Component {
                 {this.state.showEdit ? null : (
 
                     <div>
-                          <table width="100%">
+                        <table border="0" width="100%">
                             <tbody>
                             <tr>
-                                <td align='left'>
+                                <td align='left' width="30">
                                     <button type="button"
                                             className='btn btn-link'
                                             onClick={this.back}>
                                         <img src={arrow_left} alt="back"/>
                                     </button>
                                 </td>
+                                <td align='left' width="100">
+                                    <button
+                                        className="btn btn-outline-secondary mybutton"
+                                        onClick={this.back_to_letters}>
+                                        Back
+                                    </button>
+                                </td>
 
-                                <td>
+                                <td width="10">
                                     <div>
                                         {
                                             AuthenticationService.isAdmin() === "true" ?
@@ -175,7 +195,7 @@ class Letter extends Component {
                                                 </button> : null}
                                     </div>
                                 </td>
-                                <td>
+                                <td width="1000">
                                     <div>
                                         {
                                             AuthenticationService.isAdmin() === "true" ?
@@ -186,12 +206,12 @@ class Letter extends Component {
                                                 </button> : null}
                                     </div>
                                 </td>
-                                <td align="right">
+                                <td align="right" width="30">
                                     <button
                                         className="btn btn-link"
                                         onClick={this.forward}>
                                         <img src={arrow_right} alt="back"/>
-                                   </button>
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>
@@ -204,7 +224,7 @@ class Letter extends Component {
 
                 <div>
                     {this.state.showEdit ?
-                        <div >
+                        <div>
                             <div>
                                 <CommentForm
                                     letter_number={this.state.letter.number}
@@ -219,9 +239,10 @@ class Letter extends Component {
                     <table>
                         <tbody>
                         <tr>
-                            <td><div className='mb-3'>
-                                Nummer: {this.state.letter.number}
-                            </div>
+                            <td>
+                                <div className='mb-3'>
+                                    Nummer: {this.state.letter.number}
+                                </div>
                             </td>
                         </tr>
                         <tr>

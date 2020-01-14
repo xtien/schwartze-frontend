@@ -17,7 +17,9 @@ class Letters extends Component {
             letters: [{}],
             order_by: 'number',
             search_term: '',
-            go_search: false
+            go_search: false,
+            page: props.match.params.page,
+            back_to_letters: false
         }
 
         this.sort = this.sort.bind(this);
@@ -93,6 +95,7 @@ class Letters extends Component {
 
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
+        const pagenumber = this.state.page;
 
         if (this.state.go_search === true) {
             this.setState({
@@ -106,7 +109,7 @@ class Letters extends Component {
             Header: '',
             accessor: data => {
                 const nr = data.number;
-                const linkto = '/get_letter_details/' + nr;
+                const linkto = '/get_letter_details/' + nr + '/' + pagenumber;
                 let result = <Link to={linkto}>{nr}</Link>
                 return result;
             },
@@ -206,22 +209,22 @@ class Letters extends Component {
                                     <tbody>
                                     <tr>
                                         <td>
-                                        <div className='form-group searchfield mb-2 mr-2'>
-                                             <input
-                                                 type="text"
-                                                 id="text"
-                                                 value={this.state.text}
-                                                 onChange={this.handleSearchTermChange}
-                                                 className="form-control textarea"
-                                             />
-                                </div>
+                                            <div className='form-group searchfield mb-2 mr-2'>
+                                                <input
+                                                    type="text"
+                                                    id="text"
+                                                    value={this.state.text}
+                                                    onChange={this.handleSearchTermChange}
+                                                    className="form-control textarea"
+                                                />
+                                            </div>
                                         </td>
                                         <td>
-                                        <input
-                                    type="submit"
-                                    className='btn btn-outline-success mybutton mb-2 mr-5'
-                                    value="Zoek"
-                                 />                      </td>
+                                            <input
+                                                type="submit"
+                                                className='btn btn-outline-success mybutton mb-2 mr-5'
+                                                value="Zoek"
+                                            /></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -236,6 +239,8 @@ class Letters extends Component {
                     <ReactTable
                         data={this.state.letters}
                         columns={columns}
+                        page={this.state.page}
+                        onPageChange={page => this.setState({page})}
                     />
                 </div>
             </div>

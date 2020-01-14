@@ -59,7 +59,7 @@ class Login extends React.Component {
             this.props.location.toggle()
 
             return (
-                <Redirect to={"/get_letters/"}/>
+                <Redirect to={"/get_letters/0"}/>
             )
         }
 
