@@ -9,16 +9,11 @@ class TextEdit extends Component {
     constructor(props) {
         super(props)
 
-        let s_id = null;
-        const pathVars = props.location.pathname.split('/');
-        if (pathVars[1] === 'subject') {
-            s_id = pathVars[3]
-        }
-
         this.state = {
             person_id: props.location.person_id,
             location_id: props.location.location_id,
             letter_id: props.location.letter_id,
+            subject_id: props.location.subject_id,
             id: props.match.params.id,
             person: {},
             location: {},
@@ -28,7 +23,6 @@ class TextEdit extends Component {
             text_string: '',
             cancel: false,
             path: props.location.pathname,
-            subject_id: s_id
         }
 
 
@@ -120,7 +114,7 @@ class TextEdit extends Component {
         const person = this.state.person;
         const letter = this.state.letter;
         const redirectTo =
-            (letter != null && letter.text != null) ? '/get_letter_details/' + letter.number : (
+            (letter != null && letter.text != null) ? ('/get_letter_details/' + letter.number + '/0') : (
                 (location != null && location.text != null) ? '/get_location_details/' + location.id : (
                     (person != null) ? '/get_person_details/' + person.id : (
                         '/subjects/')));

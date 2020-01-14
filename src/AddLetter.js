@@ -76,7 +76,7 @@ class AddLetter extends Component {
 
         if (this.state.editDone === true) {
             return (
-                <Redirect to={"/get_letter_details/" + this.state.number}/>
+                <Redirect to={"/get_letter_details/" + this.state.number + '/0'}/>
             )
         }
 

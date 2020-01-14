@@ -46,7 +46,7 @@ class PersonToLetters extends Component {
             Header: '',
             accessor: data => {
                 const nr = data.number;
-                const linkto = '/get_letter_details/' + nr;
+                const linkto = '/get_letter_details/' + nr + '/0';
                 let result = <Link to={linkto}>{nr}</Link>
                 return result;
             },
@@ -59,7 +59,7 @@ class PersonToLetters extends Component {
                 let names = [];
                 let cell_ids = [];
                 _.map(data.senders, sender => {
-                    names.push(sender.first_name + ' ' + sender.last_name);
+                    names.push(sender.first_name+ ' ' + (sender.tussenvoegsel != null ? (sender.tussenvoegsel + ' ') : '')+ sender.last_name);
                     cell_ids.push(sender.id);
                 });
                 const name_content = names[0];

@@ -240,7 +240,7 @@ class Letters extends Component {
                         data={this.state.letters}
                         columns={columns}
                         page={this.state.page}
-                        onPageChange={page => this.setState({page})}
+                        onPageChange={page => this.setState({'page': page})}
                     />
                 </div>
             </div>
