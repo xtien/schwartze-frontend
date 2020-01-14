@@ -43,7 +43,7 @@ class SearchLetters extends Component {
             Header: '',
             accessor: data => {
                 const nr = data.number;
-                const linkto = '/get_letter_details/' + nr;
+                const linkto = '/get_letter_details/' + nr + '/0';
                 let result = <Link to={linkto}>{nr}</Link>
                 return result;
             },

@@ -81,8 +81,13 @@ class Subjects extends Component {
 
     render() {
 
-         if (this.state.editLink) {
-           return <Redirect to={'/edit_text/subject/' + this.state.subject_id}/>
+        const subjectId = this.state.subject_id;
+
+        if (this.state.editLink) {
+            return <Redirect to={{
+                pathname: '/edit_text/',
+                subject_id: subjectId
+            }}/>
         }
 
         const subjects = this.state.subjects;
@@ -98,7 +103,7 @@ class Subjects extends Component {
                             <tbody>
                             <tr>
                                 <td>
-                                    <Link to={'/get_text/subject/' +link.id}>  {link.name}</Link>
+                                    <Link to={'/get_text/subject/' + link.id}>  {link.name}</Link>
                                 </td>
                                 <td width="20%">
                                     {AuthenticationService.isAdmin() === "true" ?
