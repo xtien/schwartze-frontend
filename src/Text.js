@@ -61,7 +61,7 @@ class Text extends Component {
                 <div>
                     {this.state.person != null ?
                         <h3><Link className='mb-5'
-                                  to={'/get_person_details/' + person.id}> {person.first_name} {person.last_name}</Link>
+                                  to={'/get_person_details/' + person.id}> {person.first_name} {(person.tussenvoegsel != null ? (person.tussenvoegsel + ' ') : '')} {person.last_name}</Link>
                         </h3>
                         : null
                     }</div>

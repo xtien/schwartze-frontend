@@ -57,6 +57,10 @@
   background: #e8e8e8;
 }
 
+.number {
+  width: 20px;
+}
+
 .remark {
   margin-top: 50px;
   margin-left: 50px;
