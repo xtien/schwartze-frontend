@@ -135,7 +135,7 @@ class TextEdit extends Component {
                                     {this.state.person != null ?
                                         <Link
                                             to={'get_person' + person.id}>
-                                            <h3> {person.first_name} {person.last_name}</h3></Link>
+                                            <h3> {person.first_name} {(person.tussenvoegsel != null ? (person.tussenvoegsel + ' ') : '')} {person.last_name}</h3></Link>
                                         : null
                                     }</div>
                                 <div>

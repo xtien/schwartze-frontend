@@ -19,12 +19,16 @@ class Letters extends Component {
             search_term: '',
             go_search: false,
             page: props.match.params.page,
-            back_to_letters: false
+            back_to_letters: false,
+            number: 0,
+            gotoletter: false
         }
 
         this.sort = this.sort.bind(this);
         this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
         this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+        this.letterbynumber = this.letterbynumber.bind(this);
+        this.handleletternumber = this.handleletternumber.bind(this);
 
         let postData = {
             requestCode: 0
@@ -82,6 +86,10 @@ class Letters extends Component {
         this.setState({search_term: event.target.value});
     }
 
+    handleletternumber(event) {
+        this.setState({number: event.target.value});
+    }
+
     handleSearchSubmit(event) {
         event.preventDefault();
 
@@ -91,17 +99,29 @@ class Letters extends Component {
 
     }
 
+    letterbynumber(event) {
+        this.setState({
+            number: this.state.number,
+            gotoletter: true
+        })
+    }
+
     render() {
 
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
         const pagenumber = this.state.page;
+        const gotoletter = '/get_letter_details/' + this.state.number + '/0/';
 
         if (this.state.go_search === true) {
             this.setState({
                 go_search: false
             })
             return <Redirect to={search_letters}/>
+        }
+
+        if (this.state.gotoletter === true) {
+            return <Redirect to={gotoletter}/>
         }
 
         const columns = [{
@@ -204,6 +224,28 @@ class Letters extends Component {
                             </form>
                         </td>
                         <td align="right">
+                            <form onSubmit={this.letterbynumber}>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div className='form-group searchfield mb-2 mr-2'>
+                                                <input
+                                                    type="text"
+                                                    id="nr"
+                                                    placeholder='ga naar nummer'
+                                                    onChange={this.handleletternumber}
+                                                    className="form-control textarea"
+                                                />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </form>
+                        </td>
+                        <td align="right">
                             <form onSubmit={this.handleSearchSubmit}>
                                 <table>
                                     <tbody>
@@ -231,7 +273,7 @@ class Letters extends Component {
 
                             </form>
                         </td>
-                    </tr>
+                      </tr>
                     </tbody>
                 </table>
 
