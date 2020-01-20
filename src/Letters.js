@@ -142,7 +142,7 @@ class Letters extends Component {
                 let names = [];
                 let cell_ids = [];
                 _.map(data.senders, sender => {
-                    names.push(sender.first_name + ' ' + (sender.tussenvoegsel != null ? (sender.tussenvoegsel + ' ') : '') + sender.last_name);
+                    names.push(sender.first_name + ' ' + (sender.tussenvoegsel != null ? (sender.tussenvoegsel + ' ') : '') + (sender.last_name != null ? (sender.last_name + ' ') : ''));
                     cell_ids.push(sender.id);
                 });
                 const name_content = names[0];

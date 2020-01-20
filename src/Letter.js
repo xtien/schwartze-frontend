@@ -120,8 +120,11 @@ class Letter extends Component {
 
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
-        const pageNumber = this.state.pageNumber;
-        const go_to_letters = '/get_letters/' + (pageNumber !='undefined' ? pageNumber : 0);
+        let pageNumber = this.state.pageNumber;
+        if (pageNumber == 'undefined' || pageNumber == 0){
+            pageNumber = Math.floor(this.state.letter.number / 20);
+        }
+        const go_to_letters = '/get_letters/' +  pageNumber;
 
         if (this.state.go_search === true) {
             return <Redirect to={search_letters}/>

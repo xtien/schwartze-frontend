@@ -162,7 +162,7 @@ class Subjects extends Component {
                                                     <input
                                                         type="submit"
                                                         className="btn btn-outline-success mybutton"
-                                                        value="Link toevoegen"
+                                                        value="Onderwerp toevoegen"
                                                     />
 
                                                 </form>

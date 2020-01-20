@@ -130,7 +130,7 @@ class EditLetter extends Component {
     render() {
 
         if (this.state.editDone === true) {
-            return <Redirect to={'/get_letter_details/' + this.state.letter.number}></Redirect>
+            return <Redirect to={'/get_letter_details/' + this.state.letter.number + '/0'}></Redirect>
         }
 
         const date = this.state.letter !=null ? this.state.letter.date : '';
