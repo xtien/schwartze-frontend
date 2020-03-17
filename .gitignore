@@ -6,6 +6,8 @@ yarn.lock
 
 *.pem
 
+.env
+
 # hprof files
 *.hprof
 

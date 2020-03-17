@@ -25,7 +25,7 @@ import Locations from "./Locations"
 import People from "./People"
 import Subjects from "./Subjects"
 import References from "./References";
-import twitli from './images/logo64.png'
+import twitli from './images/logo.png'
 import AuthenticationService from "./service/AuthenticationService";
 import SearchLetters from "./SearchLetters";
 
@@ -52,7 +52,7 @@ class App extends Component {
         return (
 
             <Router>
-                <div className='container'>
+                <div className='container nomargin'>
                     <div className='jumbotron'>
                         <table width="100%">
                             <tbody>

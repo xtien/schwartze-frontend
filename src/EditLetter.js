@@ -148,7 +148,7 @@ class EditLetter extends Component {
             tussenvoegsel: '',
             last_name: ''
         };
-        const senderIn = this.state.sender_location != null ? 'in' : '';
+
         const sender_location = this.state.sender_location != null ? this.state.sender_location : {
             id: 0,
             location_name: ''
@@ -157,8 +157,6 @@ class EditLetter extends Component {
             id: 0,
             location_name: ''
         }
-        const recipientIn = this.state.recipient_location != null ? 'in' : '';
-
 
         return (
             <div>

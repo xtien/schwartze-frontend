@@ -17,13 +17,12 @@ class Landing extends Component {
 
             <div className='container'>
                 <div className='photo'>
-                    <img alt="schilderij lizzy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Th%C3%A9r%C3%A8se_Schwartze_-_Portret_van_Lizzie_Ansingh.jpg/1024px-Th%C3%A9r%C3%A8se_Schwartze_-_Portret_van_Lizzie_Ansingh.jpg" height="400" />
-                    <img alt="schilderij therese" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Th%C3%A9r%C3%A8se_Schwartze_038.jpg/1024px-Th%C3%A9r%C3%A8se_Schwartze_038.jpg" height="400" />
+                    <img alt="schilderij lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg" height="400" />
                  </div>
                  <div className='text'><p >
                     Thérèse Schwartze was de eerste vrouw in ons land die met portretschilderen
                     de kost kon verdienen. Haar nichtje, Lizzy Ansingh, leerde al snel tekenen en schilderen
-                    van haar tante. Thérèse's zuster, Georgina, was beelhouwster, en hun broer George Washington
+                    van haar tante. Thérèse's zuster, Georgina, was beelhouwster, hun broer George Washington
                     tekende en schilderde, maar raakte al jong in een psychiatrische inrichting verzeild waar
                     hij verder geen werken van belang meer maakte.</p>
 
