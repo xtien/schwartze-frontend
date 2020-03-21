@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 import AuthenticationService from "./service/AuthenticationService";
 import {Redirect} from "react-router";
-import { useHistory } from 'react-router-dom'
+import jquery from "jquery";
 
 class Letters extends Component {
 
@@ -49,6 +49,22 @@ class Letters extends Component {
             .catch(error => {
                 console.log(error)
             });
+
+        var self = this;
+
+        jquery(document).ready(function($) {
+
+            if (window.history && window.history.pushState) {
+
+                window.history.pushState('forward', null, './#forward');
+
+                $(window).on('popstate', function() {
+                    alert('Back button was pressed.');
+                    self.setState({backButtonPressed : true})
+                });
+
+            }
+        });
     }
 
     getPostData(){
@@ -108,6 +124,10 @@ class Letters extends Component {
     }
 
     render() {
+
+        if(this.state.backButtonPressed === true){
+            return <Redirect to={'/'}/>
+        }
 
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
