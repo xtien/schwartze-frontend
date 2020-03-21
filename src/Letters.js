@@ -49,23 +49,7 @@ class Letters extends Component {
             .catch(error => {
                 console.log(error)
             });
-
-        var self = this;
-
-        jquery(document).ready(function($) {
-
-            if (window.history && window.history.pushState) {
-
-                window.history.pushState('forward', null, './#forward');
-
-                $(window).on('popstate', function() {
-                    alert('Back button was pressed.');
-                    self.setState({backButtonPressed : true})
-                });
-
-            }
-        });
-    }
+     }
 
     getPostData(){
         return {requestCode: 0};
