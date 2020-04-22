@@ -51,7 +51,7 @@ class Text extends Component {
             (location != null) ? location.text : (
                 (person != null ? person.text : (
                     (letter != null ? letter.text : (
-                        back(subject != null) ? subject.text : (
+                        (subject != null) ? subject.text : (
                             ''
                     )))))
             );
