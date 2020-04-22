@@ -80,7 +80,7 @@ class Letter extends Component {
 
     post(number) {
 
-        let postData = {
+        const postData = {
             number: number
         };
 
@@ -121,7 +121,7 @@ class Letter extends Component {
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
         let pageNumber = this.state.pageNumber;
-        if (pageNumber == 'undefined' || pageNumber == 0){
+        if (pageNumber === 'undefined' || pageNumber === 0){
             pageNumber = Math.floor(this.state.letter.number / 20);
         }
         const go_to_letters = '/get_letters/' +  pageNumber;
@@ -138,7 +138,6 @@ class Letter extends Component {
         const letter = this.state.letter;
         const images = this.state.imageData;
         const remarks = this.state.letter.comment;
-        const letterNumber = this.state.letter.number;
         const letterId = this.state.letter.id;
         const listItems = images.map((d) => (
             <div className='letter_image'><img width="1000" alt="original letter" src={d}/></div>));
@@ -273,10 +272,7 @@ class Letter extends Component {
                 <div className='letter'>
                     <div dangerouslySetInnerHTML={{__html: this.state.lettertext}}/>
                 </div>
-                <div className='list_of_letters'>
-                    {listItems}
-                </div>
-                <div className='textpage mt-5 ml-5'>
+                 <div className='textpage mt-5 ml-5'>
                     {letter.text != null && Util.isNotEmpty(letter.text.text_string) ?
                         <div>
                             {/* TODO: this needs to change when others than myself get access to data entry */}
@@ -301,6 +297,10 @@ class Letter extends Component {
                         </Link>
                     </div>
                     : null}
+
+                <div className='list_of_letters'>
+                    {listItems}
+                </div>
 
             </div>
         )

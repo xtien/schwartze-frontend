@@ -6,6 +6,8 @@ yarn.lock
 
 *.pem
 
+.env
+
 # hprof files
 *.hprof
 
@@ -68,3 +70,6 @@ captures/
 
 # Keystore files
 #*.jks
+
+node_modules/
+

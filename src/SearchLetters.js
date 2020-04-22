@@ -4,8 +4,6 @@ import axios from "axios";
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
 import {Link} from "react-router-dom";
-import Util from "./service/Util";
-import {Redirect} from "react-router";
 import _ from "lodash";
 import ReactTable from "react-table";
 

@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 import AuthenticationService from "./service/AuthenticationService";
 import {Redirect} from "react-router";
+import jquery from "jquery";
 
 class Letters extends Component {
 
@@ -30,16 +31,12 @@ class Letters extends Component {
         this.letterbynumber = this.letterbynumber.bind(this);
         this.handleletternumber = this.handleletternumber.bind(this);
 
-        let postData = {
-            requestCode: 0
-        };
-
-        let axiosConfig = AuthenticationService.getAxiosConfig();
-
+        const axiosConfig = AuthenticationService.getAxiosConfig();
+        const pData = this.getPostData();
         const url = process.env.REACT_APP_API_URL + (this.state.order_by === 'number' ? '/get_letters/' : '/get_letters_by_date/');
 
         axios.post(url,
-            postData,
+            pData,
             axiosConfig
         )
             .then(response =>
@@ -52,12 +49,16 @@ class Letters extends Component {
             .catch(error => {
                 console.log(error)
             });
+     }
+
+    getPostData(){
+        return {requestCode: 0};
     }
 
     sort(event) {
         event.preventDefault();
 
-        let postData = {
+        const postData = {
             requestCode: 0
         };
 
@@ -107,6 +108,10 @@ class Letters extends Component {
     }
 
     render() {
+
+        if(this.state.backButtonPressed === true){
+            return <Redirect to={'/'}/>
+        }
 
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
