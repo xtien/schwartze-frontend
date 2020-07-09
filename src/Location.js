@@ -196,7 +196,7 @@ class Location extends Component {
 
             <div>
                 <div className='container letter'>
-                    <h3>{location.location_name}</h3>
+                    <h3>{location.id} {location.location_name}</h3>
                     <p>{location.comment}</p>
                     <p>{location.description}</p>
 
