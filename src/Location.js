@@ -165,7 +165,7 @@ class Location extends Component {
                         <table width="100%">
                             <tr>
                                 <td>
-                                    <a href={link.link_url}>{link.link_name}</a>
+                                    <a href={link.link_url} target="_blank">{link.link_name}</a>
                                 </td>
                                 <td width="20%">
                                     {AuthenticationService.isAdmin() === "true" ?
