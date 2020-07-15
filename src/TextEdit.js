@@ -114,7 +114,7 @@ class TextEdit extends Component {
         const person = this.state.person;
         const letter = this.state.letter;
         const redirectTo =
-            (letter != null && letter.text != null) ? ('/get_letter_details/' + letter.number + '/0') : (
+            (letter != null) ? ('/get_letter_details/' + letter.number + '/0') : (
                 (location != null && location.text != null) ? '/get_location_details/' + location.id : (
                     (person != null) ? '/get_person_details/' + person.id : (
                         '/subjects/')));
@@ -134,20 +134,20 @@ class TextEdit extends Component {
                                 <div>
                                     {this.state.person != null ?
                                         <Link
-                                            to={'get_person' + person.id}>
+                                            to={'/get_person_details/' + person.id}>
                                             <h3> {person.first_name} {(person.tussenvoegsel != null ? (person.tussenvoegsel + ' ') : '')} {person.last_name}</h3></Link>
                                         : null
                                     }</div>
                                 <div>
                                     {this.state.location != null ?
-                                        <Link to={'get_location' + location.id}><h3> {location.location_name}</h3>
+                                        <Link to={'/get_location_details/' + location.id}><h3> {location.location_name}</h3>
                                         </Link>
                                         : null
                                     }
                                 </div>
                                 <div>
                                     {this.state.letter != null ?
-                                        <Link to={'get_letter_details' + letter.id}><h3> Brief {letter.id}</h3>
+                                        <Link to={'/get_letter_details/' + letter.id + '/0'}><h3> Brief {letter.id}</h3>
                                         </Link>
                                         : null
                                     }
