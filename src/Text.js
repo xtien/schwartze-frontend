@@ -67,13 +67,13 @@ class Text extends Component {
                     }</div>
                 <div>
                     {this.state.location != null ?
-                        <h3><Link to={'get_location_details/' + location.id}> {location.location_name}</Link></h3>
+                        <h3><Link to={'/get_location_details/' + location.id}> {location.location_name}</Link></h3>
                         : null
                     }
                 </div>
                 <div>
                     {this.state.letter != null ?
-                        <h3><Link to={'get_letter_details/' + letter.number}> Brief {letter.number}</Link></h3>
+                        <h3><Link to={'/get_letter_details/' + letter.number}> Brief {letter.number}</Link></h3>
                         : null
                     }
                 </div>
