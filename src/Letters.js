@@ -155,6 +155,7 @@ class Letters extends Component {
         }, {
             Header: 'location',
             id: 'sender_location',
+            width: 100,
             accessor: data => {
                 let locations = [];
                 let ids = [];
@@ -184,6 +185,7 @@ class Letters extends Component {
         }, {
             Header: 'location',
             id: 'recipient_location',
+            width: 100,
             accessor: data => {
                 let locations = [];
                 let ids = [];
@@ -202,7 +204,8 @@ class Letters extends Component {
             accessor: 'remarks',
         }, {
             Header: 'date',
-            accessor: 'date'
+            accessor: 'date',
+            width: 100
         }]
 
         return (
