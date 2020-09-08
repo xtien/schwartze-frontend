@@ -94,6 +94,7 @@ class PersonFromLetters extends Component {
             },
         }, {
             Header: 'location',
+            width: 100,
             id: 'recipient_location',
             accessor: data => {
                 let locations = [];
@@ -113,6 +114,7 @@ class PersonFromLetters extends Component {
             accessor: 'remarks',
         }, {
             Header: 'date',
+            width: 100,
             accessor: 'date'
         }]
 

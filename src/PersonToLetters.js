@@ -67,6 +67,7 @@ class PersonToLetters extends Component {
             },
         }, {
             Header: 'location',
+            width: 100,
             id: 'sender_location',
             accessor: data => {
                 let locations = [];
@@ -113,6 +114,7 @@ class PersonToLetters extends Component {
             accessor: 'remarks',
         }, {
             Header: 'date',
+            width: 100,
             accessor: 'date'
         }]
 
