@@ -161,12 +161,12 @@ class CombinePersonForm
                 <div className="letter text-black-50">
                     <div>
                         <p>
-                            {person1.id} {person1.first_name} {person1.middle_name} {person1.last_name}
+                            {person1.id} {person1.nick_name} {person1.full_name} {person1.last_name}
                         </p>
                     </div>
                     <div>
                         <p>
-                            {person2.id} {person2.first_name} {person2.middle_name} {person2.last_name}
+                            {person2.id} {person2.nick_name} {person2.full_name} {person2.last_name}
                         </p>
                     </div>
                 </div>

@@ -32,11 +32,11 @@ class AddLetter extends Component {
     }
 
     handleFirstNameChange(event) {
-        this.setState({first_name: event.target.value});
+        this.setState({nick_name: event.target.value});
     }
 
     handleMiddleNameChange(event) {
-        this.setState({middle_name: event.target.value});
+        this.setState({full_name: event.target.value});
     }
 
     handleLastNameChange(event) {
@@ -87,7 +87,7 @@ class AddLetter extends Component {
                     <input
                         type="text"
                         className="form-control textarea"
-                        id="first_name"
+                        id="nick_name"
                         value={this.state.sender}
                         onChange={this.handleFirstNameChange}
                     />
@@ -97,7 +97,7 @@ class AddLetter extends Component {
                     <input
                         type="text"
                         className="form-control textarea"
-                        id="middle_name"
+                        id="full_name"
                         value={this.state.sender_location}
                         onChange={this.handleMiddleNameChange}
                     />

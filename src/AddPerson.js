@@ -12,8 +12,8 @@ class AddPerson extends Component {
 
         this.state = {
             id: 0,
-            first_name: this.props.first_name,
-            middle_name: this.props.middle_name,
+            nick_name: this.props.nick_name,
+            full_name: this.props.full_name,
             tussenvoegsel: this.props.tussenvoegsel,
             last_name: this.props.last_name,
             comment: this.props.comment,
@@ -35,11 +35,11 @@ class AddPerson extends Component {
     }
 
     handleFirstNameChange(event) {
-        this.setState({first_name: event.target.value});
+        this.setState({nick_name: event.target.value});
     }
 
     handleMiddleNameChange(event) {
-        this.setState({middle_name: event.target.value});
+        this.setState({full_name: event.target.value});
     }
 
     handleTussenvoegselChange(event) {
@@ -59,8 +59,8 @@ class AddPerson extends Component {
 
         let postData = {
             person: {
-                first_name: this.state.first_name,
-                middle_name: this.state.middle_name,
+                nick_name: this.state.nick_name,
+                full_name: this.state.full_name,
                 tussenvoegsel: this.state.tussenvoegsel,
                 last_name: this.state.last_name,
                 comment: this.state.comment,
@@ -97,14 +97,14 @@ class AddPerson extends Component {
 
         return (
             <form onSubmit={this.handleSubmit}>
-                <div><p>{this.state.person.first_name} {this.state.person.last_name}</p></div>
+                <div><p>{this.state.person.nick_name} {this.state.person.last_name}</p></div>
                 <div className="form-group">
                     <label htmlFor="status">First name</label>
                     <input
                         type="text"
                         className="form-control textarea"
-                        id="first_name"
-                        value={this.state.first_name}
+                        id="nick_name"
+                        value={this.state.nick_name}
                         onChange={this.handleFirstNameChange}
                     />
                 </div>
@@ -113,8 +113,8 @@ class AddPerson extends Component {
                     <input
                         type="text"
                         className="form-control textarea"
-                        id="middle_name"
-                        value={this.state.middle_name}
+                        id="full_name"
+                        value={this.state.full_name}
                         onChange={this.handleMiddleNameChange}
                     />
                 </div>
@@ -123,7 +123,7 @@ class AddPerson extends Component {
                     <input
                         type="text"
                         className="form-control textarea"
-                        id="middle_name"
+                        id="full_name"
                         value={this.state.tussenvoegsel}
                         onChange={this.handleTussenvoegselChange}
                     />

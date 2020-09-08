@@ -136,15 +136,15 @@ class EditLetter extends Component {
         const date = this.state.letter !=null ? this.state.letter.date : '';
         const sender = this.state.sender != null ? this.state.sender : {
             id: 0,
-            first_name: '',
-            middle_name: '',
+            nick_name: '',
+            full_name: '',
             tussenvoegsel: '',
             last_name: ''
         };
         const recipient = this.state.recipient != null ? this.state.recipient : {
             id: 0,
-            first_name: '',
-            middle_name: '',
+            nick_name: '',
+            full_name: '',
             tussenvoegsel: '',
             last_name: ''
         };
@@ -186,7 +186,7 @@ class EditLetter extends Component {
                                     Afzender:
                                 </td>
                                 <td>
-                                    {sender.first_name} {sender.middle_name} {sender.last_name} in {sender_location.name}
+                                    {sender.nick_name} {sender.full_name} {sender.last_name} in {sender_location.name}
                                 </td>
                             </tr>
                              <tr>
@@ -227,7 +227,7 @@ class EditLetter extends Component {
                                     Ontvanger
                                 </td>
                                 <td>
-                                    {recipient.first_name} {recipient.middle_name} {recipient.last_name} in {recipient_location.name}
+                                    {recipient.nick_name} {recipient.full_name} {recipient.last_name} in {recipient_location.name}
                                 </td>
                             </tr>
                             <tr>

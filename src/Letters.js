@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 import AuthenticationService from "./service/AuthenticationService";
 import {Redirect} from "react-router";
-import jquery from "jquery";
 
 class Letters extends Component {
 
@@ -144,17 +143,14 @@ class Letters extends Component {
             Header: 'sender ',
             id: 'senders',
             accessor: data => {
-                let names = [];
-                let cell_ids = [];
-                _.map(data.senders, sender => {
-                    names.push(sender.first_name + ' ' + (sender.tussenvoegsel != null ? (sender.tussenvoegsel + ' ') : '') + (sender.last_name != null ? (sender.last_name + ' ') : ''));
-                    cell_ids.push(sender.id);
-                });
-                const name_content = names[0];
-                const id_content = cell_ids[0];
-                const linkto = '/get_person_details/' + id_content;
-                let result = <Link to={linkto}>{name_content}</Link>
-                return result;
+                let senderList = []
+                if (data !=null && data.senders !=null) {
+                    senderList = data.senders.map((r) => <span><Link
+                        to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
+                } else {
+                    senderList = '';
+                }
+                return senderList;
             },
         }, {
             Header: 'location',
@@ -176,17 +172,14 @@ class Letters extends Component {
             Header: 'recipient ',
             id: 'recipients',
             accessor: data => {
-                let names = [];
-                let cell_ids = [];
-                _.map(data.recipients, recipient => {
-                    names.push(recipient.first_name + ' ' + (recipient.tussenvoegsel != null ? (recipient.tussenvoegsel + ' ') : '') + recipient.last_name);
-                    cell_ids.push(recipient.id);
-                });
-                const name_content = names.join(', ');
-                const id_content = cell_ids;
-                const linkto = '/get_person_details/' + id_content;
-                let result = <Link to={linkto}>{name_content}</Link>
-                return result;
+                let recipientList = []
+                if (data !=null && data.recipients !=null) {
+                    recipientList = data.recipients.map((r) => <span><Link
+                        to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
+                } else {
+                    recipientList = '';
+                }
+                 return recipientList;
             },
         }, {
             Header: 'location',

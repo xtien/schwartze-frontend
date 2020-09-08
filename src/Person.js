@@ -201,12 +201,12 @@ class Person extends Component {
         if(person.brieven_van === true){
             brievenVan = <Link
                 to={`/get_letters_from_person/${person.id}`}> Brieven
-                van {person.first_name} </Link>
+                van {person.nick_name} </Link>
         }
         let brievenAan = '';
         if(person.brieven_aan === true){
             brievenAan = <Link to={`/get_letters_to_person/${person.id}`}> Brieven
-                aan {person.first_name} </Link>
+                aan {person.nick_name} </Link>
         }
 
         if (this.state.combine === true) {
@@ -278,7 +278,7 @@ class Person extends Component {
                                     </table>
                                 </div>
                                 <p>
-                                    {person.id} {person.first_name} {person.middle_name} {person.tussenvoegsel} {person.last_name}
+                                    {person.id} {person.nick_name} ({person.full_name}) {person.tussenvoegsel} {person.last_name}
                                 </p>
                                 <p>Geboren: {person.date_of_birth}</p>
                                 <p>Overleden: {person.date_of_death}</p>
@@ -339,8 +339,8 @@ class Person extends Component {
                             comment={this.state.person.comment}
                             links={this.state.person.links}
                             id={this.state.person.id}
-                            first_name={this.state.person.first_name}
-                            middle_name={this.state.person.middle_name}
+                            nick_name={this.state.person.nick_name}
+                            full_name={this.state.person.full_name}
                             tussenvoegsel={this.state.person.tussenvoegsel}
                             last_name={this.state.person.last_name}
                             date_of_birth={this.state.person.date_of_birth}
@@ -432,8 +432,8 @@ class EditPersonForm extends React.Component {
 
         this.state = {
             id: this.props.id,
-            first_name: this.props.first_name,
-            middle_name: this.props.middle_name,
+            nick_name: this.props.nick_name,
+            full_name: this.props.full_name,
             tussenvoegsel: this.props.tussenvoegsel,
             last_name: this.props.last_name,
             date_of_birth: this.props.date_of_birth,
@@ -446,8 +446,8 @@ class EditPersonForm extends React.Component {
             person: {}
         };
 
-        this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-        this.handleMiddleNameChange = this.handleMiddleNameChange.bind(this);
+        this.handleNickNameChange = this.handleNickNameChange.bind(this);
+        this.handleFullNameChange = this.handleFullNameChange.bind(this);
         this.handleTussenvoegselChange = this.handleTussenvoegselChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
         this.handlecommentChange = this.handlecommentChange.bind(this);
@@ -472,12 +472,12 @@ class EditPersonForm extends React.Component {
         this.setState({image_caption: event.target.value});
     }
 
-    handleFirstNameChange(event) {
-        this.setState({first_name: event.target.value});
+    handleNickNameChange(event) {
+        this.setState({nick_name: event.target.value});
     }
 
-    handleMiddleNameChange(event) {
-        this.setState({middle_name: event.target.value});
+    handleFullNameChange(event) {
+        this.setState({full_name: event.target.value});
     }
 
     handleTussenvoegselChange(event) {
@@ -514,8 +514,8 @@ class EditPersonForm extends React.Component {
         let postData = {
             person: {
                 id: this.state.id,
-                first_name: this.state.first_name,
-                middle_name: this.state.middle_name,
+                nick_name: this.state.nick_name,
+                full_name: this.state.full_name,
                 tussenvoegsel: this.state.tussenvoegsel,
                 last_name: this.state.last_name,
                 comment: this.state.comment,
@@ -558,16 +558,16 @@ class EditPersonForm extends React.Component {
             <div>
                 <form onSubmit={this.handleSubmit}>
                     <div>
-                        <p>{this.state.person.first_name} {this.state.person.tussenvoegsel} {this.state.person.last_name}</p>
+                        <p>{this.state.person.nick_name} {this.state.person.tussenvoegsel} {this.state.person.last_name}</p>
                     </div>
                     <div className="form-group">
                         <label htmlFor="status">First name</label>
                         <input
                             type="text"
                             className="form-control textarea"
-                            id="first_name"
-                            value={this.state.first_name}
-                            onChange={this.handleFirstNameChange}
+                            id="nick_name"
+                            value={this.state.nick_name}
+                            onChange={this.handleNickNameChange}
                         />
                     </div>
                     <div className="form-group">
@@ -575,9 +575,9 @@ class EditPersonForm extends React.Component {
                         <input
                             type="text"
                             className="form-control textarea"
-                            id="middle_name"
-                            value={this.state.middle_name}
-                            onChange={this.handleMiddleNameChange}
+                            id="full_name"
+                            value={this.state.full_name}
+                            onChange={this.handleFullNameChange}
                         />
                     </div>
                     <div className="form-group">

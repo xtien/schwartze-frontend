@@ -135,7 +135,7 @@ class TextEdit extends Component {
                                     {this.state.person != null ?
                                         <Link
                                             to={'/get_person_details/' + person.id}>
-                                            <h3> {person.first_name} {(person.tussenvoegsel != null ? (person.tussenvoegsel + ' ') : '')} {person.last_name}</h3></Link>
+                                            <h3> {person.nick_name} {(person.tussenvoegsel != null ? (person.tussenvoegsel + ' ') : '')} {person.last_name}</h3></Link>
                                         : null
                                     }</div>
                                 <div>
@@ -147,7 +147,7 @@ class TextEdit extends Component {
                                 </div>
                                 <div>
                                     {this.state.letter != null ?
-                                        <Link to={'/get_letter_details/' + letter.id + '/0'}><h3> Brief {letter.id}</h3>
+                                        <Link to={'/get_letter_details/' + letter.number + '/0'}><h3> Brief {letter.number}</h3>
                                         </Link>
                                         : null
                                     }

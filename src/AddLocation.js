@@ -77,7 +77,7 @@ class AddLocation extends Component {
                     <input
                         type="text"
                         className="form-control textarea"
-                        id="first_name"
+                        id="nick_name"
                         value={this.state.location_name}
                         onChange={this.handleLocationNameChange}
                     />
