@@ -198,13 +198,13 @@ class Person extends Component {
         }
 
         let brievenVan = '';
-        if(person.brieven_van === true){
+        if (person.brieven_van === true) {
             brievenVan = <Link
                 to={`/get_letters_from_person/${person.id}`}> Brieven
                 van {person.nick_name} </Link>
         }
         let brievenAan = '';
-        if(person.brieven_aan === true){
+        if (person.brieven_aan === true) {
             brievenAan = <Link to={`/get_letters_to_person/${person.id}`}> Brieven
                 aan {person.nick_name} </Link>
         }
@@ -256,6 +256,11 @@ class Person extends Component {
             });
         }
 
+        let fullname = '';
+        if (person.full_name != null && person.full_name.length > 0) {
+            fullname = '(' + person.full_name + ')'
+        }
+
         return (
             <div>
                 <div className='container letter'>
@@ -278,7 +283,7 @@ class Person extends Component {
                                     </table>
                                 </div>
                                 <p>
-                                    {person.id} {person.nick_name} ({person.full_name}) {person.tussenvoegsel} {person.last_name}
+                                    {person.id} {person.nick_name} {fullname} {person.tussenvoegsel} {person.last_name}
                                 </p>
                                 <p>Geboren: {person.date_of_birth}</p>
                                 <p>Overleden: {person.date_of_death}</p>
@@ -561,7 +566,7 @@ class EditPersonForm extends React.Component {
                         <p>{this.state.person.nick_name} {this.state.person.tussenvoegsel} {this.state.person.last_name}</p>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="status">First name</label>
+                        <label htmlFor="status">Nick name</label>
                         <input
                             type="text"
                             className="form-control textarea"
@@ -571,7 +576,7 @@ class EditPersonForm extends React.Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="status">Middle name</label>
+                        <label htmlFor="status">Full name</label>
                         <input
                             type="text"
                             className="form-control textarea"
