@@ -3,6 +3,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
+import arrow_left from "./images/arrow_left.png";
 
 class Text extends Component {
 
@@ -53,7 +54,7 @@ class Text extends Component {
                     (letter != null ? letter.text : (
                         (subject != null) ? subject.text : (
                             ''
-                    )))))
+                        )))))
             );
 
         return (
@@ -79,7 +80,9 @@ class Text extends Component {
                 </div>
                 <div>
                     {this.state.subject != null ?
-                        <h3> {subject.name}</h3>
+                        <div>
+                            <h3>     {subject.name}</h3>
+                        </div>
                         : null
                     }
                 </div>
@@ -90,6 +93,8 @@ class Text extends Component {
                         : null
                     }
                 </div>
+                <div className='mt-5'>
+                    <h3 className='mt-5'><Link to={'/subjects/'}><img src={arrow_left} alt="back"/></Link></h3></div>
             </div>
         )
     }
