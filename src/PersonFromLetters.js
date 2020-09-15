@@ -70,12 +70,14 @@ class PersonFromLetters extends Component {
             id: 'sender_location',
             accessor: data => {
                 let locations = [];
+                let cell_ids = [];
                 _.map(data.sender_location, location => {
-                    const locationName = location.name;
-                    locations.push(locationName);
+                    locations.push(location.name);
+                    cell_ids.push(location.id);
                 });
                 const location_content = locations.join(', ');
-                const linkTo = '/get_location_details/' + location_content;
+                const id_content = cell_ids;
+                const linkTo = '/get_location_details/' + id_content;
                 let result = <Link to={linkTo}>{location_content}</Link>
                 return result;
             },

@@ -16,6 +16,7 @@ class Location extends Component {
             locationText: '',
             location: {},
             showLinkEdit: false,
+            showNameEdit: false,
             link_id: '',
             link_name: '',
             link_url: '',
@@ -23,6 +24,7 @@ class Location extends Component {
 
         this.add_link = this.add_link.bind(this);
         this.edit_link = this.edit_link.bind(this);
+        this.edit_name = this.edit_name.bind(this);
         this.delete_link = this.delete_link.bind(this);
         this.combine = this.combine.bind(this);
         this.delete = this.delete.bind(this);
@@ -52,6 +54,13 @@ class Location extends Component {
     setLocation = (location) => {
         this.setState({
             showLinkEdit: false,
+            location: location
+        })
+    }
+
+    setLocationName = (location) => {
+        this.setState({
+            showNameEdit: false,
             location: location
         })
     }
@@ -129,6 +138,16 @@ class Location extends Component {
         )
     }
 
+    edit_name(event) {
+        event.preventDefault();
+
+        this.setState(
+            {
+                showNameEdit: true
+            }
+        )
+    }
+
     combine(event) {
         event.preventDefault();
 
@@ -165,7 +184,8 @@ class Location extends Component {
                         <table width="100%">
                             <tr>
                                 <td>
-                                    <a href={link.link_url} target="_blank">{link.link_name}</a>
+                                    <a href={link.link_url} target="_blank"
+                                       rel="noopener noreferrer">{link.link_name}</a>
                                 </td>
                                 <td width="20%">
                                     {AuthenticationService.isAdmin() === "true" ?
@@ -197,14 +217,17 @@ class Location extends Component {
             <div>
                 <div className='container letter'>
                     <h3>{location.id} {location.location_name}</h3>
+                    <h4><Link to={`/get_letters_for_location/${location.id}`}>Letters</Link></h4>
                     <p>{location.comment}</p>
                     <p>{location.description}</p>
 
                     <div className='textpage mt-5 ml-5'>
                         {location.text != null && Util.isNotEmpty(location.text.text_string) ?
                             <div>
-                                 {/* TODO: this needs to change when others than myself get access to data entry */}
-                                <p><div dangerouslySetInnerHTML={{__html: location.text.text_string.substr(0, 300)}}/></p>
+                                {/* TODO: this needs to change when others than myself get access to data entry */}
+                                <p>
+                                    <div dangerouslySetInnerHTML={{__html: location.text.text_string.substr(0, 300)}}/>
+                                </p>
                                 {location.text.text_string.length > 300 ?
                                     <p>
                                         <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
@@ -221,6 +244,16 @@ class Location extends Component {
                     {AuthenticationService.isAdmin() === "true" ?
 
                         <div className="mt-5">
+
+                            {this.state.showNameEdit ? (
+
+                                <EditNameForm
+                                    location_id={this.state.location.id}
+                                    location_name={this.state.location.name}
+                                    setLocationName={this.setLocationName}
+                                />
+                            ) : null}
+
                             {this.state.showLinkEdit ? (
                                     <EditLinkForm
                                         location_id={this.state.location.id}
@@ -245,6 +278,16 @@ class Location extends Component {
                                     <table>
                                         <tbody>
                                         <tr>
+                                            <td>
+                                                <form onSubmit={this.edit_name} className='mt-5 ml-5 mb-5'>
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-outline-success mybutton"
+                                                        value="Edit locatie naam"
+                                                    />
+
+                                                </form>
+                                            </td>
                                             <td>
                                                 <form onSubmit={this.add_link} className='mt-5 ml-5 mb-5'>
                                                     <input
@@ -284,6 +327,70 @@ class Location extends Component {
             </div>
         )
     }
+}
+
+class EditNameForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            location: {},
+            location_id: this.props.location_id,
+            location_name: this.props.location_name,
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+    }
+
+    render() {
+
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="status">Locatie naam</label>
+                    <input
+                        type="text"
+                        className="form-control textarea"
+                        id="location_name"
+                        value={this.state.location_name}
+                        onChange={this.handleNameChange}
+                    />
+                </div>
+                <input
+                    type="submit"
+                    className="btn btn-outline-success mybutton"
+                    value="Submit"
+                />
+            </form>
+        );
+    }
+
+    handleNameChange(event) {
+        this.setState({location_name: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        let postData = {
+            id: this.state.location_id,
+            name: this.state.location_name,
+        };
+
+        axios.post(process.env.REACT_APP_API_URL + '/admin/update_location/',
+            postData,
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response => {
+                    this.props.setLocationName(response.data.location)
+                }
+            )
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
 }
 
 class EditLinkForm extends React.Component {

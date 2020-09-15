@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 import AuthenticationService from "./service/AuthenticationService";
 
-class PersonToLetters extends Component {
+class LettersForLocation extends Component {
 
     constructor(props) {
         super(props)
@@ -24,10 +24,10 @@ class PersonToLetters extends Component {
 
         let postData = {
             requestCode: 0,
-            toId: id
+            location_id: id
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/get_letters_to_person/',
+        axios.post(process.env.REACT_APP_API_URL + '/get_letters_for_location/',
             postData,
             AuthenticationService.getAxiosConfig()
         )
@@ -57,7 +57,7 @@ class PersonToLetters extends Component {
             id: 'senders',
             accessor: data => {
                 let senderList = []
-                if (data !=null && data.senders !=null) {
+                if (data != null && data.senders != null) {
                     senderList = data.senders.map((r) => <span><Link
                         to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
                 } else {
@@ -87,7 +87,7 @@ class PersonToLetters extends Component {
             id: 'recipients',
             accessor: data => {
                 let recipientList = []
-                if (data !=null && data.recipients !=null) {
+                if (data != null && data.recipients != null) {
                     recipientList = data.recipients.map((r) => <span><Link
                         to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
                 } else {
@@ -131,4 +131,4 @@ class PersonToLetters extends Component {
     }
 }
 
-export default PersonToLetters
+export default LettersForLocation
