@@ -22,7 +22,7 @@ class Landing extends Component {
                  <div className='text'><p >
                     Thérèse Schwartze was de eerste vrouw in ons land die met portretschilderen
                     de kost kon verdienen. Haar nichtje, Lizzy Ansingh, leerde al snel tekenen en schilderen
-                    van haar tante. Thérèse's zuster, Georgina, was beelhouwster, hun broer George Washington
+                    van haar tante. Thérèse's zuster, Georgina, was beeldhouwster, hun broer George Washington
                     tekende en schilderde, maar raakte al jong in een psychiatrische inrichting verzeild waar
                     hij verder geen werken van belang meer maakte.</p>
 

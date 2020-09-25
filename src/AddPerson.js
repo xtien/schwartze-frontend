@@ -99,7 +99,7 @@ class AddPerson extends Component {
             <form onSubmit={this.handleSubmit}>
                 <div><p>{this.state.person.nick_name} {this.state.person.last_name}</p></div>
                 <div className="form-group">
-                    <label htmlFor="status">First name</label>
+                    <label htmlFor="status">Nick name</label>
                     <input
                         type="text"
                         className="form-control textarea"
@@ -109,7 +109,7 @@ class AddPerson extends Component {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="status">Middle name</label>
+                    <label htmlFor="status">Full first name</label>
                     <input
                         type="text"
                         className="form-control textarea"

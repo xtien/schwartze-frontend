@@ -93,8 +93,6 @@ class Text extends Component {
                         : null
                     }
                 </div>
-                <div className='mt-5'>
-                    <h3 className='mt-5'><Link to={'/subjects/'}><img src={arrow_left} alt="back"/></Link></h3></div>
             </div>
         )
     }
