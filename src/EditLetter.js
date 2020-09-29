@@ -4,6 +4,7 @@ import axios from "axios";
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
 import {Redirect} from "react-router";
+import {Link} from "react-router-dom";
 
 class EditLetter extends Component {
 
@@ -13,10 +14,12 @@ class EditLetter extends Component {
         this.state = {
             letter: {},
             editDone: false,
-            sender: {},
-            recipient: {},
+            senders: [],
+            recipients: [],
             sender_location: {},
-            recipient_location: {}
+            recipient_location: {},
+            recipientsString: '',
+            sendersString: ''
         }
 
         this.handleSenderId = this.handleSenderId.bind(this);
@@ -37,10 +40,41 @@ class EditLetter extends Component {
             .then(response => {
                     this.setState({
                         letter: response.data.letter,
-                        sender: response.data.letter.senders[0],
-                        recipient: response.data.letter.recipients[0],
+                        senders: response.data.letter.senders,
+                        recipients: response.data.letter.recipients,
                         sender_location: response.data.letter.sender_location[0],
                         recipient_location: response.data.letter.recipient_location[0]
+                    })
+
+                    let senderIdList = ''
+                    if (this.state != null && this.state.senders != null && this.state.senders.length > 0) {
+                        senderIdList = this.state.senders.map((r) =>
+                            r.id);
+                    }
+                    let senderIds = ''
+                    let id
+                    for (id in senderIdList) {
+                        senderIds += senderIdList[id];
+                        if (id < senderIdList.length - 1) {
+                            senderIds += ','
+                        }
+                    }
+                    let recipientIdList = ''
+                    if (this.state != null && this.state.recipients != null && this.state.recipients.length > 0) {
+                        recipientIdList = this.state.recipients.map((r) =>
+                            r.id);
+                    }
+                    let recipientIds = ''
+                    for (id in recipientIdList) {
+                        recipientIds += recipientIdList[id];
+                        if (id < recipientIdList.length - 1) {
+                            recipientIds += ','
+                        }
+                    }
+
+                    this.setState({
+                        sendersString: senderIds,
+                        recipientsString: recipientIds
                     })
                 }
             )
@@ -51,11 +85,9 @@ class EditLetter extends Component {
 
     handleSenderId(event) {
         const value = event.target.value;
+
         this.setState(prevState => ({
-            sender: {
-                ...prevState.sender,
-                id: value
-            }
+            sendersString: value
         }))
     }
 
@@ -71,11 +103,9 @@ class EditLetter extends Component {
 
     handleRecipientId(event) {
         const value = event.target.value;
+
         this.setState(prevState => ({
-            recipient: {
-                ...prevState.recipient,
-                id: value
-            }
+            recipientsString: value
         }))
     }
 
@@ -102,9 +132,30 @@ class EditLetter extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
+        let x
+        let sendersList = []
+        let splitSenders = this.state.sendersString.replace(/ /g, '').replace(/(^,)|(,$)/g, "").split(',')
+        for (x in splitSenders) {
+             sendersList.push(
+                {
+                    id: splitSenders[x]
+                }
+            )
+        }
+        let y
+        let recipientList = []
+        let splitRecipients = this.state.recipientsString.replace(' ', '').replace(/(^,)|(,$)/g, '').split(',')
+        for (y in splitRecipients) {
+            recipientList.push(
+                {
+                    id: splitRecipients[y]
+                }
+            )
+        }
+
         let updated_letter = this.state.letter;
-        updated_letter.senders = [this.state.sender];
-        updated_letter.recipients = [this.state.recipient];
+        updated_letter.senders = sendersList;
+        updated_letter.recipients = recipientList;
         updated_letter.sender_location = [this.state.sender_location];
         updated_letter.recipient_location = [this.state.recipient_location];
 
@@ -129,25 +180,28 @@ class EditLetter extends Component {
 
     render() {
 
-        if (this.state.editDone === true) {
+        if (this.state.editDone === true && this.state.letter != null) {
             return <Redirect to={'/get_letter_details/' + this.state.letter.number + '/0'}></Redirect>
         }
 
-        const date = this.state.letter !=null ? this.state.letter.date : '';
-        const sender = this.state.sender != null ? this.state.sender : {
-            id: 0,
-            nick_name: '',
-            full_name: '',
-            tussenvoegsel: '',
-            last_name: ''
-        };
-        const recipient = this.state.recipient != null ? this.state.recipient : {
-            id: 0,
-            nick_name: '',
-            full_name: '',
-            tussenvoegsel: '',
-            last_name: ''
-        };
+        const date = this.state.letter != null ? this.state.letter.date : '';
+
+        let senderList = []
+        if (this.state != null && this.state.senders != null) {
+            senderList = this.state.senders.map((r) => <span>
+                {r.nick_name} {r.tussenvoegsel} {r.last_name} </span>);
+        } else {
+            senderList = '';
+        }
+
+
+        let recipientList = []
+        if (this.state != null && this.state.recipients != null) {
+            recipientList = this.state.recipients.map((r) => <span>
+                {r.nick_name} {r.tussenvoegsel} {r.last_name} </span>);
+        } else {
+            recipientList = '';
+        }
 
         const sender_location = this.state.sender_location != null ? this.state.sender_location : {
             id: 0,
@@ -167,9 +221,10 @@ class EditLetter extends Component {
                         <table width="600px">
                             <tbody>
                             <tr>
-                                <td width="150px"><div className='mb-5'>
-                                    Datum:
-                                </div>
+                                <td width="150px">
+                                    <div className='mb-5'>
+                                        Datum:
+                                    </div>
                                 </td>
                                 <td>
                                     <input
@@ -186,10 +241,10 @@ class EditLetter extends Component {
                                     Afzender:
                                 </td>
                                 <td>
-                                    {sender.nick_name} {sender.full_name} {sender.last_name} in {sender_location.name}
+                                    {senderList} in {sender_location.name}
                                 </td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td>
                                     <label className='mr-3' htmlFor="status">Persoon id</label>
                                 </td>
@@ -197,8 +252,8 @@ class EditLetter extends Component {
                                     <input
                                         type="text"
                                         className='form-control textarea mt-1 w-25'
-                                        id="sender.id"
-                                        value={sender.id}
+                                        id="senderId"
+                                        value={this.state.sendersString}
                                         onChange={this.handleSenderId}
                                     />
                                 </td>
@@ -227,7 +282,7 @@ class EditLetter extends Component {
                                     Ontvanger
                                 </td>
                                 <td>
-                                    {recipient.nick_name} {recipient.full_name} {recipient.last_name} in {recipient_location.name}
+                                    {recipientList} in {recipient_location.name}
                                 </td>
                             </tr>
                             <tr>
@@ -237,7 +292,7 @@ class EditLetter extends Component {
                                         type="text"
                                         className='form-control textarea mt-1 w-25'
                                         id="recipientid"
-                                        value={recipient.id}
+                                        value={this.state.recipientsString}
                                         onChange={this.handleRecipientId}
                                     />
                                 </td>
