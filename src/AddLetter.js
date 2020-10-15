@@ -11,56 +11,34 @@ class AddLetter extends Component {
         super(props);
 
         this.state = {
-            sender: '',
-            sender_location: '',
-            recipient: '',
-            recipient_location: '',
-            date: '',
-            letter: {}
+            number: '',
+            date: ''
         };
 
-        this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-        this.handleMiddleNameChange = this.handleMiddleNameChange.bind(this);
-        this.handleLastNameChange = this.handleLastNameChange.bind(this);
-        this.handleCommentChange = this.handleCommentChange.bind(this);
-        this.handleLinksChange = this.handleLinksChange.bind(this);
+        this.handleNumberChange = this.handleNumberChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
     }
 
-    handleCommentChange(event) {
-        this.setState({comment: event.target.value});
+    handleDateChange(event) {
+        this.setState({date: event.target.value});
     }
 
-    handleFirstNameChange(event) {
-        this.setState({nick_name: event.target.value});
-    }
-
-    handleMiddleNameChange(event) {
-        this.setState({full_name: event.target.value});
-    }
-
-    handleLastNameChange(event) {
-        this.setState({last_name: event.target.value});
-    }
-
-    handleLinksChange(event) {
-        this.setState({links: event.target.value});
+    handleNumberChange(event) {
+        this.setState({number: event.target.value});
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
         let postData = {
-            person: {
-                sender: this.state.sender,
-                sender_location: this.state.sender_location,
-                recipient: this.state.recipient,
-                recipient_location: this.state.recipient_location,
-                date: this.state.date,
+            letter: {
+                number: this.state.number,
+                 date: this.state.date,
             }
         };
 
-        axios.post(process.env.REACT_APP_API_URL + process.env.REACT_APP_API_URL + '/admin/add_letter/',
+        axios.post(process.env.REACT_APP_API_URL  + '/admin/add_letter/',
             postData,
             AuthenticationService.getAxiosConfig()
         )
@@ -69,7 +47,14 @@ class AddLetter extends Component {
                     editDone: true,
                     number: response.data.letter.number
                 })
-            );
+            )
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
+            });
     }
 
     render() {
@@ -83,53 +68,23 @@ class AddLetter extends Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="status">Afzender</label>
+                    <label htmlFor="status">Nummer</label>
                     <input
                         type="text"
                         className="form-control textarea"
-                        id="nick_name"
-                        value={this.state.sender}
-                        onChange={this.handleFirstNameChange}
+                        id="number"
+                        value={this.state.number}
+                        onChange={this.handleNumberChange}
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="status">Locatie afzender</label>
-                    <input
-                        type="text"
-                        className="form-control textarea"
-                        id="full_name"
-                        value={this.state.sender_location}
-                        onChange={this.handleMiddleNameChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="status">Ontvanger</label>
-                    <input
-                        type="text"
-                        className="form-control textarea"
-                        id="last_name"
-                        value={this.state.recipient}
-                        onChange={this.handleLastNameChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="status">Locatie ontvanger</label>
-                    <input
-                        type="text"
-                        className="form-control textarea"
-                        id="comments"
-                        value={this.state.recipient_location}
-                        onChange={this.handleCommentChange}
-                    />
-                </div>
-                <div className="form-group">
+                 <div className="form-group">
                     <label htmlFor="header">Datum</label>
                     <input
                         type="text"
                         className="form-control textarea"
                         id="links"
                         value={this.state.date}
-                        onChange={this.handleLinksChange}
+                        onChange={this.handleDateChange}
                     />
                 </div>
                 <input
