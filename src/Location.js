@@ -65,6 +65,13 @@ class Location extends Component {
         })
     }
 
+    setLocationComment = (comment) => {
+        this.setState({
+            showNameEdit: false,
+            comment: comment
+        })
+    }
+
     delete(event) {
         event.preventDefault();
 
@@ -219,7 +226,6 @@ class Location extends Component {
                     <h3>{location.id} {location.location_name}</h3>
                     <h4><Link to={`/get_letters_for_location/${location.id}`}>Letters</Link></h4>
                     <p>{location.comment}</p>
-                    <p>{location.description}</p>
 
                     <div className='textpage mt-5 ml-5'>
                         {location.text != null && Util.isNotEmpty(location.text.text_string) ?
@@ -250,7 +256,9 @@ class Location extends Component {
                                 <EditNameForm
                                     location_id={this.state.location.id}
                                     location_name={this.state.location.name}
+                                    location_comment={this.state.location.comment}
                                     setLocationName={this.setLocationName}
+                                    setLocationComment={this.setLocationComment}
                                 />
                             ) : null}
 
@@ -283,7 +291,7 @@ class Location extends Component {
                                                     <input
                                                         type="submit"
                                                         className="btn btn-outline-success mybutton"
-                                                        value="Edit locatie naam"
+                                                        value="Edit"
                                                     />
 
                                                 </form>
@@ -338,9 +346,11 @@ class EditNameForm extends React.Component {
             location: {},
             location_id: this.props.location_id,
             location_name: this.props.location_name,
+            location_comment: this.props.location_comment
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleCommentChange = this.handleCommentChange.bind(this);
     }
 
     render() {
@@ -356,6 +366,14 @@ class EditNameForm extends React.Component {
                         value={this.state.location_name}
                         onChange={this.handleNameChange}
                     />
+                    <label htmlFor="status">Comment</label>
+                    <input
+                        type="text"
+                        className="form-control textarea"
+                        id="location_name"
+                        value={this.state.location_comment}
+                        onChange={this.handleCommentChange}
+                    />
                 </div>
                 <input
                     type="submit"
@@ -370,12 +388,17 @@ class EditNameForm extends React.Component {
         this.setState({location_name: event.target.value});
     }
 
+    handleCommentChange(event) {
+        this.setState({location_comment: event.target.value});
+    }
+
     handleSubmit(event) {
         event.preventDefault();
 
         let postData = {
             id: this.state.location_id,
             name: this.state.location_name,
+            comment: this.state.location_comment
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/admin/update_location/',

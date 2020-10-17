@@ -12,10 +12,12 @@ class AddLetter extends Component {
 
         this.state = {
             number: '',
+            collectie: '',
             date: ''
         };
 
         this.handleNumberChange = this.handleNumberChange.bind(this);
+        this.handleCollectieChange = this.handleCollectieChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
     }
@@ -28,12 +30,19 @@ class AddLetter extends Component {
         this.setState({number: event.target.value});
     }
 
+    handleCollectieChange(event) {
+        this.setState({collectie: event.target.value});
+    }
+
     handleSubmit(event) {
         event.preventDefault();
 
         let postData = {
             letter: {
                 number: this.state.number,
+                collectie: {
+                    id: parseInt(this.state.collectie)
+                },
                  date: this.state.date,
             }
         };
@@ -75,6 +84,16 @@ class AddLetter extends Component {
                         id="number"
                         value={this.state.number}
                         onChange={this.handleNumberChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="status">Collectie</label>
+                    <input
+                        type="number"
+                        className="form-control textarea"
+                        id="collectie"
+                        value={this.state.collectie}
+                        onChange={this.handleCollectieChange}
                     />
                 </div>
                  <div className="form-group">

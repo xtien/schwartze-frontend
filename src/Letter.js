@@ -241,12 +241,30 @@ class Letter extends Component {
                     <table>
                         <tbody>
                         <tr>
+                            <td width="80">
+                                <div >
+                                    Nummer:
+                                </div>
+                            </td>
                             <td>
-                                <div className='mb-3'>
-                                    Nummer: {this.state.letter.number}
+                                <div >
+                                    {this.state.letter.number}
                                 </div>
                             </td>
                         </tr>
+                        {this.state.letter.collectie != null ?
+                            <tr>
+                                <td width="80" >
+                                    <div className='mb-3'>
+                                        Collectie:</div>
+                                </td>
+                                <td colSpan="2">
+                                    <div className='mb-3'>
+                                        {this.state.letter.collectie.name} </div>
+                                </td>
+                            </tr>
+                            : null
+                        }
                         <tr>
                             <td>From:</td>
                             <td>{senderList}</td>
@@ -262,7 +280,7 @@ class Letter extends Component {
                             </td>
                         </tr>
                         <tr>
-                            <td>Date</td>
+                            <td>Date:</td>
                             <td>{this.state.letter.date}</td>
                         </tr>
                         </tbody>

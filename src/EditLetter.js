@@ -19,7 +19,8 @@ class EditLetter extends Component {
             sender_location: {},
             recipient_location: {},
             recipientsString: '',
-            sendersString: ''
+            sendersString: '',
+            errorMessage: null
         }
 
         this.handleSenderId = this.handleSenderId.bind(this);
@@ -136,7 +137,7 @@ class EditLetter extends Component {
         let sendersList = []
         let splitSenders = this.state.sendersString.replace(/ /g, '').replace(/(^,)|(,$)/g, "").split(',')
         for (x in splitSenders) {
-             sendersList.push(
+            sendersList.push(
                 {
                     id: splitSenders[x]
                 }
@@ -175,6 +176,9 @@ class EditLetter extends Component {
             )
             .catch(error => {
                 console.log(error)
+                this.setState({
+                    errorMessage: error
+                })
             });
     }
 
@@ -212,112 +216,126 @@ class EditLetter extends Component {
             location_name: ''
         }
 
+        const number = this.state.letter != null ? this.state.letter.number : ''
+
+        const errorM = this.state.errorMessage;
+
         return (
             <div>
-                <h3>Brief nummer {this.state.letter.number}</h3>
+                <div>
+                    {errorM != null ?
+                        <div className="mb-5">
+                            <div>{this.state.errorMessage.message}</div>
+                            <div> {this.state.errorMessage.stack}</div>
+                        </div> : null}
 
-                <form onSubmit={this.handleSubmit}>
-                    <div className='form-group mt-5'>
-                        <table width="600px">
-                            <tbody>
-                            <tr>
-                                <td width="150px">
-                                    <div className='mb-5'>
-                                        Datum:
-                                    </div>
-                                </td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        className='form-control textarea mt-1 w-25 mb-5'
-                                        id="sender.id"
-                                        value={date}
-                                        onChange={this.handleDate}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="150px">
-                                    Afzender:
-                                </td>
-                                <td>
-                                    {senderList} in {sender_location.name}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label className='mr-3' htmlFor="status">Persoon id</label>
-                                </td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        className='form-control textarea mt-1 w-25'
-                                        id="senderId"
-                                        value={this.state.sendersString}
-                                        onChange={this.handleSenderId}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor="status">Locatie id</label></td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        className='form-control textarea mt-1 w-25'
-                                        id="sender_location.id"
-                                        value={sender_location.id}
-                                        onChange={this.handleSenderLocation}
-                                    />
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <div>
+                        <h3>Brief nummer {number} </h3>
 
-                    <div className='form-group mt-5'>
-                        <table width="600px">
-                            <tbody>
-                            <tr>
-                                <td width="150px">
-                                    Ontvanger
-                                </td>
-                                <td>
-                                    {recipientList} in {recipient_location.name}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor="status">Persoon id</label></td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        className='form-control textarea mt-1 w-25'
-                                        id="recipientid"
-                                        value={this.state.recipientsString}
-                                        onChange={this.handleRecipientId}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor="status">Locatie id</label></td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        className='form-control textarea mt-1 w-25'
-                                        id="recipient_location.id"
-                                        value={recipient_location.id}
-                                        onChange={this.handleRecipientLocation}
-                                    />
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <form onSubmit={this.handleSubmit}>
+                            <div className='form-group mt-5'>
+                                <table width="600px">
+                                    <tbody>
+                                    <tr>
+                                        <td width="150px">
+                                            <div className='mb-5'>
+                                                Datum:
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className='form-control textarea mt-1 w-25 mb-5'
+                                                id="sender.id"
+                                                value={date}
+                                                onChange={this.handleDate}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="150px">
+                                            Afzender:
+                                        </td>
+                                        <td>
+                                            {senderList} in {sender_location.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label className='mr-3' htmlFor="status">Persoon id</label>
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className='form-control textarea mt-1 w-25'
+                                                id="senderId"
+                                                value={this.state.sendersString}
+                                                onChange={this.handleSenderId}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label htmlFor="status">Locatie id</label></td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className='form-control textarea mt-1 w-25'
+                                                id="sender_location.id"
+                                                value={sender_location.id}
+                                                onChange={this.handleSenderLocation}
+                                            />
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className='form-group mt-5'>
+                                <table width="600px">
+                                    <tbody>
+                                    <tr>
+                                        <td width="150px">
+                                            Ontvanger
+                                        </td>
+                                        <td>
+                                            {recipientList} in {recipient_location.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label htmlFor="status">Persoon id</label></td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className='form-control textarea mt-1 w-25'
+                                                id="recipientid"
+                                                value={this.state.recipientsString}
+                                                onChange={this.handleRecipientId}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label htmlFor="status">Locatie id</label></td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className='form-control textarea mt-1 w-25'
+                                                id="recipient_location.id"
+                                                value={recipient_location.id}
+                                                onChange={this.handleRecipientLocation}
+                                            />
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <input
+                                type="submit"
+                                className="btn btn-outline-success mybutton"
+                                value="Submit"
+                            />
+                        </form>
                     </div>
-                    <input
-                        type="submit"
-                        className="btn btn-outline-success mybutton"
-                        value="Submit"
-                    />
-                </form>
+                </div>
             </div>
         )
     }
