@@ -14,6 +14,7 @@ class Admin extends Component {
             addPerson: false,
             addLocation: false,
             logout: false,
+            indexing: false,
             refreshMe: props.match.params.refreshMe
         }
 
@@ -21,6 +22,7 @@ class Admin extends Component {
         this.add_person = this.add_person.bind(this);
         this.add_letter = this.add_letter.bind(this);
         this.logout = this.logout.bind(this);
+        this.index_letters = this.index_letters.bind(this);
     }
 
     add_person() {
@@ -42,6 +44,38 @@ class Admin extends Component {
             {
                 addLetter: true
             })
+    }
+
+    index_letters() {
+
+        this.setState(
+            {
+                indexing: true
+            })
+
+        let postData = {};
+
+        let axiosConfig = AuthenticationService.getAxiosConfig();
+        const self = this;
+
+        const url = process.env.REACT_APP_API_URL + '/admin/index_files/';
+
+        axios.post(url,
+            postData,
+            axiosConfig
+        )
+            .then(response => {
+                    this.setState({
+                        indexing: false
+                    })
+                 }
+            )
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    indexing: false
+                })
+            });
     }
 
     logout() {
@@ -73,6 +107,8 @@ class Admin extends Component {
 
     render() {
 
+        const indexing = this.state.indexing;
+
         if (this.state.logout === true) {
             return (
                 <Redirect to={"/"}/>
@@ -97,56 +133,67 @@ class Admin extends Component {
         }
 
         return (
-            <div className='container letter'>
-                {
-                    AuthenticationService.isAdmin() === "true" ?
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <form onSubmit={this.add_person} className='mt-5'>
-                                        <input
-                                            type="submit"
-                                            className="btn btn-outline-success mybutton"
-                                            value="Persoon toevoegen"
-                                        />
+            <div>
+                <div className='container letter'>
+                    {
+                        AuthenticationService.isAdmin() === "true" ?
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <form onSubmit={this.add_person} className='mt-5'>
+                                            <input
+                                                type="submit"
+                                                className="btn btn-outline-success mybutton"
+                                                value="Persoon toevoegen"
+                                            />
 
-                                    </form>
-                                </td>
-                                <td>
-                                    <form onSubmit={this.add_letter} className='mt-5'>
-                                        <input
-                                            type="submit"
-                                            className="btn btn-outline-success mybutton"
-                                            value="Brief toevoegen"
-                                        />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form onSubmit={this.add_letter} className='mt-5'>
+                                            <input
+                                                type="submit"
+                                                className="btn btn-outline-success mybutton"
+                                                value="Brief toevoegen"
+                                            />
 
-                                    </form>
-                                </td>
-                                <td>
-                                    <form onSubmit={this.add_location} className='mt-5'>
-                                        <input
-                                            type="submit"
-                                            className="btn btn-outline-success mybutton"
-                                            value="Locatie toevoegen"
-                                        />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form onSubmit={this.add_location} className='mt-5'>
+                                            <input
+                                                type="submit"
+                                                className="btn btn-outline-success mybutton"
+                                                value="Locatie toevoegen"
+                                            />
 
-                                    </form>
-                                </td>
-                                <td>
-                                    <form onSubmit={this.logout} className='mt-5'>
-                                        <input
-                                            type="submit"
-                                            className="btn btn-outline-success mybutton"
-                                            value="Logout"
-                                        />
+                                        </form>
+                                    </td>
+                                    <td>
+                                              <button
+                                                className="btn btn-outline-success mt-5"
+                                                onClick={this.index_letters}>
+                                                Index letters
+                                            </button>
+                                    </td>
+                                    <td>
+                                        <form onSubmit={this.logout} className='mt-5'>
+                                            <input
+                                                type="submit"
+                                                className="btn btn-outline-success mybutton"
+                                                value="Logout"
+                                            />
 
-                                    </form>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        : null}
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            : null}
+                </div>
+                <div>{indexing === true ? <div className='mt-5'>Indexing....</div> : null}</div>
             </div>
 
         )
