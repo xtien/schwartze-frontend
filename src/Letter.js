@@ -140,7 +140,7 @@ class Letter extends Component {
         const remarks = this.state.letter.comment;
         const letterId = this.state.letter.id;
         const listItems = images.map((d) => (
-            <div className='letter_image'><img alt="original letter" src={`data:image/jpeg;base64,${d}`}/></div>));
+            <div className='letter_image mt-5'><img alt="original letter" src={`data:image/jpeg;base64,${d}`}/></div>));
         const senders = this.state.senders;
         const recipients = this.state.recipients;
         const senderList = senders.map((s) => <span><Link
