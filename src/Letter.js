@@ -121,15 +121,15 @@ class Letter extends Component {
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
         let pageNumber = this.state.pageNumber;
-        if (pageNumber === 'undefined' || pageNumber === 0){
+        if (pageNumber === 'undefined' || pageNumber === 0) {
             pageNumber = Math.floor(this.state.letter.number / 20);
         }
-        const go_to_letters = '/get_letters/' +  pageNumber;
+        const go_to_letters = '/get_letters/' + pageNumber;
 
         if (this.state.go_search === true) {
             return <Redirect to={search_letters}/>
         }
-        if(this.state.back_to_letters === true){
+        if (this.state.back_to_letters === true) {
             return <Redirect to={go_to_letters}/>
         }
 
@@ -140,7 +140,7 @@ class Letter extends Component {
         const remarks = this.state.letter.comment;
         const letterId = this.state.letter.id;
         const listItems = images.map((d) => (
-            <div className='letter_image'><img width="1000" alt="original letter" src={d}/></div>));
+            <div className='letter_image'><img width="1000" alt="original letter" src={`data:image/jpeg;base64,${d}`}/></div>));
         const senders = this.state.senders;
         const recipients = this.state.recipients;
         const senderList = senders.map((s) => <span><Link
@@ -242,21 +242,22 @@ class Letter extends Component {
                         <tbody>
                         <tr>
                             <td width="80">
-                                <div >
+                                <div>
                                     Nummer:
                                 </div>
                             </td>
                             <td>
-                                <div >
+                                <div>
                                     {this.state.letter.number}
                                 </div>
                             </td>
                         </tr>
                         {this.state.letter.collectie != null ?
                             <tr>
-                                <td width="80" >
+                                <td width="80">
                                     <div className='mb-3'>
-                                        Collectie:</div>
+                                        Collectie:
+                                    </div>
                                 </td>
                                 <td colSpan="2">
                                     <div className='mb-3'>
@@ -290,7 +291,7 @@ class Letter extends Component {
                 <div className='letter'>
                     <div dangerouslySetInnerHTML={{__html: this.state.lettertext}}/>
                 </div>
-                 <div className='textpage mt-5 ml-5'>
+                <div className='textpage mt-5 ml-5'>
                     {letter.text != null && Util.isNotEmpty(letter.text.text_string) ?
                         <div>
                             {/* TODO: this needs to change when others than myself get access to data entry */}
