@@ -58,7 +58,9 @@
 }
 
 .number {
-  width: 20px;
+  background: #e8e8e8;
+  padding-right: 10px;
+  color: #1190b0;
 }
 
 .remark {
