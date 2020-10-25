@@ -1,5 +1,9 @@
 import React, {Component} from 'react'
 import './css/bootstrap.css'
+import axios from "axios";
+import AuthenticationService from "./service/AuthenticationService";
+import Util from "./service/Util";
+import {Link} from "react-router-dom";
 
 class Landing extends Component {
 
@@ -8,29 +12,72 @@ class Landing extends Component {
     constructor() {
         super()
 
-        this.state = {}
+        this.state = {
+            home_text: '',
+            blog_text: ''
+        }
+
+        let postData = {
+            text_id: 'home',
+        };
+
+        axios.post(process.env.REACT_APP_API_URL + '/get_page_text/',
+            postData,
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response =>
+                this.setState({
+                    home_text: response.data.text,
+                })
+            )
+            .catch(error => {
+                console.log(error)
+            });
+
+        let pData = {
+            text_id: 'blog',
+        };
+
+        axios.post(process.env.REACT_APP_API_URL + '/get_page_text/',
+            pData,
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response =>
+                this.setState({
+                    blog_text: response.data.text,
+                })
+            )
+            .catch(error => {
+                console.log(error)
+            });
+
     }
 
     render() {
+
+        const home_text = this.state.home_text;
+        const blog_text = this.state.blog_text;
 
         return (
 
             <div className='container'>
                 <div className='photo'>
-                    <img alt="schilderij lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg" height="400" />
-                 </div>
-                 <div className='text'><p >
-                    Thérèse Schwartze was de eerste vrouw in ons land die met portretschilderen
-                    de kost kon verdienen. Haar nichtje, Lizzy Ansingh, leerde al snel tekenen en schilderen
-                    van haar tante. Thérèse's zuster, Georgina, was beeldhouwster, hun broer George Washington
-                    tekende en schilderde, maar raakte al jong in een psychiatrische inrichting verzeild waar
-                    hij verder geen werken van belang meer maakte.</p>
+                    <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"
+                    />
+                </div>
+                <div className='textpage mt-5 ml-5'>
+                    {/* TODO: this needs to change when others than myself get access to data entry */}
 
-                   <p> Mijn vader kocht jaren geleden op een postzegelveiling twee doosjes met brieven van de
-                    familie Schwartze-Ansingh. Hij begon er een studie van te maken, en na zijn dood heb ik de doosjes
-                    gekregen en ben ik verder gegaan met de studie. Op deze site vind je mijn bevindingen,
-                    en mijn weergave van het leven van de families Schwartze en Ansingh van 1880 tot 1940.
-                </p></div>
+                    <div dangerouslySetInnerHTML={{__html: home_text}}/>
+                </div>
+                <div className='textpage mt-5 ml-5'>
+                    <div>
+                        {/* TODO: this needs to change when others than myself get access to data entry */}
+                        <p>
+                            <div dangerouslySetInnerHTML={{__html: blog_text}}/>
+                        </p>
+                    </div>
+                </div>
             </div>
         )
     }
