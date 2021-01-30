@@ -34,7 +34,6 @@ class Letter extends Component {
         this.forward = this.forward.bind(this);
         this.back = this.back.bind(this);
         this.post = this.post.bind(this);
-        this.back_to_letters = this.back_to_letters.bind(this);
 
         this.post(props.match.params.number)
     }
@@ -69,13 +68,6 @@ class Letter extends Component {
 
     back(event) {
         this.post(this.state.letter.number > 1 ? this.state.letter.number - 1 : 1)
-    }
-
-    back_to_letters(event) {
-        this.setState({
-            back_to_letters: true
-        })
-
     }
 
     post(number) {
@@ -129,9 +121,6 @@ class Letter extends Component {
         if (this.state.go_search === true) {
             return <Redirect to={search_letters}/>
         }
-        if (this.state.back_to_letters === true) {
-            return <Redirect to={go_to_letters}/>
-        }
 
         let linkTo = '';
 
@@ -178,14 +167,6 @@ class Letter extends Component {
                                         <img src={arrow_left} alt="back"/>
                                     </button>
                                 </td>
-                                <td align='left' width="100">
-                                    <button
-                                        className="btn btn-outline-secondary mybutton"
-                                        onClick={this.back_to_letters}>
-                                        Back
-                                    </button>
-                                </td>
-
                                 <td width="10">
                                     <div>
                                         {
