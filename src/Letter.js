@@ -33,9 +33,12 @@ class Letter extends Component {
         this.editComment = this.editComment.bind(this);
         this.forward = this.forward.bind(this);
         this.back = this.back.bind(this);
+        this.letter = this.letter.bind(this);
+        this.previous = this.previous.bind(this);
+        this.next = this.next.bind(this);
         this.post = this.post.bind(this);
 
-        this.post(props.match.params.number)
+        this.letter(props.match.params.number)
     }
 
     toggleEditDone = (letter) => {
@@ -63,38 +66,62 @@ class Letter extends Component {
     }
 
     forward(event) {
-        this.post(this.state.letter.number + 1)
+        this.next(this.state.letter.number)
     }
 
     back(event) {
-        this.post(this.state.letter.number > 1 ? this.state.letter.number - 1 : 1)
+        this.previous(this.state.letter.number)
     }
 
-    post(number) {
+    letter(number) {
+        this.post(process.env.REACT_APP_API_URL + '/get_letter_details/', number)
+    }
+
+    next(number) {
+        this.post(process.env.REACT_APP_API_URL + '/get_next_letter/', number)
+    }
+
+    previous(number) {
+        this.post(process.env.REACT_APP_API_URL + '/get_previous_letter/', number)
+    }
+
+    post(url, number) {
 
         const postData = {
             number: number
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/get_letter_details/',
+        axios.post(url,
             postData,
             AuthenticationService.getAxiosConfig()
         )
-            .then(response =>
-                this.setState({
-                    resultCode: response.data.resultCode,
-                    lettertext: response.data.lettertext,
-                    letter: response.data.letter,
-                    senders: response.data.letter.senders,
-                    recipients: response.data.letter.recipients,
-                    sender_locations: response.data.letter.sender_location,
-                    recipient_locations: response.data.letter.recipient_location
-                })
+            .then(response => {
+                    this.setState({
+                        resultCode: response.data.resultCode,
+                        lettertext: response.data.lettertext,
+                        letter: response.data.letter,
+                        senders: response.data.letter.senders,
+                        recipients: response.data.letter.recipients,
+                        sender_locations: response.data.letter.sender_location,
+                        recipient_locations: response.data.letter.recipient_location
+                    })
+                    this.getLetterImages(response.data.letter.number)
+                }
             )
             .catch(error => {
                 console.log(error)
             });
+    }
 
+    getLetterImages(number) {
+
+        const postData = {
+            number: number
+        };
+
+        this.setState({
+            imageData: []
+        })
         axios.post(process.env.REACT_APP_API_URL + '/get_letter_images/',
             postData,
             AuthenticationService.getAxiosConfig()
@@ -105,7 +132,6 @@ class Letter extends Component {
                     imageData: response.data.images
                 })
             )
-
     }
 
     render() {
@@ -116,7 +142,6 @@ class Letter extends Component {
         if (pageNumber === 'undefined' || pageNumber === 0) {
             pageNumber = Math.floor(this.state.letter.number / 20);
         }
-        const go_to_letters = '/get_letters/' + pageNumber;
 
         if (this.state.go_search === true) {
             return <Redirect to={search_letters}/>
@@ -129,7 +154,8 @@ class Letter extends Component {
         const remarks = this.state.letter.comment;
         const letterId = this.state.letter.id;
         const listItems = images.map((d) => (
-            <div className='letter_image ml-4 mt-5'><img alt="original letter" src={`data:image/jpeg;base64,${d}`}/></div>));
+            <div className='letter_image ml-4 mt-5'><img alt="original letter" src={`data:image/jpeg;base64,${d}`}/>
+            </div>));
         const senders = this.state.senders;
         const recipients = this.state.recipients;
         const senderList = senders.map((s) => <span><Link
@@ -193,7 +219,7 @@ class Letter extends Component {
                                     <button
                                         className="btn btn-link"
                                         onClick={this.forward}>
-                                        <img src={arrow_right} alt="back"/>
+                                        <img src={arrow_right} alt="forward"/>
                                     </button>
                                 </td>
                             </tr>

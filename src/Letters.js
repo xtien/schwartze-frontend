@@ -145,7 +145,7 @@ class Letters extends Component {
             accessor: data => {
                 let senderList = []
                 if (data !=null && data.senders !=null) {
-                    senderList = data.senders.map((r) => <span><Link
+                    senderList = data.senders.map(r => <span key={r.id}><Link
                         to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
                 } else {
                     senderList = '';
@@ -175,7 +175,7 @@ class Letters extends Component {
             accessor: data => {
                 let recipientList = []
                 if (data !=null && data.recipients !=null) {
-                    recipientList = data.recipients.map((r) => <span><Link
+                    recipientList = data.recipients.map(r => <span key={r.id}><Link
                         to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
                 } else {
                     recipientList = '';

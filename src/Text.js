@@ -3,7 +3,6 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
-import arrow_left from "./images/arrow_left.png";
 
 class Text extends Component {
 

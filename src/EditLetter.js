@@ -4,7 +4,6 @@ import axios from "axios";
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
 import {Redirect} from "react-router";
-import {Link} from "react-router-dom";
 
 class EditLetter extends Component {
 

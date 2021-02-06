@@ -56,7 +56,6 @@ class Admin extends Component {
         let postData = {};
 
         let axiosConfig = AuthenticationService.getAxiosConfig();
-        const self = this;
 
         const url = process.env.REACT_APP_API_URL + '/admin/index_files/';
 

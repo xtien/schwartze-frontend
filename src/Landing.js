@@ -2,8 +2,6 @@ import React, {Component} from 'react'
 import './css/bootstrap.css'
 import axios from "axios";
 import AuthenticationService from "./service/AuthenticationService";
-import Util from "./service/Util";
-import {Link} from "react-router-dom";
 
 class Landing extends Component {
 
@@ -73,9 +71,7 @@ class Landing extends Component {
                 <div className='textpage mt-5 ml-5'>
                     <div>
                         {/* TODO: this needs to change when others than myself get access to data entry */}
-                        <p>
                             <div dangerouslySetInnerHTML={{__html: blog_text}}/>
-                        </p>
                     </div>
                 </div>
             </div>
