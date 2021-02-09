@@ -26,10 +26,12 @@ class Letter extends Component {
             sender_locations: [],
             recipient_locations: [],
             edit_letter: false,
+            delete_letter: false,
             pageNumber: props.match.params.pagenumber
         }
 
         this.editLetter = this.editLetter.bind(this);
+        this.deleteLetter = this.deleteLetter.bind(this);
         this.editComment = this.editComment.bind(this);
         this.forward = this.forward.bind(this);
         this.back = this.back.bind(this);
@@ -62,6 +64,12 @@ class Letter extends Component {
     editLetter(event) {
         this.setState({
             edit_letter: true
+        })
+    }
+
+    deleteLetter(event) {
+        this.setState({
+            delete_letter: true
         })
     }
 
@@ -177,6 +185,9 @@ class Letter extends Component {
         if (this.state.edit_letter === true) {
             return <Redirect to={'/edit_letter/' + letter.number}/>
         }
+        if (this.state.delete_letter === true) {
+            return <Redirect to={'/delete_letter/' + letter.number}/>
+        }
 
         return (
             <div className='container'>
@@ -212,6 +223,17 @@ class Letter extends Component {
                                                     className="btn btn-outline-warning mybutton ml-2"
                                                     onClick={this.editLetter}>
                                                     Edit afzender/ontvanger
+                                                </button> : null}
+                                    </div>
+                                </td>
+                                <td width="1000">
+                                    <div>
+                                        {
+                                            AuthenticationService.isAdmin() === "true" ?
+                                                <button
+                                                    className="btn btn-outline-warning mybutton ml-2"
+                                                    onClick={this.deleteLetter}>
+                                                    Delete brief
                                                 </button> : null}
                                     </div>
                                 </td>
