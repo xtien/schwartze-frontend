@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2018 - 2021, Zaphod Consulting BV, Christine Karman
+ * This project is free software: you can redistribute it and/or modify it under the terms of
+ * the Apache License, Version 2.0. You can find a copy of the license at
+ * http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
 .button__container {
   margin-top: 200px;
   text-align: center;
@@ -149,4 +156,33 @@ a {
 
 a:visited {
   color: #4e555b !important;
+}
+
+.jumbotron {
+  padding: 10px ! important;
+}
+
+.logo {
+  margin-right: -40px;
+}
+
+h1 {
+  margin-left: 15px;
+}
+
+.page_header {
+  padding: 40px;
+  padding-left: 80px;
+  color: #6c757d;
+  font-family: Garamond;
+  font-size: x-large;
+}
+
+.page_text {
+  padding: 80px;
+  padding-top: 20px;
+  font-family: Garamond;
+  font-size: large;
+  column-count: 2;
+  column-gap: 80px;
 }

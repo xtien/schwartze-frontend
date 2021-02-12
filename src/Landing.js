@@ -1,7 +1,15 @@
+/*
+ * Copyright (c) 2018 - 2021, Zaphod Consulting BV, Christine Karman
+ * This project is free software: you can redistribute it and/or modify it under the terms of
+ * the Apache License, Version 2.0. You can find a copy of the license at
+ * http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
 import React, {Component} from 'react'
 import './css/bootstrap.css'
 import axios from "axios";
 import AuthenticationService from "./service/AuthenticationService";
+import {Link} from "react-router-dom";
 
 class Landing extends Component {
 
@@ -16,7 +24,9 @@ class Landing extends Component {
         }
 
         let postData = {
+            type: 'text',
             text_id: 'home',
+            language: 'nl'
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_page_text/',
@@ -33,7 +43,9 @@ class Landing extends Component {
             });
 
         let pData = {
+            text_type: 'text',
             text_id: 'blog',
+            language: 'nl'
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_page_text/',
@@ -71,8 +83,11 @@ class Landing extends Component {
                 <div className='textpage mt-5 ml-5'>
                     <div>
                         {/* TODO: this needs to change when others than myself get access to data entry */}
-                            <div dangerouslySetInnerHTML={{__html: blog_text}}/>
+                        <div dangerouslySetInnerHTML={{__html: blog_text}}/>
                     </div>
+                </div>
+                <div className='textpage mt-5 ml-5'>
+                    <Link to='/get_page/1/1'>pages</Link>
                 </div>
             </div>
         )

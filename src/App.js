@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2018 - 2021, Zaphod Consulting BV, Christine Karman
+ * This project is free software: you can redistribute it and/or modify it under the terms of
+ * the Apache License, Version 2.0. You can find a copy of the license at
+ * http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
 import React, {Component} from 'react'
 import './App.css'
 import 'react-table/react-table.css'
@@ -19,6 +26,7 @@ import CombinePerson from './CombinePerson'
 import CombineLocation from './CombineLocation'
 import LettersForLocation from "./LettersForLocation";
 import Text from './Text'
+import Page from './Page'
 import TextEdit from './TextEdit'
 import Login from "./Login";
 import Signup from "./Signup";
@@ -54,13 +62,13 @@ class App extends Component {
         return (
 
             <Router>
-                <div className='container nomargin'>
+                <div className='container '>
                     <div className='jumbotron'>
                         <table width="100%">
                             <tbody>
                             <tr>
                                 <td>
-                                    <h1>Het nichtje van tante Therèse</h1>
+                                    <h1>Het nichtje van tante Thérèse</h1>
                                     <nav className="navbar navbar-expand-lg navbar-light">
                                         <p className="navbar-nav"><Link to='/'>Home</Link></p>
                                         <p className="navbar-nav"><Link to='/get_letters/0'>Brieven</Link></p>
@@ -81,8 +89,8 @@ class App extends Component {
                                         </p>
                                     </nav>
                                 </td>
-                                <td valign="top">
-                                    <img src={twitli} alt="logo"/>
+                                <td>
+                                    <img src={twitli} className="logo" alt="logo"/>
                                  </td>
                             </tr>
                             </tbody>
@@ -108,6 +116,7 @@ class App extends Component {
                         <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
                         <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
                         <Route path="/get_text/:entity/:id" component={Text}/>
+                        <Route path="/get_page/:chapter/:page" component={Page}/>
                         <Route path="/edit_text/" component={TextEdit}/>
                         <Route path="/get_locations/" component={Locations}/>
                         <Route path="/get_people/" component={People}/>
