@@ -69,25 +69,28 @@ class Landing extends Component {
         const blog_text = this.state.blog_text;
 
         return (
-
-            <div className='container'>
-                <div className='photo'>
-                    <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"
-                    />
+            <div>
+                <div id="sidebar-wrapper">
+                    <ul className="sidebar-nav pl-3 pt-5">
+                        <Link to='/get_page/1/1'>pages</Link>
+                    </ul>
                 </div>
-                <div className='textpage mt-5 ml-5'>
-                    {/* TODO: this needs to change when others than myself get access to data entry */}
-
-                    <div dangerouslySetInnerHTML={{__html: home_text}}/>
-                </div>
-                <div className='textpage mt-5 ml-5'>
-                    <div>
-                        {/* TODO: this needs to change when others than myself get access to data entry */}
-                        <div dangerouslySetInnerHTML={{__html: blog_text}}/>
+                <div className='container'>
+                    <div className='photo'>
+                        <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"
+                        />
                     </div>
-                </div>
-                <div className='textpage mt-5 ml-5'>
-                    <Link to='/get_page/1/1'>pages</Link>
+                    <div className='textpage mt-5'>
+                        {/* TODO: this needs to change when others than myself get access to data entry */}
+
+                        <div dangerouslySetInnerHTML={{__html: home_text}}/>
+                    </div>
+                    <div className='textpage mt-5 '>
+                        <div>
+                            {/* TODO: this needs to change when others than myself get access to data entry */}
+                            <div dangerouslySetInnerHTML={{__html: blog_text}}/>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

@@ -130,6 +130,7 @@ text {
 
 .textpage {
   width: 800px;
+  margin-left: 100px;
 }
 
 .searchfield {
@@ -207,7 +208,7 @@ h1 {
   width: 250px;
   background: #eee;
   position: fixed;
-  height: 100%;
+  height: 50%;
   overflow-y: auto;
   z-index: 1000;
   transition: all 0.4s ease 0s;

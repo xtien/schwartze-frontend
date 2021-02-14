@@ -178,20 +178,34 @@ class Page extends Component {
             case 'LOCATION':
                 return (<div className='mb-2'>
                     <Link to={this.state.refMap.location + reference.key}>{reference.description}</Link>
-                    <button type="button" className='btn btn-link mb-1' onClick={this.delete_link(reference.id)}> del
-                    </button>
+                    {AuthenticationService.isAdmin() === "true" ?
+                        <button type="button" className='btn btn-link mb-1'
+                                onClick={()=>{delete_link(reference.id)}}> del
+                        </button> : ''}
                 </div>)
             case 'LETTER':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.letter + reference.key}>{reference.description}</Link>
-                    <button type="button" className='btn btn-link mb-1' onClick={this.delete_link(reference.id)}> del
-                    </button>
+                    <Link to={this.state.refMap.letter + reference.key + '/0'}>{reference.description}</Link>
+                    {AuthenticationService.isAdmin() === "true" ?
+                        <button type="button" className='btn btn-link mb-1'
+                                onClick={()=>{delete_link(reference.id)}}> del
+                        </button> : ''}
                 </div>)
             case 'SUBJECT':
                 return (<div className='mb-2'>
                     <Link to={this.state.refMap.subject + reference.key}>{reference.description}</Link>
-                    <button type="button" className='btn btn-link mb-1' onClick={this.delete_link(reference.id)}> del
-                    </button>
+                    {AuthenticationService.isAdmin() === "true" ?
+                        <button type="button" className='btn btn-link mb-1'
+                                onClick={()=>{delete_link(reference.id)}}> del
+                        </button> : ''}
+                </div>)
+            case 'LINK':
+                return (<div className='mb-2'>
+                    <a href={reference.key} target="_blank">{reference.description}</a>
+                    {AuthenticationService.isAdmin() === "true" ?
+                        <button type="button" className='btn btn-link mb-1'
+                                onClick={()=>{delete_link(reference.id)}}> del
+                        </button> : ''}
                 </div>)
         }
     }
