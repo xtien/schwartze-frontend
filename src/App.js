@@ -38,16 +38,20 @@ import References from "./References";
 import twitli from './images/logo.png'
 import AuthenticationService from "./service/AuthenticationService";
 import SearchLetters from "./SearchLetters";
+import detectBrowserLanguage from 'detect-browser-language'
+import strings from './strings.js'
 
 class App extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             refreshPage: this.refreshPage,
             refresh: false,
-        }
-     }
+         }
+        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+    }
 
     refreshPage = () => {
         this.setState({
@@ -58,7 +62,9 @@ class App extends Component {
 
     render() {
 
+        let home = strings.home;
         const refreshPage = this.refreshPage;
+
         return (
 
             <Router>
@@ -70,12 +76,12 @@ class App extends Component {
                                 <td>
                                     <h1>Het nichtje van tante Thérèse</h1>
                                     <nav className="navbar navbar-expand-lg navbar-light">
-                                        <p className="navbar-nav"><Link to='/'>Home</Link></p>
-                                        <p className="navbar-nav"><Link to='/get_letters/0'>Brieven</Link></p>
-                                        <p className="navbar-nav"><Link to='/get_people/'>Personen</Link></p>
-                                        <p className="navbar-nav"><Link to='/get_locations/'>Locaties</Link></p>
-                                        <p className="navbar-nav"><Link to='/references/'>Referenties</Link></p>
-                                        <p className="navbar-nav"><Link to='/subjects/'>Onderwerpen</Link></p>
+                                        <p className="navbar-nav"><Link to='/'>{strings.home}</Link></p>
+                                        <p className="navbar-nav"><Link to='/get_letters/0'>{strings.letters}</Link></p>
+                                        <p className="navbar-nav"><Link to='/get_people/'>{strings.people}</Link></p>
+                                        <p className="navbar-nav"><Link to='/get_locations/'>{strings.locations}</Link></p>
+                                        <p className="navbar-nav"><Link to='/references/'>{strings.references}</Link></p>
+                                        <p className="navbar-nav"><Link to='/subjects/'>{strings.subjects}</Link></p>
                                         {/* Admin should only be visible after login. toggle enables Login.js
                                                to render App.js by setting its state  */}
                                         {AuthenticationService.isAdmin() === 'true' ?

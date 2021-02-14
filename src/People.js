@@ -10,6 +10,8 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 import AuthenticationService from "./service/AuthenticationService";
+import detectBrowserLanguage from 'detect-browser-language'
+import strings from './strings.js'
 
 class People extends Component {
 
@@ -21,6 +23,7 @@ class People extends Component {
             people: [{}],
             order_by: 'firstname',
         }
+        strings.setLanguage(detectBrowserLanguage().substring(0,2));
 
         this.sort = this.sort.bind(this);
 
@@ -59,6 +62,9 @@ class People extends Component {
 
     render() {
 
+        const op_achternaam = strings.op_achternaam;
+        const op_voornaam = strings.op_voornaam;
+
         const columns = [{
             accessor: 'id',
             width: 40
@@ -87,7 +93,7 @@ class People extends Component {
                     <input
                         type="submit"
                         className="btn btn-outline-secondary mybutton"
-                        value={this.state.order_by === 'lastname' ? 'op voornaam' : 'op achternaam'}
+                        value={this.state.order_by === 'lastname' ? op_voornaam : op_achternaam}
                     />
 
                 </form>

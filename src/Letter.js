@@ -15,6 +15,8 @@ import Util from "./service/Util";
 import {Redirect} from "react-router";
 import arrow_left from "./images/arrow_left.png";
 import arrow_right from "./images/arrow_right.png";
+import detectBrowserLanguage from 'detect-browser-language'
+import strings from './strings.js'
 
 class Letter extends Component {
 
@@ -36,6 +38,7 @@ class Letter extends Component {
             delete_letter: false,
             pageNumber: props.match.params.pagenumber
         }
+        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
 
         this.editLetter = this.editLetter.bind(this);
         this.deleteLetter = this.deleteLetter.bind(this);
@@ -151,6 +154,10 @@ class Letter extends Component {
 
     render() {
 
+        const nummer = strings.nummer;
+        const from = strings.from;
+        const to = strings.to;
+        const date = strings.date;
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
         let pageNumber = this.state.pageNumber;
@@ -279,7 +286,7 @@ class Letter extends Component {
                         <tr>
                             <td width="80">
                                 <div>
-                                    Nummer:
+                                    {nummer}
                                 </div>
                             </td>
                             <td>
@@ -303,21 +310,21 @@ class Letter extends Component {
                             : null
                         }
                         <tr>
-                            <td>From:</td>
+                            <td>{from}:</td>
                             <td>{senderList}</td>
                             <td>
                                 <div className='ml-3'>{senderLocationList}</div>
                             </td>
                         </tr>
                         <tr>
-                            <td>To:</td>
+                            <td>{to}:</td>
                             <td>{recipientList}</td>
                             <td>
                                 <div className='ml-3'>{recipientLocationList}</div>
                             </td>
                         </tr>
                         <tr>
-                            <td>Date:</td>
+                            <td>{date}:</td>
                             <td>{this.state.letter.date}</td>
                         </tr>
                         </tbody>

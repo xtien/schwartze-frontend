@@ -10,6 +10,8 @@ import './css/bootstrap.css'
 import axios from "axios";
 import AuthenticationService from "./service/AuthenticationService";
 import {Link} from "react-router-dom";
+import detectBrowserLanguage from 'detect-browser-language'
+import strings from './strings.js'
 
 class Landing extends Component {
 
@@ -23,10 +25,12 @@ class Landing extends Component {
             blog_text: ''
         }
 
+        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+
         let postData = {
             type: 'text',
             text_id: 'home',
-            language: 'nl'
+            language: strings.getLanguage()
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_page_text/',
@@ -45,7 +49,7 @@ class Landing extends Component {
         let pData = {
             type: 'text',
             text_id: 'blog',
-            language: 'nl'
+            language: strings.getLanguage()
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_page_text/',
@@ -72,7 +76,7 @@ class Landing extends Component {
             <div>
                 <div id="sidebar-wrapper">
                     <ul className="sidebar-nav pl-3 pt-5">
-                        <Link to='/get_page/1/1'>pages</Link>
+                        <Link to='/get_page/1/1'>{strings.pages}</Link>
                     </ul>
                 </div>
                 <div className='container'>

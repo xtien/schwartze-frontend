@@ -8,6 +8,8 @@
 import React, {Component} from 'react'
 import axios from "axios";
 import AuthenticationService from "./service/AuthenticationService";
+import detectBrowserLanguage from 'detect-browser-language'
+import strings from './strings.js'
 
 class References extends Component {
 
@@ -19,6 +21,7 @@ class References extends Component {
             references: {},
             linkEditDone: false
         }
+        strings.setLanguage(detectBrowserLanguage().substring(0,2));
 
         this.edit_link = this.edit_link.bind(this);
         this.delete_link = this.delete_link.bind(this);
@@ -95,6 +98,7 @@ class References extends Component {
 
     render() {
 
+        const reftext = strings.references;
         const references = this.state.references;
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
@@ -139,7 +143,7 @@ class References extends Component {
         return (
 
             <div className='container letter'>
-                <h3>Referenties</h3>
+                <h3>{reftext}</h3>
 
                 <div className='mt-5'>
                     {this.state.showLinkEdit ? null :

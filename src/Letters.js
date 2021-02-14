@@ -12,6 +12,8 @@ import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 import AuthenticationService from "./service/AuthenticationService";
 import {Redirect} from "react-router";
+import detectBrowserLanguage from 'detect-browser-language'
+import strings from './strings.js'
 
 class Letters extends Component {
 
@@ -30,6 +32,7 @@ class Letters extends Component {
             number: 0,
             gotoletter: false
         }
+        strings.setLanguage(detectBrowserLanguage().substring(0,2));
 
         this.sort = this.sort.bind(this);
         this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
@@ -114,6 +117,13 @@ class Letters extends Component {
     }
 
     render() {
+
+        const op_nummer = strings.op_nummer;
+        const op_datum = strings.op_datum;
+        const naar_nummer = strings.naar_nummer;
+        const search = strings.search;
+        const previous = strings.previous;
+        const next = strings.next;
 
         if(this.state.backButtonPressed === true){
             return <Redirect to={'/'}/>
@@ -226,7 +236,7 @@ class Letters extends Component {
                                 <input
                                     type="submit"
                                     className="btn btn-outline-secondary mybutton"
-                                    value={this.state.order_by === 'date' ? 'op nummer' : 'op datum'}
+                                    value={this.state.order_by === 'date' ? op_nummer : op_datum}
                                 />
 
                             </form>
@@ -241,7 +251,7 @@ class Letters extends Component {
                                                 <input
                                                     type="text"
                                                     id="nr"
-                                                    placeholder='ga naar nummer'
+                                                    placeholder={naar_nummer}
                                                     onChange={this.handleletternumber}
                                                     className="form-control textarea"
                                                 />
@@ -273,7 +283,7 @@ class Letters extends Component {
                                             <input
                                                 type="submit"
                                                 className='btn btn-outline-success mybutton mb-2 mr-5'
-                                                value="Zoek"
+                                                value={search}
                                             /></td>
                                     </tr>
                                     </tbody>

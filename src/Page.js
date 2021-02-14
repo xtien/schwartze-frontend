@@ -15,7 +15,7 @@ import three_arrow_right from "./images/three_arrow_right.png";
 import three_arrow_left from "./images/three_arrow_left.png";
 import arrow_left from "./images/arrow_left.png";
 import {Link, Redirect} from "react-router-dom";
-import {Container, Row, Col} from 'reactstrap';
+import detectBrowserLanguage from 'detect-browser-language'
 
 class Page extends Component {
 
@@ -32,7 +32,8 @@ class Page extends Component {
                 location: '/get_location/',
                 letter: '/get_letter_details/',
                 subject: '/get_text/subject/'
-            }
+            },
+            language: detectBrowserLanguage().substring(0,2)
         }
 
         this.post = this.post.bind(this);
@@ -127,7 +128,7 @@ class Page extends Component {
         const postData = {
             chapter: chapterNumber,
             page: pageNumber,
-            language: 'nl'
+            language: this.state.language
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_page_page/',
@@ -201,7 +202,7 @@ class Page extends Component {
                 </div>)
             case 'LINK':
                 return (<div className='mb-2'>
-                    <a href={reference.key} target="_blank">{reference.description}</a>
+                    <a href={reference.key} target="_blank" rel="noopener noreferrer">{reference.description}</a>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={()=>{delete_link(reference.id)}}> del

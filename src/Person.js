@@ -12,6 +12,8 @@ import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
 import AuthenticationService from './service/AuthenticationService';
 import Util from './service/Util';
+import detectBrowserLanguage from 'detect-browser-language'
+import strings from './strings.js'
 
 // https://medium.com/better-programming/building-basic-react-authentication-e20a574d5e71
 
@@ -29,6 +31,7 @@ class Person extends Component {
             person: {},
             textString: '',
         }
+        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
 
         if (this.state.person != null && this.state.person.text != null) {
             this.setState({
@@ -192,6 +195,13 @@ class Person extends Component {
 
     render() {
 
+        const overleden = strings.overleden;
+        const geboren = strings.geboren;
+        const brieven_aan = strings.brieven_aan;
+        const brieven_van = strings.brieven_van;
+        const meer = strings.meer;
+
+
         if (this.state.person == null) {
             return "Person is null";
         }
@@ -207,13 +217,11 @@ class Person extends Component {
         let brievenVan = '';
         if (person.brieven_van === true) {
             brievenVan = <Link
-                to={`/get_letters_from_person/${person.id}`}> Brieven
-                van {person.nick_name} </Link>
+                to={`/get_letters_from_person/${person.id}`}> {brieven_van} {person.nick_name} </Link>
         }
         let brievenAan = '';
         if (person.brieven_aan === true) {
-            brievenAan = <Link to={`/get_letters_to_person/${person.id}`}> Brieven
-                aan {person.nick_name} </Link>
+            brievenAan = <Link to={`/get_letters_to_person/${person.id}`}> {brieven_aan} {person.nick_name} </Link>
         }
 
         if (this.state.combine === true) {
@@ -233,7 +241,8 @@ class Person extends Component {
                             <tbody>
                             <tr>
                                 <td>
-                                    <a href={link.link_url} target="_blank" rel="noopener noreferrer">{link.link_name}</a>
+                                    <a href={link.link_url} target="_blank"
+                                       rel="noopener noreferrer">{link.link_name}</a>
                                 </td>
                                 <td width="20%">
                                     {
@@ -292,8 +301,8 @@ class Person extends Component {
                                 <p>
                                     {person.id} {person.nick_name} {fullname} {person.tussenvoegsel} {person.last_name}
                                 </p>
-                                <p>Geboren: {person.date_of_birth}</p>
-                                <p>Overleden: {person.date_of_death}</p>
+                                <p>{strings.geboren}: {person.date_of_birth}</p>
+                                <p>{strings.overleden}: {person.date_of_death}</p>
                                 <p>{person.comment}</p>
                                 <p className='mt-5'>
                                     {brievenVan}
@@ -330,7 +339,7 @@ class Person extends Component {
                                             </p>
                                             {person.text.text_string.length > 300 ?
                                                 <p>
-                                                    <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
+                                                    <Link to={linkTo} className='mt-5 mb-5'> {meer} </Link>
                                                 </p>
                                                 : null}
                                         </div> : null}

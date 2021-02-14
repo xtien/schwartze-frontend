@@ -9,6 +9,8 @@ import React, {Component} from 'react'
 import axios from "axios";
 import {Redirect, Link} from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
+import detectBrowserLanguage from 'detect-browser-language'
+import strings from './strings.js'
 
 class Subjects extends Component {
 
@@ -20,6 +22,7 @@ class Subjects extends Component {
             subjects: [{}],
             linkEditDone: false
         }
+        strings.setLanguage(detectBrowserLanguage().substring(0,2));
 
         this.edit_link = this.edit_link.bind(this);
         this.delete_link = this.delete_link.bind(this);
@@ -88,6 +91,7 @@ class Subjects extends Component {
 
     render() {
 
+        const sujectsText = strings.subjects;
         const subjectId = this.state.subject_id;
 
         if (this.state.editLink) {
@@ -141,7 +145,7 @@ class Subjects extends Component {
         return (
 
             <div className='container letter'>
-                <h3>Onderwerpen</h3>
+                <h3>{sujectsText}</h3>
 
                 <div className='mt-5'>
                     <div id='linkContainer'>
