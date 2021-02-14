@@ -116,7 +116,7 @@ class App extends Component {
                         <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
                         <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
                         <Route path="/get_text/:entity/:id" component={Text}/>
-                        <Route path="/get_page/:chapter/:page" component={Page}/>
+                        <Route path="/get_page/:chapterNumber/:pageNumber" component={Page}/>
                         <Route path="/edit_text/" component={TextEdit}/>
                         <Route path="/get_locations/" component={Locations}/>
                         <Route path="/get_people/" component={People}/>

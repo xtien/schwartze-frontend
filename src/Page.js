@@ -24,8 +24,9 @@ class Page extends Component {
 
         this.state = {
             text: '',
-            chapter: props.match.params.chapter,
-            page: props.match.params.page,
+            page: {},
+            chapterNumber: props.match.params.chapterNumber,
+            pageNumber: props.match.params.pageNumber,
             refMap: {
                 person: '/get_person_details/',
                 location: '/get_location/',
@@ -41,8 +42,9 @@ class Page extends Component {
         this.previousChapter = this.previousChapter.bind(this);
         this.delete_link = this.delete_link.bind(this);
         this.add_reference = this.add_reference.bind(this);
+        this.renderReference = this.renderReference.bind(this);
 
-        this.post(props.match.params.chapter, props.match.params.page)
+        this.post(props.match.params.chapterNumber, props.match.params.pageNumber)
     }
 
     setPage = (page) => {
@@ -57,37 +59,37 @@ class Page extends Component {
     }
 
     next() {
-        let nextpage = parseInt(this.state.page) + 1;
+        let nextpageNumber = parseInt(this.state.pageNumber) + 1;
         this.setState({
-            page: nextpage
+            pageNumber: nextpageNumber
         })
-        this.post(this.state.chapter, nextpage)
+        this.post(this.state.chapterNumber, nextpageNumber)
     }
 
     previous() {
-        let previous = Math.max(parseInt(this.state.page) - 1, 1);
+        let previousNumber = Math.max(parseInt(this.state.pageNumber) - 1, 1);
         this.setState({
-            page: previous
+            pageNumber: previousNumber
         })
-        this.post(this.state.chapter, previous)
+        this.post(this.state.chapterNumber, previousNumber)
     }
 
     nextChapter() {
-        let nextchapter = parseInt(this.state.chapter) + 1
+        let nextchapterNumber = parseInt(this.state.chapterNumber) + 1
         this.setState({
-            chapter: nextchapter,
-            page: 1
+            chapterNumber: nextchapterNumber,
+            pageNumber: 1
         })
-        this.post(nextchapter, this.state.page)
+        this.post(nextchapterNumber, this.state.pageNumber)
     }
 
     previousChapter() {
-        let previouschapter = Math.max(parseInt(this.state.chapter) - 1, 1)
+        let previouschapterNumber = Math.max(parseInt(this.state.chapterNumber) - 1, 1)
         this.setState({
-            chapter: previouschapter,
-            page: 1
+            chapterNumber: previouschapterNumber,
+            pageNumber: 1
         })
-        this.post(previouschapter, this.state.page)
+        this.post(previouschapterNumber, this.state.pageNumber)
     }
 
     add_reference(event) {
@@ -97,11 +99,11 @@ class Page extends Component {
         })
     }
 
-    post(chapter, page) {
+    post(chapterNumber, pageNumber) {
 
         const postData = {
-            chapter: chapter,
-            page: page,
+            chapter: chapterNumber,
+            page: pageNumber,
             language: 'nl'
         };
 
@@ -112,9 +114,9 @@ class Page extends Component {
             .then(response => {
                     this.setState({
                         text: response.data.text,
+                        page: response.data.page,
                     })
-                    this.getLetterImages(response.data.letter.number)
-                }
+                 }
             )
             .catch(error => {
                 console.log(error)
@@ -127,23 +129,23 @@ class Page extends Component {
                 return <div>
                     <a href={reference.key}>{reference.description}</a>
                 </div>
-            case 'person':
+            case 'PERSON':
                 return (<div>
                     <Link to={this.state.refMap.person + reference.key}>{reference.description}</Link>
                     <button type="button" className='btn btn-link' onClick={this.delete_link(reference.id)}> del
                     </button>
                 </div>)
-            case 'location':
+            case 'LOCATION':
                 return (<div>
                     <Link to={this.state.refMap.location + reference.key}>{reference.description}</Link>
                     <button type="button" className='btn btn-link' onClick={this.delete_link(reference.id)}> del
                     </button>
                 </div>)
-            case 'letter':
+            case 'LETTER':
                 return (<div>
                     <Link to={this.state.refMap.letter + reference.key}>{reference.description}</Link>
                 </div>)
-            case 'subject':
+            case 'SUBJECT':
                 return (<div>
                     <Link to={this.state.refMap.subject + reference.key}>{reference.description}</Link>
                 </div>)
@@ -154,6 +156,7 @@ class Page extends Component {
 
         const page = this.state.page;
         let references = [];
+        let renderReference = this.renderReference;
 
         if (page != null && page.references != null) {
             references = page.references.map(function (reference, i) {
@@ -163,7 +166,7 @@ class Page extends Component {
                             <tbody>
                             <tr>
                                 <td>
-                                    {this.renderReference(reference)}
+                                    {renderReference(reference)}
                                 </td>
                             </tr>
                             </tbody>
@@ -176,6 +179,29 @@ class Page extends Component {
 
         return (
             <div>
+
+                <div id="sidebar-wrapper">
+                    <ul className="sidebar-nav">
+                        <li className="sidebar-brand"><a href="#">References</a>
+                        </li>
+                        <li><a href="#">Dashboard</a>
+                        </li>
+                        <li><a href="#">Shortcuts</a>
+                        </li>
+                        <li><a href="#">Overview</a>
+                        </li>
+                        <li><a href="#">Events</a>
+                        </li>
+                        <li><a href="#">About</a>
+                        </li>
+                        <li><a href="#">Services</a>
+                        </li>
+                        <li><a href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+
                 <table width='100%'>
                     <tbody>
                     <tr>
@@ -194,7 +220,7 @@ class Page extends Component {
                             </button>
                         </td>
                         <td>
-                            <p className='page_header'>Chapter {this.state.chapter} &nbsp; &nbsp; &nbsp; page {this.state.page} </p>
+                            <p className='page_header'>Chapter {this.state.chapterNumber} &nbsp; &nbsp; &nbsp; page {this.state.pageNumber} </p>
                         </td>
                         <td>
                             <button type="button"
@@ -216,10 +242,10 @@ class Page extends Component {
                 <p className='page_text'> {this.state.text}  </p>
 
                 <div>
-                    {this.state.showLinkEdit ? (
+                    {this.state.showLinkEdit && (AuthenticationService.isAdmin() === "true") ? (
                             <EditReferenceForm
-                                pageNumber={this.state.page}
-                                chapterNumber={this.state.chapter}
+                                pageNumber={this.state.pageNumber}
+                                chapterNumber={this.state.chapterNumber}
                                 key=''
                                 reference_description=''
                                 reference_type=''
@@ -238,12 +264,16 @@ class Page extends Component {
                             </div>
                         </Col>
                         <Col>
-                            <button type="button"
-                                    className='btn btn-link'
-                                    onClick={this.add_reference}>
-                                Add reference
-                            </button>
-
+                            <div>
+                                {
+                                    AuthenticationService.isAdmin() === "true" ?
+                                        <button type="button"
+                                                className='btn btn-link'
+                                                onClick={this.add_reference}>
+                                            Add reference
+                                        </button> : null
+                                }
+                            </div>
                         </Col>
                     </Row>
                 </Container>

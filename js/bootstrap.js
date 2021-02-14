@@ -648,7 +648,7 @@
       };
 
       _proto.nextWhenVisible = function nextWhenVisible() {
-        // Don't call next when the page isn't visible
+        // Don't call next when the pageNumber isn't visible
         // or the carousel or its parent isn't visible
         if (!document.hidden && $$$1(this._element).is(':visible') && $$$1(this._element).css('visibility') !== 'hidden') {
           this.next();
