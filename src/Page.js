@@ -116,11 +116,24 @@ class Page extends Component {
                         text: response.data.text,
                         page: response.data.page,
                     })
-                 }
+                }
             )
             .catch(error => {
                 console.log(error)
             });
+    }
+
+    toggleEditDone = (page) => {
+        this.setState({
+            showLinkEdit: false,
+        })
+        this.post(this.state.pageNumber, this.state.chapterNumber)
+    }
+
+    toggleEditDone = () => {
+        this.setState({
+            showLinkEdit: false,
+        })
     }
 
     renderReference(reference) {
@@ -157,6 +170,7 @@ class Page extends Component {
         const page = this.state.page;
         let references = [];
         let renderReference = this.renderReference;
+        let add_reference = this.add_reference;
 
         if (page != null && page.references != null) {
             references = page.references.map(function (reference, i) {
@@ -179,29 +193,27 @@ class Page extends Component {
 
         return (
             <div>
-
-                <div id="sidebar-wrapper">
-                    <ul className="sidebar-nav">
-                        <li className="sidebar-brand"><a href="#">References</a>
-                        </li>
-                        <li><a href="#">Dashboard</a>
-                        </li>
-                        <li><a href="#">Shortcuts</a>
-                        </li>
-                        <li><a href="#">Overview</a>
-                        </li>
-                        <li><a href="#">Events</a>
-                        </li>
-                        <li><a href="#">About</a>
-                        </li>
-                        <li><a href="#">Services</a>
-                        </li>
-                        <li><a href="#">Contact</a>
-                        </li>
-                    </ul>
+                <div>
+                    <div id="sidebar-wrapper">
+                        <ul className="sidebar-nav">
+                            <li className="sidebar-brand">References</li>
+                            <div id='linkContainer'>
+                                <h3 className='mt-5'>Links</h3>
+                                {references}
+                            </div>
+                            <div>
+                                {
+                                    AuthenticationService.isAdmin() === "true" ?
+                                        <button type="button"
+                                                className='btn btn-link mt-5'
+                                                onClick={add_reference}>
+                                            Add reference
+                                        </button> : null
+                                }
+                            </div>
+                        </ul>
+                    </div>
                 </div>
-
-
                 <table width='100%'>
                     <tbody>
                     <tr>
@@ -239,10 +251,9 @@ class Page extends Component {
                     </tr>
                     </tbody>
                 </table>
-                <p className='page_text'> {this.state.text}  </p>
 
                 <div>
-                    {this.state.showLinkEdit && (AuthenticationService.isAdmin() === "true") ? (
+                    {this.state.showLinkEdit  ? (
                             <EditReferenceForm
                                 pageNumber={this.state.pageNumber}
                                 chapterNumber={this.state.chapterNumber}
@@ -250,35 +261,13 @@ class Page extends Component {
                                 reference_description=''
                                 reference_type=''
                                 setPage={this.setPage}
+                                toggleEditDone={this.toggleEditDone}
                             />
                         )
-                        : ''}
+                        :
+                        <p className='page_text'> {this.state.text}  </p>
+                    }
                 </div>
-
-                <Container>
-                    <Row>
-                        <Col>
-                            <div id='linkContainer'>
-                                <h3 className='mt-5'>Links</h3>
-                                {references}
-                            </div>
-                        </Col>
-                        <Col>
-                            <div>
-                                {
-                                    AuthenticationService.isAdmin() === "true" ?
-                                        <button type="button"
-                                                className='btn btn-link'
-                                                onClick={this.add_reference}>
-                                            Add reference
-                                        </button> : null
-                                }
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
-
-
             </div>
         )
     }
@@ -351,12 +340,21 @@ class EditReferenceForm extends React.Component {
         const redirectTo = '/get_page/' + this.state.id;
 
         if (this.state.editDone === true) {
-            return <Redirect to={redirectTo}/>
+            this.setState({
+                editDone: false
+            })
+            this.props.toggleEditDone(this.state.page);
+        }
+        if (this.state.cancel === true) {
+            this.setState({
+                editDone: false
+            })
+            this.props.toggleEditDone();
         }
 
 
         return (
-            <div>
+            <div className='add_reference'>
                 <h5 className='mb-5'> Add page reference</h5>
 
                 <form onSubmit={this.handleSubmit}>
@@ -410,12 +408,12 @@ class EditReferenceForm extends React.Component {
                     <table>
                         <tbody>
                         <tr>
-                            <td></td>
+                            <td>
                             <input
                                 type="submit"
                                 className="btn btn-outline-success mybutton mt-5 ml-5 mb-5"
                                 value="Submit"
-                            />
+                            /></td>
                             <td>
                                 <input
                                     type="button"

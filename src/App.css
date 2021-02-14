@@ -170,6 +170,11 @@ h1 {
   margin-left: 15px;
 }
 
+.add_reference {
+  margin-left: 200px;
+  margin-top: 60px;
+}
+
 .page_header {
   padding: 40px;
   padding-left: 80px;
