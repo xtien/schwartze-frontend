@@ -56,6 +56,29 @@ class Page extends Component {
 
     delete_link(reference_id) {
 
+        const postData = {
+            reference: {
+                id: reference_id
+            },
+            page_number: this.state.pageNumber,
+            chapter_number: this.state.chapterNumber
+        }
+        axios.post(process.env.REACT_APP_API_URL + '/admin/remove_page_reference/',
+            postData,
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response => {
+                    this.setState({
+                        text: response.data.text,
+                        page: response.data.page,
+                    })
+                }
+            )
+            .catch(error => {
+                console.log(error)
+            });
+
+
     }
 
     next() {
@@ -137,30 +160,38 @@ class Page extends Component {
     }
 
     renderReference(reference) {
+        const delete_link = this.delete_link;
+
         switch (reference.type) {
             case 'link':
                 return <div>
                     <a href={reference.key}>{reference.description}</a>
                 </div>
             case 'PERSON':
-                return (<div>
+                return (<div className='mb-2'>
                     <Link to={this.state.refMap.person + reference.key}>{reference.description}</Link>
-                    <button type="button" className='btn btn-link' onClick={this.delete_link(reference.id)}> del
-                    </button>
+                    {AuthenticationService.isAdmin() === "true" ?
+                        <button type="button" className='btn btn-link mb-1'
+                                onClick={()=>{delete_link(reference.id)}}> del
+                        </button> : ''}
                 </div>)
             case 'LOCATION':
-                return (<div>
+                return (<div className='mb-2'>
                     <Link to={this.state.refMap.location + reference.key}>{reference.description}</Link>
-                    <button type="button" className='btn btn-link' onClick={this.delete_link(reference.id)}> del
+                    <button type="button" className='btn btn-link mb-1' onClick={this.delete_link(reference.id)}> del
                     </button>
                 </div>)
             case 'LETTER':
-                return (<div>
+                return (<div className='mb-2'>
                     <Link to={this.state.refMap.letter + reference.key}>{reference.description}</Link>
+                    <button type="button" className='btn btn-link mb-1' onClick={this.delete_link(reference.id)}> del
+                    </button>
                 </div>)
             case 'SUBJECT':
-                return (<div>
+                return (<div className='mb-2'>
                     <Link to={this.state.refMap.subject + reference.key}>{reference.description}</Link>
+                    <button type="button" className='btn btn-link mb-1' onClick={this.delete_link(reference.id)}> del
+                    </button>
                 </div>)
         }
     }
@@ -171,6 +202,7 @@ class Page extends Component {
         let references = [];
         let renderReference = this.renderReference;
         let add_reference = this.add_reference;
+        let delete_link = this.delete_link;
 
         if (page != null && page.references != null) {
             references = page.references.map(function (reference, i) {
@@ -197,8 +229,7 @@ class Page extends Component {
                     <div id="sidebar-wrapper">
                         <ul className="sidebar-nav">
                             <li className="sidebar-brand">References</li>
-                            <div id='linkContainer'>
-                                <h3 className='mt-5'>Links</h3>
+                            <div id='linkContainer' className='ml-3'>
                                 {references}
                             </div>
                             <div>
@@ -253,7 +284,7 @@ class Page extends Component {
                 </table>
 
                 <div>
-                    {this.state.showLinkEdit  ? (
+                    {this.state.showLinkEdit ? (
                             <EditReferenceForm
                                 pageNumber={this.state.pageNumber}
                                 chapterNumber={this.state.chapterNumber}
@@ -409,11 +440,11 @@ class EditReferenceForm extends React.Component {
                         <tbody>
                         <tr>
                             <td>
-                            <input
-                                type="submit"
-                                className="btn btn-outline-success mybutton mt-5 ml-5 mb-5"
-                                value="Submit"
-                            /></td>
+                                <input
+                                    type="submit"
+                                    className="btn btn-outline-success mybutton mt-5 ml-5 mb-5"
+                                    value="Submit"
+                                /></td>
                             <td>
                                 <input
                                     type="button"
