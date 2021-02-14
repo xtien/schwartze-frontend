@@ -177,6 +177,7 @@ class Page extends Component {
         return (
             <div>
                 <table width='100%'>
+                    <tbody>
                     <tr>
                         <td>
                             <button type="button"
@@ -210,14 +211,15 @@ class Page extends Component {
                             </button>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
                 <p className='page_text'> {this.state.text}  </p>
 
                 <div>
                     {this.state.showLinkEdit ? (
                             <EditReferenceForm
-                                pageNumber={this.state.pageNumber}
-                                chapterNumber={this.state.chapterNumber}
+                                pageNumber={this.state.page}
+                                chapterNumber={this.state.chapter}
                                 key=''
                                 reference_description=''
                                 reference_type=''
@@ -253,6 +255,7 @@ class Page extends Component {
 }
 
 class EditReferenceForm extends React.Component {
+
     constructor(props) {
         super(props);
 
@@ -294,15 +297,16 @@ class EditReferenceForm extends React.Component {
         event.preventDefault();
 
         let postData = {
-            pageNumber: this.state.pageNumber,
-            chapterNumber: this.state.chapterNumber,
-            description: this.state.description,
-            key: this.state.key,
-            type: this.state.type,
-            language: 'nl'
+            page_number: this.state.pageNumber,
+            chapter_number: this.state.chapterNumber,
+            reference: {
+                key: this.state.key,
+                type: this.state.type.toUpperCase(),
+                description: this.state.description
+            }
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/admin/add_reference/',
+        axios.post(process.env.REACT_APP_API_URL + '/admin/add_page_reference/',
             postData,
             AuthenticationService.getAxiosConfig()
         )
@@ -310,7 +314,6 @@ class EditReferenceForm extends React.Component {
                     this.props.setPage(response.data.page)
                 }
             )
-
     }
 
     render() {
@@ -329,6 +332,7 @@ class EditReferenceForm extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <table width="60%" className='mt-2'>
+                            <tbody>
                             <tr>
                                 <td width="150px"><label htmlFor="status">Description</label></td>
                                 <td><input
@@ -339,9 +343,11 @@ class EditReferenceForm extends React.Component {
                                     onChange={this.handleDescriptionChange}
                                 /></td>
                             </tr>
+                            </tbody>
                         </table>
 
                         <table width="60%" className='mt-2'>
+                            <tbody>
                             <tr>
                                 <td width="150px"><label htmlFor="status">Type</label></td>
                                 <td><input
@@ -352,9 +358,11 @@ class EditReferenceForm extends React.Component {
                                     onChange={this.handleTypeChange}
                                 /></td>
                             </tr>
+                            </tbody>
                         </table>
 
                         <table width="60%" className='mt-2'>
+                            <tbody>
                             <tr>
                                 <td width="150px"><label htmlFor="status">Key</label></td>
                                 <td><input
@@ -365,6 +373,7 @@ class EditReferenceForm extends React.Component {
                                     onChange={this.handleKeyChange}
                                 /></td>
                             </tr>
+                            </tbody>
                         </table>
 
                     </div>

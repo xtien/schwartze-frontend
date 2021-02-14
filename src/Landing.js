@@ -43,7 +43,7 @@ class Landing extends Component {
             });
 
         let pData = {
-            text_type: 'text',
+            type: 'text',
             text_id: 'blog',
             language: 'nl'
         };
