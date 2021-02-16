@@ -92,21 +92,11 @@ class Page extends Component {
     }
 
     nextChapter() {
-        let nextchapterNumber = parseInt(this.state.chapterNumber) + 1
-        this.setState({
-            chapterNumber: nextchapterNumber,
-            pageNumber: 1
-        })
-        this.get_page(nextchapterNumber, this.state.pageNumber)
+        this.post('/get_next_chapter/', this.state.chapterNumber, this.state.pageNumber)
     }
 
     previousChapter() {
-        let previouschapterNumber = Math.max(parseInt(this.state.chapterNumber) - 1, 1)
-        this.setState({
-            chapterNumber: previouschapterNumber,
-            pageNumber: 1
-        })
-        this.get_page(previouschapterNumber, this.state.pageNumber)
+        this.post('/get_previous_chapter/', this.state.chapterNumber, this.state.pageNumber)
     }
 
     add_reference(event) {
