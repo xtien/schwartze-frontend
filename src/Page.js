@@ -33,10 +33,10 @@ class Page extends Component {
                 letter: '/get_letter_details/',
                 subject: '/get_text/subject/'
             },
-            language: detectBrowserLanguage().substring(0,2)
+            language: detectBrowserLanguage().substring(0, 2)
         }
 
-        this.post = this.post.bind(this);
+        this.get_page = this.get_page.bind(this);
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
         this.nextChapter = this.nextChapter.bind(this);
@@ -44,8 +44,9 @@ class Page extends Component {
         this.delete_link = this.delete_link.bind(this);
         this.add_reference = this.add_reference.bind(this);
         this.renderReference = this.renderReference.bind(this);
+        this.post = this.post.bind(this);
 
-        this.post(props.match.params.chapterNumber, props.match.params.pageNumber)
+        this.get_page(props.match.params.chapterNumber, props.match.params.pageNumber)
     }
 
     setPage = (page) => {
@@ -83,11 +84,7 @@ class Page extends Component {
     }
 
     next() {
-        let nextpageNumber = parseInt(this.state.pageNumber) + 1;
-        this.setState({
-            pageNumber: nextpageNumber
-        })
-        this.post(this.state.chapterNumber, nextpageNumber)
+        this.post('/get_next_page/', this.state.chapterNumber, this.state.pageNumber)
     }
 
     previous() {
@@ -95,7 +92,7 @@ class Page extends Component {
         this.setState({
             pageNumber: previousNumber
         })
-        this.post(this.state.chapterNumber, previousNumber)
+        this.get_page(this.state.chapterNumber, previousNumber)
     }
 
     nextChapter() {
@@ -104,7 +101,7 @@ class Page extends Component {
             chapterNumber: nextchapterNumber,
             pageNumber: 1
         })
-        this.post(nextchapterNumber, this.state.pageNumber)
+        this.get_page(nextchapterNumber, this.state.pageNumber)
     }
 
     previousChapter() {
@@ -113,7 +110,7 @@ class Page extends Component {
             chapterNumber: previouschapterNumber,
             pageNumber: 1
         })
-        this.post(previouschapterNumber, this.state.pageNumber)
+        this.get_page(previouschapterNumber, this.state.pageNumber)
     }
 
     add_reference(event) {
@@ -123,7 +120,11 @@ class Page extends Component {
         })
     }
 
-    post(chapterNumber, pageNumber) {
+    get_page(chapterNumber, pageNumber) {
+        this.post('/get_page_page', chapterNumber, pageNumber);
+    }
+
+    post(url, chapterNumber, pageNumber) {
 
         const postData = {
             chapter: chapterNumber,
@@ -131,7 +132,7 @@ class Page extends Component {
             language: this.state.language
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/get_page_page/',
+        axios.post(process.env.REACT_APP_API_URL + url,
             postData,
             AuthenticationService.getAxiosConfig()
         )
@@ -139,6 +140,8 @@ class Page extends Component {
                     this.setState({
                         text: response.data.text,
                         page: response.data.page,
+                        pageNumber: response.data.page.page_number,
+                        chapterNumber: response.data.page.chapter_number
                     })
                 }
             )
@@ -151,7 +154,7 @@ class Page extends Component {
         this.setState({
             showLinkEdit: false,
         })
-        this.post(this.state.pageNumber, this.state.chapterNumber)
+        this.get_page(this.state.pageNumber, this.state.chapterNumber)
     }
 
     toggleEditDone = () => {
@@ -173,7 +176,9 @@ class Page extends Component {
                     <Link to={this.state.refMap.person + reference.key}>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
             case 'LOCATION':
@@ -181,7 +186,9 @@ class Page extends Component {
                     <Link to={this.state.refMap.location + reference.key}>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
             case 'LETTER':
@@ -189,7 +196,9 @@ class Page extends Component {
                     <Link to={this.state.refMap.letter + reference.key + '/0'}>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
             case 'SUBJECT':
@@ -197,7 +206,9 @@ class Page extends Component {
                     <Link to={this.state.refMap.subject + reference.key}>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
             case 'LINK':
@@ -205,7 +216,9 @@ class Page extends Component {
                     <a href={reference.key} target="_blank" rel="noopener noreferrer">{reference.description}</a>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
         }
@@ -217,7 +230,6 @@ class Page extends Component {
         let references = [];
         let renderReference = this.renderReference;
         let add_reference = this.add_reference;
-        let delete_link = this.delete_link;
 
         if (page != null && page.references != null) {
             references = page.references.map(function (reference, i) {

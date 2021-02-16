@@ -129,8 +129,8 @@ text {
 }
 
 .textpage {
-  width: 800px;
-  margin-left: 100px;
+  width: 700px;
+  margin-left: 250px;
 }
 
 .searchfield {
@@ -185,7 +185,7 @@ h1 {
 }
 
 .page_text {
-  padding-left: 200px;
+  padding-left: 250px;
   margin-right: 120px;
   padding-top: 20px;
   font-family: Garamond;
@@ -204,7 +204,7 @@ h1 {
 #sidebar-wrapper {
   margin-left: -150px;
   margin-top: 200px;
-  left: 250px;
+  left: 300px;
   width: 250px;
   background: #eee;
   position: fixed;
