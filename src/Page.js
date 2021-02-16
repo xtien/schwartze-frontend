@@ -88,11 +88,7 @@ class Page extends Component {
     }
 
     previous() {
-        let previousNumber = Math.max(parseInt(this.state.pageNumber) - 1, 1);
-        this.setState({
-            pageNumber: previousNumber
-        })
-        this.get_page(this.state.chapterNumber, previousNumber)
+        this.post('/get_previous_page/', this.state.chapterNumber, this.state.pageNumber)
     }
 
     nextChapter() {
