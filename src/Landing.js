@@ -20,18 +20,37 @@ class Landing extends Component {
     constructor() {
         super()
 
+        const languages = ['nl', 'en'];
+        let lang = detectBrowserLanguage().substring(0, 2);
+        if (!languages.includes(lang)) {
+            lang = 'nl'
+        }
+        strings.setLanguage(lang);
+
         this.state = {
             home_text: '',
-            blog_text: ''
+            blog_text: '',
+            page: {},
+            chapterNumber: '0',
+            pageNumber: '0',
+            refMap: {
+                person: '/get_person_details/',
+                location: '/get_location/',
+                letter: '/get_letter_details/',
+                subject: '/get_text/subject/'
+            },
+            language: lang
         }
+        this.add_reference = this.add_reference.bind(this);
+        this.renderReference = this.renderReference.bind(this);
+        this.delete_link = this.delete_link.bind(this);
 
-        strings.setLanguage(detectBrowserLanguage().substring(0,2));
-
-        let postData = {
+        const postData = {
             type: 'text',
             text_id: 'home',
-            language: strings.getLanguage()
+            language: this.state.language
         };
+
 
         axios.post(process.env.REACT_APP_API_URL + '/get_page_text/',
             postData,
@@ -46,10 +65,10 @@ class Landing extends Component {
                 console.log(error)
             });
 
-        let pData = {
+        const pData = {
             type: 'text',
             text_id: 'blog',
-            language: strings.getLanguage()
+            language: this.state.language
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_page_text/',
@@ -65,12 +84,74 @@ class Landing extends Component {
                 console.log(error)
             });
 
+        const ppData = {
+            page_number: this.state.pageNumber,
+            chapter_number: this.state.chapterNumber,
+            language: this.state.language
+        };
+        axios.post(process.env.REACT_APP_API_URL + '/get_page_references/',
+            ppData,
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response =>
+                this.setState({
+                    page: response.data.page,
+                })
+            )
+            .catch(error => {
+                console.log(error)
+            });
+
+    }
+
+    delete_link(reference_id) {
+
+        const postData = {
+            reference: {
+                id: reference_id
+            },
+            page_number: this.state.pageNumber,
+            chapter_number: this.state.chapterNumber
+        }
+        axios.post(process.env.REACT_APP_API_URL + '/admin/remove_page_reference/',
+            postData,
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response => {
+                    this.setState({
+                        page: response.data.page,
+                    })
+                }
+            )
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    setPage = (page) => {
+        this.setState({
+            showLinkEdit: false,
+            page: page
+        })
     }
 
     add_reference(event) {
         event.preventDefault();
         this.setState({
             showLinkEdit: true
+        })
+    }
+
+    toggleEditDone = (page) => {
+        this.setState({
+            showLinkEdit: false,
+        })
+        this.get_page(this.state.pageNumber, this.state.chapterNumber)
+    }
+
+    toggleEditDone = () => {
+        this.setState({
+            showLinkEdit: false,
         })
     }
 
@@ -87,7 +168,9 @@ class Landing extends Component {
                     <Link to={this.state.refMap.person + reference.key}>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
             case 'LOCATION':
@@ -95,7 +178,9 @@ class Landing extends Component {
                     <Link to={this.state.refMap.location + reference.key}>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
             case 'LETTER':
@@ -103,7 +188,9 @@ class Landing extends Component {
                     <Link to={this.state.refMap.letter + reference.key + '/0'}>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
             case 'SUBJECT':
@@ -111,7 +198,9 @@ class Landing extends Component {
                     <Link to={this.state.refMap.subject + reference.key}>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
             case 'LINK':
@@ -119,7 +208,9 @@ class Landing extends Component {
                     <a href={reference.key} target="_blank" rel="noopener noreferrer">{reference.description}</a>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
-                                onClick={()=>{delete_link(reference.id)}}> del
+                                onClick={() => {
+                                    delete_link(reference.id)
+                                }}> del
                         </button> : ''}
                 </div>)
         }
@@ -132,13 +223,36 @@ class Landing extends Component {
 
         const page = this.state.page;
         let references = [];
-        let renderReference = this.renderReference;
-        let add_reference = this.add_reference;
+        const renderReference = this.renderReference;
+        const add_reference = this.add_reference;
+
+        if (page != null && page.references != null) {
+            references = page.references.map(function (reference, i) {
+                return (
+                    <div key={i}>
+                        <table width="100%">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    {renderReference(reference)}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                )
+            })
+        }
 
         return (
             <div>
                 <div id="sidebar-wrapper">
-                     <ul className="sidebar-nav">
+                    <ul className="sidebar-nav">
+                        <ul className="sidebar-nav pt-3 pl-3">
+                            <Link to='/get_page/1/1'>{strings.pages}</Link>
+                        </ul>
+                        <li className="sidebar-brand"></li>
                         <div id='linkContainer' className='ml-3'>
                             {references}
                         </div>
@@ -146,17 +260,32 @@ class Landing extends Component {
                             {
                                 AuthenticationService.isAdmin() === "true" ?
                                     <button type="button"
-                                            className='btn btn-link mt-5'
+                                            className='btn btn-link mt-5 pl-3'
                                             onClick={add_reference}>
                                         Add reference
                                     </button> : null
                             }
                         </div>
                     </ul>
-                    <ul className="sidebar-nav mt-5 pl-3 pt-5">
-                        <Link to='/get_page/1/1'>{strings.pages}</Link>
-                    </ul>
                 </div>
+
+                <div>
+                    {this.state.showLinkEdit ? (
+                            <EditReferenceForm
+                                pageNumber={this.state.pageNumber}
+                                chapterNumber={this.state.chapterNumber}
+                                key=''
+                                reference_description=''
+                                reference_type=''
+                                setPage={this.setPage}
+                                toggleEditDone={this.toggleEditDone}
+                            />
+                        )
+                        :
+                        <p className='page_text'> {this.state.text}  </p>
+                    }
+                </div>
+
                 <div className='container'>
                     <div className='photo'>
                         <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"

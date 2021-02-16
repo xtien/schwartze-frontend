@@ -16,24 +16,45 @@ import three_arrow_left from "./images/three_arrow_left.png";
 import arrow_left from "./images/arrow_left.png";
 import {Link, Redirect} from "react-router-dom";
 import detectBrowserLanguage from 'detect-browser-language'
+import strings from "./strings";
+import Cookies from 'universal-cookie';
 
 class Page extends Component {
 
     constructor(props) {
         super(props)
 
+        const cookies = new Cookies();
+        const p = cookies.get('pageNumber');
+        const c = cookies.get('chapterNumber');
+        let pageNr, chapterNr;
+        if (p != null && p != 'undefined' && c != null && c != 'undefined') {
+            pageNr = p;
+            chapterNr = c;
+        } else {
+            pageNr = props.match.params.pageNumber;
+            chapterNr = props.match.params.chapterNumber;
+        }
+
+        const languages = ['nl', 'en'];
+        let lang = detectBrowserLanguage().substring(0, 2);
+        if (!languages.includes(lang)) {
+            lang = 'nl'
+        }
+        strings.setLanguage(lang);
+
         this.state = {
             text: '',
             page: {},
-            chapterNumber: props.match.params.chapterNumber,
-            pageNumber: props.match.params.pageNumber,
+            chapterNumber: chapterNr,
+            pageNumber: pageNr,
             refMap: {
                 person: '/get_person_details/',
                 location: '/get_location/',
                 letter: '/get_letter_details/',
                 subject: '/get_text/subject/'
             },
-            language: detectBrowserLanguage().substring(0, 2)
+            language: lang
         }
 
         this.get_page = this.get_page.bind(this);
@@ -79,8 +100,6 @@ class Page extends Component {
             .catch(error => {
                 console.log(error)
             });
-
-
     }
 
     next() {
@@ -128,7 +147,11 @@ class Page extends Component {
                         page: response.data.page,
                         pageNumber: response.data.page.page_number,
                         chapterNumber: response.data.page.chapter_number
-                    })
+                    });
+                    const cookies = new Cookies();
+                    cookies.set('pageNumber', response.data.page.page_number, {path: '/'});
+                    cookies.set('chapterNumber', response.data.page.chapter_number, {path: '/'});
+
                 }
             )
             .catch(error => {
@@ -214,8 +237,8 @@ class Page extends Component {
 
         const page = this.state.page;
         let references = [];
-        let renderReference = this.renderReference;
-        let add_reference = this.add_reference;
+        const renderReference = this.renderReference;
+        const add_reference = this.add_reference;
 
         if (page != null && page.references != null) {
             references = page.references.map(function (reference, i) {
