@@ -54,7 +54,8 @@ class Page extends Component {
                 letter: '/get_letter_details/',
                 subject: '/get_text/subject/'
             },
-            language: lang
+            language: lang,
+            current_language: lang
         }
 
         this.get_page = this.get_page.bind(this);
@@ -65,6 +66,7 @@ class Page extends Component {
         this.delete_link = this.delete_link.bind(this);
         this.add_reference = this.add_reference.bind(this);
         this.renderReference = this.renderReference.bind(this);
+        this.switch = this.switch.bind(this);
         this.post = this.post.bind(this);
 
         this.get_page(props.match.params.chapterNumber, props.match.params.pageNumber)
@@ -126,7 +128,7 @@ class Page extends Component {
     }
 
     get_page(chapterNumber, pageNumber) {
-        this.post('/get_page_page', chapterNumber, pageNumber);
+        this.post('/get_page_page/', chapterNumber, pageNumber);
     }
 
     post(url, chapterNumber, pageNumber) {
@@ -146,7 +148,8 @@ class Page extends Component {
                         text: response.data.text,
                         page: response.data.page,
                         pageNumber: response.data.page.page_number,
-                        chapterNumber: response.data.page.chapter_number
+                        chapterNumber: response.data.page.chapter_number,
+                        current_language: this.state.language
                     });
                     const cookies = new Cookies();
                     cookies.set('pageNumber', response.data.page.page_number, {path: '/'});
@@ -157,6 +160,34 @@ class Page extends Component {
             .catch(error => {
                 console.log(error)
             });
+    }
+
+    switch(event) {
+
+        event.preventDefault();
+
+        const postData = {
+            chapter: this.state.chapterNumber,
+            page: this.state.pageNumber,
+            language: this.state.current_language
+        };
+
+        axios.post(process.env.REACT_APP_API_URL + '/switch_page_text/',
+            postData,
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response => {
+                    this.setState({
+                        text: response.data.text,
+                        current_language: response.data.language
+                    });
+
+                }
+            )
+            .catch(error => {
+                console.log(error)
+            });
+
     }
 
     toggleEditDone = (page) => {
@@ -235,6 +266,9 @@ class Page extends Component {
 
     render() {
 
+        const otherLanguage = this.state.current_language === 'nl' ? 'en' : 'nl';
+        const otherLanguageDisplay = otherLanguage.toLocaleUpperCase();
+
         const page = this.state.page;
         let references = [];
         const renderReference = this.renderReference;
@@ -254,7 +288,6 @@ class Page extends Component {
                             </tbody>
                         </table>
                     </div>
-
                 )
             })
         }
@@ -332,9 +365,21 @@ class Page extends Component {
                             />
                         )
                         :
-                        <p className='page_text'> {this.state.text}  </p>
+                        <div><p className='page_text'> {this.state.text}  </p></div>
                     }
                 </div>
+
+                <div>
+                    <p className='textpage'>
+                        <button type="button"
+                                className='btn btn-link'
+                                onClick={this.switch}>
+                            {otherLanguageDisplay}
+                        </button>
+
+                    </p>
+                </div>
+
             </div>
         )
     }
