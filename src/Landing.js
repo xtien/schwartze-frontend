@@ -249,9 +249,7 @@ class Landing extends Component {
             <div>
                 <div id="sidebar-wrapper">
                     <ul className="sidebar-nav">
-                        <ul className="sidebar-nav pt-3 pl-3">
-                            <Link to='/get_page/1/1'>{strings.pages}</Link>
-                        </ul>
+
                         <li className="sidebar-brand"></li>
                         <div id='linkContainer' className='ml-3'>
                             {references}
@@ -289,7 +287,7 @@ class Landing extends Component {
                 <div className='container'>
                     <div className='photo'>
                         <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"
-                        />
+                        width="500px"/>
                     </div>
                     <div className='textpage mt-5'>
                         {/* TODO: this needs to change when others than myself get access to data entry */}

@@ -297,7 +297,7 @@ class Page extends Component {
                 <div>
                     <div id="sidebar-wrapper">
                         <ul className="sidebar-nav">
-                            <li className="sidebar-brand">References</li>
+                            <li className="sidebar-brand"></li>
                             <div id='linkContainer' className='ml-3'>
                                 {references}
                             </div>
@@ -370,7 +370,7 @@ class Page extends Component {
                 </div>
 
                 <div>
-                    <p className='textpage'>
+                    <p className='page_text'>
                         <button type="button"
                                 className='btn btn-link'
                                 onClick={this.switch}>

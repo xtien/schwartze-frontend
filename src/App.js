@@ -82,6 +82,7 @@ class App extends Component {
                                         <p className="navbar-nav"><Link to='/get_locations/'>{strings.locations}</Link></p>
                                         <p className="navbar-nav"><Link to='/references/'>{strings.references}</Link></p>
                                         <p className="navbar-nav"><Link to='/subjects/'>{strings.subjects}</Link></p>
+                                        <p className="navbar-nav"><Link to='/get_page/1/1'>{strings.pages}</Link></p>
                                         {/* Admin should only be visible after login. toggle enables Login.js
                                                to render App.js by setting its state  */}
                                         {AuthenticationService.isAdmin() === 'true' ?
