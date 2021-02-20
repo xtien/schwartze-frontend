@@ -364,8 +364,7 @@ class Page extends Component {
                                 toggleEditDone={this.toggleEditDone}
                             />
                         )
-                        :
-                        <div><p className='page_text'> {this.state.text}  </p></div>
+                        : <div className='page_text' dangerouslySetInnerHTML={{__html: this.state.text}}/>
                     }
                 </div>
 
