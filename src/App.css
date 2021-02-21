@@ -205,12 +205,12 @@ h1 {
 
 #sidebar-wrapper {
   margin-left: -0px;
-  margin-top: 200px;
+  margin-top: 160px;
   left: 300px;
   width: 250px;
   background: #eee;
   position: fixed;
-  height: 50%;
+  height: 70%;
   overflow-y: auto;
   z-index: 1000;
   transition: all 0.4s ease 0s;
@@ -276,6 +276,11 @@ h1 {
   margin-left: 20px;
   line-height: 65px;
   display: inline-block;
+}
+
+.sidebar-picture {
+  margin-top: 50px;
+  margin-left: 25px;
 }
 
 #menu-toggle {

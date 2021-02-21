@@ -24,18 +24,6 @@ class Page extends Component {
     constructor(props) {
         super(props)
 
-        const cookies = new Cookies();
-        const p = cookies.get('pageNumber');
-        const c = cookies.get('chapterNumber');
-        let pageNr, chapterNr;
-        if (p != null && p != 'undefined' && c != null && c != 'undefined') {
-            pageNr = p;
-            chapterNr = c;
-        } else {
-            pageNr = props.match.params.pageNumber;
-            chapterNr = props.match.params.chapterNumber;
-        }
-
         const languages = ['nl', 'en'];
         let lang = detectBrowserLanguage().substring(0, 2);
         if (!languages.includes(lang)) {
@@ -46,8 +34,8 @@ class Page extends Component {
         this.state = {
             text: '',
             page: {},
-            chapterNumber: chapterNr,
-            pageNumber: pageNr,
+            chapterNumber: props.match.params.chapterNumber,
+            pageNumber: props.match.params.pageNumber,
             refMap: {
                 person: '/get_person_details/',
                 location: '/get_location/',
@@ -55,7 +43,8 @@ class Page extends Component {
                 subject: '/get_text/subject/'
             },
             language: lang,
-            current_language: lang
+            current_language: lang,
+            showPictureUrlEdit: false
         }
 
         this.get_page = this.get_page.bind(this);
@@ -68,6 +57,7 @@ class Page extends Component {
         this.renderReference = this.renderReference.bind(this);
         this.switch = this.switch.bind(this);
         this.post = this.post.bind(this);
+        this.edit_picture = this.edit_picture.bind(this);
 
         this.get_page(props.match.params.chapterNumber, props.match.params.pageNumber)
     }
@@ -133,9 +123,22 @@ class Page extends Component {
 
     post(url, chapterNumber, pageNumber) {
 
+        const cookies = new Cookies();
+        const p = cookies.get('pageNumber');
+        const c = cookies.get('chapterNumber');
+        let pageNr, chapterNr;
+        if (p != null && p != 'undefined' && c != null && c != 'undefined') {
+            pageNr = p;
+            chapterNr = c;
+        } else {
+            pageNr = this.state.pageNumber;
+            chapterNr = this.state.chapterNumber;
+        }
+
+
         const postData = {
-            chapter: chapterNumber,
-            page: pageNumber,
+            chapter: chapterNr,
+            page: pageNr,
             language: this.state.language
         };
 
@@ -200,6 +203,18 @@ class Page extends Component {
     toggleEditDone = () => {
         this.setState({
             showLinkEdit: false,
+        })
+    }
+
+    togglePictureDone = () => {
+        this.setState({
+            showPictureUrlEdit: false,
+        })
+    }
+
+    edit_picture() {
+        this.setState({
+            showPictureUrlEdit: true
         })
     }
 
@@ -273,6 +288,15 @@ class Page extends Component {
         let references = [];
         const renderReference = this.renderReference;
         const add_reference = this.add_reference;
+        const edit_picture = this.edit_picture;
+
+        let picture_url = this.state.page.picture_url;
+        if (picture_url == 'undefined') {
+            picture_url = null;
+        }
+        if (picture_url != null && !picture_url.startsWith('https://')) {
+            picture_url = "https://" + picture_url;
+        }
 
         if (page != null && page.references != null) {
             references = page.references.map(function (reference, i) {
@@ -295,23 +319,38 @@ class Page extends Component {
         return (
             <div>
                 <div>
-                    <div id="sidebar-wrapper">
-                        <ul className="sidebar-nav">
-                            <li className="sidebar-brand"></li>
-                            <div id='linkContainer' className='ml-3'>
-                                {references}
+                        <div className="row align-items-start">
+                            <div id="sidebar-wrapper" className='container'>
+                                <ul className="sidebar-nav">
+                                    <li className="sidebar-brand"></li>
+                                    <div id='linkContainer' className='ml-3'>
+                                        {references}
+                                    </div>
+                                    <div className="row align-items-end">
+                                        <div className='sidebar-picture'>
+                                            <img src={picture_url} width="200"/>
+                                        </div>
+                                        <div>
+                                            {
+                                                AuthenticationService.isAdmin() === "true" ?
+                                                    <div>
+                                                        <button type="button"
+                                                                className='btn btn-link mt-5'
+                                                                onClick={add_reference}>
+                                                            Add reference
+                                                        </button>
+                                                        <button type="button"
+                                                                className='btn btn-link mt-5'
+                                                                onClick={edit_picture}>
+                                                            edit picture
+                                                        </button>
+                                                    </div>
+                                                    : null
+                                            }
+                                        </div>
+                                    </div>
+                                </ul>
                             </div>
-                            <div>
-                                {
-                                    AuthenticationService.isAdmin() === "true" ?
-                                        <button type="button"
-                                                className='btn btn-link mt-5'
-                                                onClick={add_reference}>
-                                            Add reference
-                                        </button> : null
-                                }
-                            </div>
-                        </ul>
                     </div>
                 </div>
                 <table width='100%'>
@@ -353,6 +392,18 @@ class Page extends Component {
                 </table>
 
                 <div>
+                    {this.state.showPictureUrlEdit ? (
+
+                        <EditPictureUrlEditForm
+                            page={this.state.page}
+                            setPage={this.setPage}
+                            togglePictureDone={this.togglePictureDone}
+                        />
+
+                    ) : null
+                    }
+
+
                     {this.state.showLinkEdit ? (
                             <EditReferenceForm
                                 pageNumber={this.state.pageNumber}
@@ -382,6 +433,78 @@ class Page extends Component {
             </div>
         )
     }
+}
+
+class EditPictureUrlEditForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            page: this.props.page,
+            picture_url: this.props.page.picture_url
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUrlChange = this.handleUrlChange.bind(this);
+    }
+
+    handleUrlChange(event) {
+        this.setState({picture_url: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        this.setState(prevState => ({
+            page: {
+                ...prevState.page,
+                picture_url: this.state.picture_url
+            }
+        }))
+
+        let postData = {
+            page: this.state.page
+        };
+
+        axios.post(process.env.REACT_APP_API_URL + '/admin/update_page/',
+            postData,
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response => {
+                    this.props.setPage(response.data.page)
+                    this.props.togglePictureDone()
+                }
+            )
+    }
+
+    render() {
+
+        return (
+            <div className='page_text'>
+                <h4 className='mb-5'> Edit picture url</h4>
+                <form onSubmit={this.handleSubmit}>
+                    <div className="form-group">
+                        <table width="100%" className='mt-2'>
+                            <tbody>
+                            <tr>
+                                <td width="150px"><label htmlFor="status">URL:</label></td>
+                                <td><input
+                                    type="text"
+                                    className="form-control text"
+                                    id="picture"
+                                    value={this.state.picture_url}
+                                    onChange={this.handleUrlChange}
+                                /></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </form>
+            </div>
+        )
+    }
+
 }
 
 class EditReferenceForm extends React.Component {
