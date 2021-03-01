@@ -403,7 +403,6 @@ class Page extends Component {
                     ) : null
                     }
 
-
                     {this.state.showLinkEdit ? (
                             <EditReferenceForm
                                 pageNumber={this.state.pageNumber}
@@ -455,15 +454,11 @@ class EditPictureUrlEditForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        this.setState(prevState => ({
-            page: {
-                ...prevState.page,
-                picture_url: this.state.picture_url
-            }
-        }))
+        const p = this.state.page;
+        p.picture_url = this.state.picture_url;
 
         let postData = {
-            page: this.state.page
+            page: p
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/admin/update_page/',

@@ -40,6 +40,7 @@ import AuthenticationService from "./service/AuthenticationService";
 import SearchLetters from "./SearchLetters";
 import detectBrowserLanguage from 'detect-browser-language'
 import strings from './strings.js'
+import NotFound from "./NotFound";
 
 class App extends Component {
 

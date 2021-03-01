@@ -39,11 +39,13 @@ class Landing extends Component {
                 letter: '/get_letter_details/',
                 subject: '/get_text/subject/'
             },
-            language: lang
+            language: lang,
+            showPictureUrlEdit: false
         }
         this.add_reference = this.add_reference.bind(this);
         this.renderReference = this.renderReference.bind(this);
         this.delete_link = this.delete_link.bind(this);
+        this.edit_picture = this.edit_picture.bind(this);
 
         const postData = {
             type: 'text',
@@ -84,6 +86,10 @@ class Landing extends Component {
                 console.log(error)
             });
 
+        this.axios_get_page();
+    }
+
+    axios_get_page(){
         const ppData = {
             page_number: this.state.pageNumber,
             chapter_number: this.state.chapterNumber,
@@ -133,6 +139,7 @@ class Landing extends Component {
             showLinkEdit: false,
             page: page
         })
+        this.axios_get_page()
     }
 
     add_reference(event) {
@@ -152,6 +159,18 @@ class Landing extends Component {
     toggleEditDone = () => {
         this.setState({
             showLinkEdit: false,
+        })
+    }
+
+    togglePictureDone = () => {
+        this.setState({
+            showPictureUrlEdit: false,
+        })
+    }
+
+    edit_picture() {
+        this.setState({
+            showPictureUrlEdit: true
         })
     }
 
@@ -225,6 +244,18 @@ class Landing extends Component {
         let references = [];
         const renderReference = this.renderReference;
         const add_reference = this.add_reference;
+        const edit_picture = this.edit_picture;
+
+        let picture_url = null;
+        if (this.state.page != null) {
+            picture_url = this.state.page.picture_url;
+        }
+        if (picture_url == 'undefined') {
+            picture_url = null;
+        }
+        if (picture_url != null && !picture_url.startsWith('https://')) {
+            picture_url = "https://" + picture_url;
+        }
 
         if (page != null && page.references != null) {
             references = page.references.map(function (reference, i) {
@@ -254,20 +285,41 @@ class Landing extends Component {
                         <div id='linkContainer' className='ml-3'>
                             {references}
                         </div>
+                        <div className='sidebar-picture'>
+                            <img src={picture_url} width="200"/>
+                        </div>
                         <div>
                             {
                                 AuthenticationService.isAdmin() === "true" ?
-                                    <button type="button"
-                                            className='btn btn-link mt-5 pl-3'
-                                            onClick={add_reference}>
-                                        Add reference
-                                    </button> : null
+                                    <div>
+                                        <button type="button"
+                                                className='btn btn-link mt-5 pl-3'
+                                                onClick={add_reference}>
+                                            Add reference
+                                        </button>
+                                        <button type="button"
+                                                className='btn btn-link mt-5'
+                                                onClick={edit_picture}>
+                                            edit picture
+                                        </button>
+                                    </div> : null
                             }
                         </div>
                     </ul>
                 </div>
 
                 <div>
+                    {this.state.showPictureUrlEdit ? (
+
+                        <EditPictureUrlEditForm
+                            page={this.state.page}
+                            setPage={this.setPage}
+                            togglePictureDone={this.togglePictureDone}
+                        />
+
+                    ) : null
+                    }
+
                     {this.state.showLinkEdit ? (
                             <EditReferenceForm
                                 pageNumber={this.state.pageNumber}
@@ -287,7 +339,7 @@ class Landing extends Component {
                 <div className='container'>
                     <div className='photo'>
                         <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"
-                        width="500px"/>
+                             width="500px"/>
                     </div>
                     <div className='textpage mt-5'>
                         {/* TODO: this needs to change when others than myself get access to data entry */}
@@ -304,6 +356,76 @@ class Landing extends Component {
             </div>
         )
     }
+}
+
+class EditPictureUrlEditForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            page: this.props.page,
+            picture_url: this.props.page.picture_url
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUrlChange = this.handleUrlChange.bind(this);
+    }
+
+    handleUrlChange(event) {
+        this.setState({picture_url: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        const p = this.state.page;
+        p.picture_url = this.state.picture_url;
+        p.page_number = 0;
+        p.chapter_number = 0;
+
+        let postData = {
+            page: p
+        };
+
+        axios.post(process.env.REACT_APP_API_URL + '/admin/update_page/',
+            postData,
+            AuthenticationService.getAxiosConfig()
+        )
+            .then(response => {
+                    this.props.setPage(response.data.page)
+                    this.props.togglePictureDone()
+                }
+            )
+    }
+
+    render() {
+
+        return (
+            <div className='page_text'>
+                <h4 className='mb-5'> Edit picture url</h4>
+                <form onSubmit={this.handleSubmit}>
+                    <div className="form-group">
+                        <table width="100%" className='mt-2'>
+                            <tbody>
+                            <tr>
+                                <td width="150px"><label htmlFor="status">URL:</label></td>
+                                <td><input
+                                    type="text"
+                                    className="form-control text"
+                                    id="picture"
+                                    value={this.state.picture_url}
+                                    onChange={this.handleUrlChange}
+                                /></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </form>
+            </div>
+        )
+    }
+
 }
 
 class EditReferenceForm extends React.Component {

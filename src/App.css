@@ -162,11 +162,11 @@ a:visited {
 }
 
 .jumbotron {
-  padding: 10px ! important;
+  padding: 0px ! important;
 }
 
 .logo {
-  margin-right: -40px;
+  margin-right: -10px;
 }
 
 h1 {
@@ -204,7 +204,7 @@ h1 {
 }
 
 #sidebar-wrapper {
-  margin-left: -0px;
+  margin-left: -150px;
   margin-top: 160px;
   left: 300px;
   width: 250px;
@@ -279,7 +279,7 @@ h1 {
 }
 
 .sidebar-picture {
-  margin-top: 50px;
+  margin-top: 100px;
   margin-left: 25px;
 }
 
