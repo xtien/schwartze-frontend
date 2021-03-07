@@ -301,8 +301,8 @@ class Person extends Component {
                                 <p>
                                     {person.id} {person.nick_name} {fullname} {person.tussenvoegsel} {person.last_name}
                                 </p>
-                                <p>{strings.geboren}: {person.date_of_birth}</p>
-                                <p>{strings.overleden}: {person.date_of_death}</p>
+                                <p>{strings.geboren}: {person.date_of_birth} {person.place_of_birth === null ? null : ' te'} {person.place_of_birth} </p>
+                                <p>{strings.overleden}: {person.date_of_death} {person.place_of_death === null ? null : 'te'} {person.place_of_death}</p>
                                 <p>{person.comment}</p>
                                 <p className='mt-5'>
                                     {brievenVan}
@@ -366,6 +366,8 @@ class Person extends Component {
                             last_name={this.state.person.last_name}
                             date_of_birth={this.state.person.date_of_birth}
                             date_of_death={this.state.person.date_of_death}
+                            place_of_birth={this.state.person.place_of_birth}
+                            place_of_death={this.state.person.place_of_death}
                             image_url={this.state.person.image_url}
                             image_caption={this.state.person.image_caption}
                             person={this.state.person}
@@ -458,7 +460,9 @@ class EditPersonForm extends React.Component {
             tussenvoegsel: this.props.tussenvoegsel,
             last_name: this.props.last_name,
             date_of_birth: this.props.date_of_birth,
+            place_of_birth: this.props.place_of_birth,
             date_of_death: this.props.date_of_death,
+            place_of_death: this.props.place_of_death,
             comment: this.props.comment,
             image_url: this.props.image_url,
             image_caption: this.props.image_caption,
@@ -478,6 +482,8 @@ class EditPersonForm extends React.Component {
         this.handleImageCaptionChange = this.handleImageCaptionChange.bind(this);
         this.handleDoBChange = this.handleDoBChange.bind(this);
         this.handleDoDChange = this.handleDoDChange.bind(this);
+        this.handlePoBChange = this.handlePoBChange.bind(this);
+        this.handlePoDChange = this.handlePoDChange.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     }
 
@@ -521,6 +527,14 @@ class EditPersonForm extends React.Component {
         this.setState({date_of_death: event.target.value});
     }
 
+    handlePoBChange(event) {
+        this.setState({place_of_birth: event.target.value});
+    }
+
+    handlePoDChange(event) {
+        this.setState({place_of_death: event.target.value});
+    }
+
     handleCancel(event) {
         event.preventDefault();
 
@@ -544,7 +558,9 @@ class EditPersonForm extends React.Component {
                 image_caption: this.state.image_caption,
                 links: this.state.links,
                 date_of_birth: this.state.date_of_birth,
-                date_of_death: this.state.date_of_death
+                date_of_death: this.state.date_of_death,
+                place_of_birth: this.state.place_of_birth,
+                place_of_death: this.state.place_of_death
             }
         };
 
@@ -632,6 +648,16 @@ class EditPersonForm extends React.Component {
                         />
                     </div>
                     <div className="form-group">
+                        <label htmlFor="status">Plaats</label>
+                        <input
+                            type="text"
+                            className="form-control textarea"
+                            id="last_name"
+                            value={this.state.place_of_birth}
+                            onChange={this.handlePoBChange}
+                        />
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="status">Overleden</label>
                         <input
                             type="text"
@@ -639,6 +665,16 @@ class EditPersonForm extends React.Component {
                             id="last_name"
                             value={this.state.date_of_death}
                             onChange={this.handleDoDChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Plaats</label>
+                        <input
+                            type="text"
+                            className="form-control textarea"
+                            id="last_name"
+                            value={this.state.place_of_death}
+                            onChange={this.handlePoDChange}
                         />
                     </div>
                     <div className="form-group">
