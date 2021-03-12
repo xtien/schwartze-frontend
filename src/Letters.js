@@ -32,7 +32,7 @@ class Letters extends Component {
             number: 0,
             gotoletter: false
         }
-        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
 
         this.sort = this.sort.bind(this);
         this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
@@ -58,9 +58,9 @@ class Letters extends Component {
             .catch(error => {
                 console.log(error)
             });
-     }
+    }
 
-    getPostData(){
+    getPostData() {
         return {requestCode: 0};
     }
 
@@ -120,12 +120,9 @@ class Letters extends Component {
 
         const op_nummer = strings.op_nummer;
         const op_datum = strings.op_datum;
-        const naar_nummer = strings.naar_nummer;
         const search = strings.search;
-        const previous = strings.previous;
-        const next = strings.next;
 
-        if(this.state.backButtonPressed === true){
+        if (this.state.backButtonPressed === true) {
             return <Redirect to={'/'}/>
         }
 
@@ -151,7 +148,9 @@ class Letters extends Component {
             accessor: data => {
                 const nr = data.number;
                 const linkto = '/get_letter_details/' + nr + '/' + pagenumber;
-                let result = <Link to={linkto}><div className='number'>{nr}</div></Link>
+                let result = <Link to={linkto}>
+                    <div className='number'>{nr}</div>
+                </Link>
                 return result;
             },
             width: 50,
@@ -161,7 +160,7 @@ class Letters extends Component {
             id: 'senders',
             accessor: data => {
                 let senderList = []
-                if (data !=null && data.senders !=null) {
+                if (data != null && data.senders != null) {
                     senderList = data.senders.map(r => <span key={r.id}><Link
                         to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
                 } else {
@@ -191,13 +190,13 @@ class Letters extends Component {
             id: 'recipients',
             accessor: data => {
                 let recipientList = []
-                if (data !=null && data.recipients !=null) {
+                if (data != null && data.recipients != null) {
                     recipientList = data.recipients.map(r => <span key={r.id}><Link
                         to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
                 } else {
                     recipientList = '';
                 }
-                 return recipientList;
+                return recipientList;
             },
         }, {
             Header: 'location',
@@ -249,9 +248,9 @@ class Letters extends Component {
                                         <td>
                                             <div className='form-group searchfield mb-2 mr-2'>
                                                 <input
-                                                    type="text"
+                                                    type="input"
                                                     id="nr"
-                                                    placeholder={naar_nummer}
+                                                    placeholder={strings.naar_nummer}
                                                     onChange={this.handleletternumber}
                                                     className="form-control textarea"
                                                 />
@@ -265,33 +264,19 @@ class Letters extends Component {
                         </td>
                         <td align="right">
                             <form onSubmit={this.handleSearchSubmit}>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <div className='form-group searchfield mb-2 mr-2'>
-                                                <input
-                                                    type="text"
-                                                    id="text"
-                                                    value={this.state.text}
-                                                    onChange={this.handleSearchTermChange}
-                                                    className="form-control textarea"
-                                                />
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="submit"
-                                                className='btn btn-outline-success mybutton mb-2 mr-5'
-                                                value={search}
-                                            /></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <div className='form-group searchfield mb-2 mr-2'>
+                                    <input
+                                        type="input"
+                                        id="text"
+                                        placeholder={strings.search}
+                                        onChange={this.handleSearchTermChange}
+                                        className="form-control textarea"
+                                    />
+                                </div>
 
                             </form>
                         </td>
-                      </tr>
+                    </tr>
                     </tbody>
                 </table>
 

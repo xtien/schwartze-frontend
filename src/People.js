@@ -29,6 +29,9 @@ class People extends Component {
         this.sort = this.sort.bind(this);
 
         this.apiCall();
+
+        this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
+        this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     }
 
     handleSearchTermChange(event) {
@@ -41,8 +44,10 @@ class People extends Component {
         const postData = {
             search_term: this.state.search_term
         }
+        const axiosConfig = AuthenticationService.getAxiosConfig();
 
-        axios.post(process.env.REACT_APP_API_URL + 'search_people',
+        const url = process.env.REACT_APP_API_URL + '/search_people/';
+        axios.post(url,
             postData,
             axiosConfig
         )
@@ -116,11 +121,11 @@ class People extends Component {
         return (
 
             <div>
-                <table>
+                <table width="90%">
                     <tbody>
                     <tr>
                         <td>
-                            <form onSubmit={this.sort} className='ml-5 mb-2'>
+                            <form onSubmit={this.sort} className='mt-2 ml-5 mb-2'>
                                 <input
                                     type="submit"
                                     className="btn btn-outline-secondary mybutton"
@@ -128,16 +133,19 @@ class People extends Component {
                                 />
                             </form>
                         </td>
-                        <td>
-                            <div className='form-group searchfield mb-2 mr-2'>
+                        <td align="right">
+                            <div className='form-group searchfield mt-2 mb-2 mr-2'>
                                 <form onSubmit={this.handleSearchSubmit}>
-                                    <input
-                                        type="text"
-                                        id="text"
-                                        value={this.state.search_term}
-                                        onChange={this.handleSearchTermChange}
-                                        className="form-control textarea"
-                                    />
+                                    <div className='form-group searchfield mb-2 mr-2'>
+                                        <input
+                                            type="input"
+                                            id="text"
+                                            placeholder={strings.search}
+                                            onChange={this.handleSearchTermChange}
+                                            className="form-control textarea"
+                                        />
+                                    </div>
+
                                 </form>
                             </div>
                         </td>
