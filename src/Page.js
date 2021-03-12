@@ -14,7 +14,7 @@ import arrow_right from "./images/arrow_right.png";
 import three_arrow_right from "./images/three_arrow_right.png";
 import three_arrow_left from "./images/three_arrow_left.png";
 import arrow_left from "./images/arrow_left.png";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import detectBrowserLanguage from 'detect-browser-language'
 import strings from "./strings";
 import Cookies from 'universal-cookie';
@@ -121,7 +121,7 @@ class Page extends Component {
         this.post('/get_page_page/', chapterNumber, pageNumber);
     }
 
-    post(url, chapterNumber, pageNumber) {
+    post(url) {
 
         const cookies = new Cookies();
         const p = cookies.get('pageNumber');
@@ -135,12 +135,12 @@ class Page extends Component {
             chapterNr = this.state.chapterNumber;
         }
 
-
-        const postData = {
-            chapter: chapterNr,
-            page: pageNr,
-            language: this.state.language
-        };
+        const
+            postData = {
+                chapter: chapterNr,
+                page: pageNr,
+                language: this.state.language
+            };
 
         axios.post(process.env.REACT_APP_API_URL + url,
             postData,
@@ -319,38 +319,41 @@ class Page extends Component {
         return (
             <div>
                 <div>
-                        <div className="row align-items-start">
-                            <div id="sidebar-wrapper" className='container'>
-                                <ul className="sidebar-nav">
-                                    <li className="sidebar-brand"></li>
-                                    <div id='linkContainer' className='ml-3'>
-                                        {references}
+                    <div className="row align-items-start">
+                        <div id="sidebar-wrapper" className='container'>
+                            <ul className="sidebar-nav">
+                                <li className="sidebar-brand"></li>
+                                <div id='linkContainer' className='ml-3'>
+                                    {references}
+                                </div>
+                                <div className='ml-3 mt-5'>
+                                    <Link to='/get_content/'>{strings.content}</Link>
+                                </div>
+                                <div className="row align-items-end">
+                                    <div className='sidebar-picture'>
+                                        <img src={picture_url} width="200"/>
                                     </div>
-                                    <div className="row align-items-end">
-                                        <div className='sidebar-picture'>
-                                            <img src={picture_url} width="200"/>
-                                        </div>
-                                        <div>
-                                            {
-                                                AuthenticationService.isAdmin() === "true" ?
-                                                    <div>
-                                                        <button type="button"
-                                                                className='btn btn-link mt-5'
-                                                                onClick={add_reference}>
-                                                            Add reference
-                                                        </button>
-                                                        <button type="button"
-                                                                className='btn btn-link mt-5'
-                                                                onClick={edit_picture}>
-                                                            edit picture
-                                                        </button>
-                                                    </div>
-                                                    : null
-                                            }
-                                        </div>
+                                    <div>
+                                        {
+                                            AuthenticationService.isAdmin() === "true" ?
+                                                <div>
+                                                    <button type="button"
+                                                            className='btn btn-link mt-5'
+                                                            onClick={add_reference}>
+                                                        Add reference
+                                                    </button>
+                                                    <button type="button"
+                                                            className='btn btn-link mt-5'
+                                                            onClick={edit_picture}>
+                                                        edit picture
+                                                    </button>
+                                                </div>
+                                                : null
+                                        }
                                     </div>
-                                </ul>
-                            </div>
+                                </div>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <table width='100%'>

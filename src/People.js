@@ -22,12 +22,38 @@ class People extends Component {
             resultCode: -1,
             people: [{}],
             order_by: 'firstname',
+            search_term: ''
         }
-        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
 
         this.sort = this.sort.bind(this);
 
         this.apiCall();
+    }
+
+    handleSearchTermChange(event) {
+        this.setState({search_term: event.target.value});
+    }
+
+    handleSearchSubmit(event) {
+        event.preventDefault();
+
+        const postData = {
+            search_term: this.state.search_term
+        }
+
+        axios.post(process.env.REACT_APP_API_URL + 'search_people',
+            postData,
+            axiosConfig
+        )
+            .then(response =>
+                this.setState({
+                    people: response.data.people,
+                })
+            )
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     sort(event) {
@@ -64,6 +90,7 @@ class People extends Component {
 
         const op_achternaam = strings.op_achternaam;
         const op_voornaam = strings.op_voornaam;
+        const search = strings.search;
 
         const columns = [{
             accessor: 'id',
@@ -89,14 +116,34 @@ class People extends Component {
         return (
 
             <div>
-                <form onSubmit={this.sort} className='ml-5 mb-2'>
-                    <input
-                        type="submit"
-                        className="btn btn-outline-secondary mybutton"
-                        value={this.state.order_by === 'lastname' ? op_voornaam : op_achternaam}
-                    />
-
-                </form>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <form onSubmit={this.sort} className='ml-5 mb-2'>
+                                <input
+                                    type="submit"
+                                    className="btn btn-outline-secondary mybutton"
+                                    value={this.state.order_by === 'lastname' ? op_voornaam : op_achternaam}
+                                />
+                            </form>
+                        </td>
+                        <td>
+                            <div className='form-group searchfield mb-2 mr-2'>
+                                <form onSubmit={this.handleSearchSubmit}>
+                                    <input
+                                        type="text"
+                                        id="text"
+                                        value={this.state.search_term}
+                                        onChange={this.handleSearchTermChange}
+                                        className="form-control textarea"
+                                    />
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
                 <div className='container'>
                     <ReactTable
                         data={this.state.people}

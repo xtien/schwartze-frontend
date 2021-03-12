@@ -35,7 +35,8 @@ let strings = new LocalizedStrings({
         from:"Van",
         date:"Datum",
         chapter:"Hoofdstuk",
-        page:"Pagina"
+        page:"Pagina",
+        content:"Inhoud"
     },
     en:{
         home:"Home",
@@ -65,7 +66,8 @@ let strings = new LocalizedStrings({
         from:"From",
         date:"Date",
         chapter:"Chapter",
-        page:"Page"
+        page:"Page",
+        content:"Content"
     },
 });
 export default strings;

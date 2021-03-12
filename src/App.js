@@ -40,7 +40,7 @@ import AuthenticationService from "./service/AuthenticationService";
 import SearchLetters from "./SearchLetters";
 import detectBrowserLanguage from 'detect-browser-language'
 import strings from './strings.js'
-import NotFound from "./NotFound";
+import Content from './Content.js'
 
 class App extends Component {
 
@@ -131,6 +131,7 @@ class App extends Component {
                         <Route path="/references/" component={References}/>
                         <Route path="/subjects/" component={Subjects}/>
                         <Route path="/search_letters/:search_term" component={SearchLetters}/>
+                        <Route path="/get_content/" component={Content}/>
                     </div>
                 </div>
             </Router>
