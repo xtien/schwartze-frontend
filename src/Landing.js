@@ -232,6 +232,7 @@ class Landing extends Component {
                                 }}> del
                         </button> : ''}
                 </div>)
+            default: return null
         }
     }
 
@@ -250,7 +251,7 @@ class Landing extends Component {
         if (this.state.page != null) {
             picture_url = this.state.page.picture_url;
         }
-        if (picture_url == 'undefined') {
+        if (picture_url === 'undefined') {
             picture_url = null;
         }
         if (picture_url != null && !picture_url.startsWith('https://')) {
@@ -282,11 +283,11 @@ class Landing extends Component {
                     <ul className="sidebar-nav">
 
                         <li className="sidebar-brand"></li>
-                        <div id='linkContainer' className='ml-3'>
+                        <div id='linkContainer' className='ml-3' alt="">
                             {references}
                         </div>
                         <div className='sidebar-picture'>
-                            <img src={picture_url} width="200"/>
+                            <img src={picture_url} width="200" alt=""/>
                         </div>
                         <div>
                             {
@@ -491,8 +492,6 @@ class EditReferenceForm extends React.Component {
     }
 
     render() {
-
-        const redirectTo = '/get_page/' + this.state.id;
 
         if (this.state.editDone === true) {
             this.setState({

@@ -95,7 +95,6 @@ class People extends Component {
 
         const op_achternaam = strings.op_achternaam;
         const op_voornaam = strings.op_voornaam;
-        const search = strings.search;
 
         const columns = [{
             accessor: 'id',

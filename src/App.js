@@ -63,7 +63,6 @@ class App extends Component {
 
     render() {
 
-        let home = strings.home;
         const refreshPage = this.refreshPage;
 
         return (

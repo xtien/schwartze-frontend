@@ -127,7 +127,7 @@ class Page extends Component {
         const p = cookies.get('pageNumber');
         const c = cookies.get('chapterNumber');
         let pageNr, chapterNr;
-        if (p != null && p != 'undefined' && c != null && c != 'undefined') {
+        if (p != null && p !== 'undefined' && c != null && c !== 'undefined') {
             pageNr = p;
             chapterNr = c;
         } else {
@@ -277,6 +277,7 @@ class Page extends Component {
                                 }}> del
                         </button> : ''}
                 </div>)
+            default: return null
         }
     }
 
@@ -292,7 +293,7 @@ class Page extends Component {
         const edit_picture = this.edit_picture;
 
         let picture_url = this.state.page.picture_url;
-        if (picture_url == 'undefined') {
+        if (picture_url === 'undefined') {
             picture_url = null;
         }
         if (picture_url != null && !picture_url.startsWith('https://')) {
@@ -332,7 +333,7 @@ class Page extends Component {
                                 </div>
                                 <div className="row align-items-end">
                                     <div className='sidebar-picture'>
-                                        <img src={picture_url} width="200"/>
+                                        <img src={picture_url} width="200" alt=""/>
                                     </div>
                                     <div>
                                         {
@@ -421,7 +422,7 @@ class Page extends Component {
                         : <div>
 
                             <div className='chapter_title'>
-                                {this.state.pageNumber == '1' ? this.state.chapterTitle : null}
+                                {this.state.pageNumber === '1' ? this.state.chapterTitle : null}
                              </div>
 
 
@@ -577,8 +578,6 @@ class EditReferenceForm extends React.Component {
     }
 
     render() {
-
-        const redirectTo = '/get_page/' + this.state.id;
 
         if (this.state.editDone === true) {
             this.setState({

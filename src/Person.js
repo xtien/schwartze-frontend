@@ -195,12 +195,9 @@ class Person extends Component {
 
     render() {
 
-        const overleden = strings.overleden;
-        const geboren = strings.geboren;
         const brieven_aan = strings.brieven_aan;
         const brieven_van = strings.brieven_van;
         const meer = strings.meer;
-
 
         if (this.state.person == null) {
             return "Person is null";

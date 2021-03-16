@@ -120,7 +120,6 @@ class Letters extends Component {
 
         const op_nummer = strings.op_nummer;
         const op_datum = strings.op_datum;
-        const search = strings.search;
 
         if (this.state.backButtonPressed === true) {
             return <Redirect to={'/'}/>
