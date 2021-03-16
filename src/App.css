@@ -186,6 +186,16 @@ h1 {
   font-size: x-large;
 }
 
+.chapter_title {
+  padding-left: 300px;
+  margin-right: 100px;
+  padding-top: 20px;
+  font-family: Garamond;
+  font-size: 32px;
+  column-count: 1;
+  column-gap: 0px;
+}
+
 .page_text {
   padding-left: 300px;
   margin-right: 100px;

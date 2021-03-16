@@ -152,6 +152,7 @@ class Page extends Component {
                         page: response.data.page,
                         pageNumber: response.data.page.page_number,
                         chapterNumber: response.data.page.chapter_number,
+                        chapterTitle: response.data.page.chapter_title,
                         current_language: this.state.language
                     });
                     const cookies = new Cookies();
@@ -417,7 +418,15 @@ class Page extends Component {
                                 toggleEditDone={this.toggleEditDone}
                             />
                         )
-                        : <div className='page_text' dangerouslySetInnerHTML={{__html: this.state.text}}/>
+                        : <div>
+
+                            <div className='chapter_title'>
+                                {this.state.pageNumber == '1' ? this.state.chapterTitle : null}
+                             </div>
+
+
+                            <div className='page_text' dangerouslySetInnerHTML={{__html: this.state.text}}/>
+                        </div>
                     }
                 </div>
 
