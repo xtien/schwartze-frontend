@@ -10,6 +10,8 @@ import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
+import strings from './strings.js'
+import detectBrowserLanguage from "detect-browser-language";
 
 class TextEdit extends Component {
 
@@ -32,6 +34,7 @@ class TextEdit extends Component {
             path: props.location.pathname,
         }
 
+        strings.setLanguage(detectBrowserLanguage().substring(0,2));
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -42,7 +45,8 @@ class TextEdit extends Component {
             location_id: this.state.location_id,
             person_id: this.state.person_id,
             letter_id: this.state.letter_id,
-            subject_id: this.state.subject_id
+            subject_id: this.state.subject_id,
+            language: strings.getLanguage()
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_text/',
@@ -91,6 +95,7 @@ class TextEdit extends Component {
             text_id: this.state.text_id,
             subject_id: this.state.subject_id,
             text_string: this.state.text_string,
+            language: strings.getLanguage()
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/admin/update_text/',

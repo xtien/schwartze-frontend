@@ -28,7 +28,12 @@ class Subjects extends Component {
         this.delete_link = this.delete_link.bind(this);
         this.add_link = this.add_link.bind(this);
 
-        axios.get(process.env.REACT_APP_API_URL + '/get_subjects/',
+        let postData = {
+             language: strings.getLanguage()
+        };
+
+        axios.post(process.env.REACT_APP_API_URL + '/get_subjects/',
+            postData,
             AuthenticationService.getAxiosConfig()
         )
             .then(response =>
@@ -209,6 +214,7 @@ class EditLinkForm extends React.Component {
 
         let postData = {
             subject_name: this.state.subject_name,
+            language: strings.getLanguage()
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/admin/add_subject/',

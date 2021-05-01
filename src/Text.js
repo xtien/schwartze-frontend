@@ -10,6 +10,8 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
+import strings from './strings.js'
+import detectBrowserLanguage from "detect-browser-language";
 
 class Text extends Component {
 
@@ -25,11 +27,14 @@ class Text extends Component {
             subject: {}
         }
 
+        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+
         let postData = {
             location_id: this.state.entity === 'location' ? this.state.id : null,
             person_id: this.state.entity === 'person' ? this.state.id : null,
             letter_id: this.state.entity === 'letter' ? this.state.id : null,
-            subject_id: this.state.entity === 'subject' ? this.state.id : null
+            subject_id: this.state.entity === 'subject' ? this.state.id : null,
+            language: strings.getLanguage()
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_text/',
