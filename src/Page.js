@@ -26,9 +26,9 @@ class Page extends Component {
 
         const languages = ['nl', 'en'];
         let lang = detectBrowserLanguage().substring(0, 2);
-        if (!languages.includes(lang)) {
-            lang = 'nl'
-        }
+        // if (!languages.includes(lang)) {
+        //     lang = 'nl'
+        // }
         strings.setLanguage(lang);
 
         this.state = {
