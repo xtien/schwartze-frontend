@@ -30,6 +30,7 @@ class TextEdit extends Component {
             subject: {},
             text: {},
             text_string: '',
+            title_string: '',
             cancel: false,
             path: props.location.pathname,
         }
@@ -39,6 +40,7 @@ class TextEdit extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
+        this.handleTitleChange = this.handleTitleChange.bind(this);
 
         let postData = {
             id: this.state.id,
@@ -68,13 +70,18 @@ class TextEdit extends Component {
                     location: response.data.location,
                     person: response.data.person,
                     letter: response.data.letter,
-                    subject: response.data.subject
+                    subject: response.data.subject,
+                    title_string: (response.data.subject != null) ? response.data.subject.name : ''
                 })
             )
     }
 
     handleTextChange(event) {
         this.setState({text_string: event.target.value});
+    }
+
+    handleTitleChange(event) {
+        this.setState({title_string: event.target.value});
     }
 
     handleCancel(event) {
@@ -95,6 +102,7 @@ class TextEdit extends Component {
             text_id: this.state.text_id,
             subject_id: this.state.subject_id,
             text_string: this.state.text_string,
+            title_string: this.state.title_string,
             language: strings.getLanguage()
         };
 
@@ -125,6 +133,7 @@ class TextEdit extends Component {
         const location = this.state.location;
         const person = this.state.person;
         const letter = this.state.letter;
+        const subject = this.state.subject;
         const redirectTo =
             (letter != null) ? ('/get_letter_details/' + letter.number + '/0') : (
                 (location != null && location.text != null) ? '/get_location_details/' + location.id : (
@@ -166,13 +175,27 @@ class TextEdit extends Component {
                                 </div>
                                 <div>
                                     {this.state.subject != null ?
-                                        <h3> {this.state.subject.name}</h3>
+                                        <Link to={'/get_text/subject/' + subject.id}><h3> {this.state.subject.name}</h3>
+                                        </Link>
                                         : null
                                     }
                                 </div>
                                 <form onSubmit={this.handleSubmit} className='mt-5'>
                                     <div className="form-group">
-                        <textarea
+                                        <div>
+                                            {this.state.subject != null ?
+                                                <h3><textarea
+                                                    type="text"
+                                                    rows="1"
+                                                    id="title_string"
+                                                    value={this.state.title_string}
+                                                    onChange={this.handleTitleChange}
+                                                />
+                                                    </h3>
+                                                : null
+                                            }
+                                        </div>
+                                        <textarea
                             type="text"
                             className="form-control extratextarea"
                             id="text_string"
