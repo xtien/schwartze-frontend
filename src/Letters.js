@@ -120,6 +120,11 @@ class Letters extends Component {
 
         const op_nummer = strings.op_nummer;
         const op_datum = strings.op_datum;
+        const senderheader = strings.sender;
+        const locationheader = strings.location;
+        const recipientheader = strings.recipient;
+        const dateheader = strings.date;
+        const remarksheader = strings.remarks;
 
         if (this.state.backButtonPressed === true) {
             return <Redirect to={'/'}/>
@@ -155,7 +160,7 @@ class Letters extends Component {
             width: 50,
             className: 'text-right'
         }, {
-            Header: 'sender ',
+            Header: senderheader,
             id: 'senders',
             accessor: data => {
                 let senderList = []
@@ -168,7 +173,7 @@ class Letters extends Component {
                 return senderList;
             },
         }, {
-            Header: 'location',
+            Header: locationheader,
             id: 'sender_location',
             width: 100,
             accessor: data => {
@@ -185,7 +190,7 @@ class Letters extends Component {
                 return result;
             },
         }, {
-            Header: 'recipient ',
+            Header: recipientheader,
             id: 'recipients',
             accessor: data => {
                 let recipientList = []
@@ -198,7 +203,7 @@ class Letters extends Component {
                 return recipientList;
             },
         }, {
-            Header: 'location',
+            Header: locationheader,
             id: 'recipient_location',
             width: 100,
             accessor: data => {
@@ -215,10 +220,10 @@ class Letters extends Component {
                 return result;
             },
         }, {
-            Header: 'remarks',
+            Header: remarksheader,
             accessor: 'remarks',
         }, {
-            Header: 'date',
+            Header: dateheader,
             accessor: 'date',
             width: 100
         }]

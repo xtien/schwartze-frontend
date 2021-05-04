@@ -214,10 +214,10 @@ h1 {
 }
 
 #sidebar-wrapper {
-  margin-left: -150px;
+  margin-left: -80px;
   margin-top: 160px;
   left: 300px;
-  width: 250px;
+  width: 280px;
   background: #eee;
   position: fixed;
   height: 70%;

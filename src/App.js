@@ -74,7 +74,7 @@ class App extends Component {
                             <tbody>
                             <tr>
                                 <td>
-                                    <h1>Het nichtje van tante Thérèse</h1>
+                                    <h1>{strings.titel}</h1>
                                     <nav className="navbar navbar-expand-lg navbar-light">
                                         <p className="navbar-nav"><Link to='/'>{strings.home}</Link></p>
                                         <p className="navbar-nav"><Link to='/get_letters/0'>{strings.letters}</Link></p>
