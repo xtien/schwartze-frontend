@@ -184,14 +184,14 @@ class TextEdit extends Component {
                                     <div className="form-group">
                                         <div>
                                             {this.state.subject != null ?
-                                                <h3><textarea
+                                                <div><textarea
                                                     type="text"
                                                     rows="1"
                                                     id="title_string"
                                                     value={this.state.title_string}
                                                     onChange={this.handleTitleChange}
                                                 />
-                                                    </h3>
+                                                    </div>
                                                 : null
                                             }
                                         </div>
