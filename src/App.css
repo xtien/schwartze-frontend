@@ -132,7 +132,8 @@ text {
   font-family: Garamond;
   font-size: 20px;
   width: 700px;
-  margin-left: 300px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .searchfield {
@@ -187,7 +188,7 @@ h1 {
 }
 
 .chapter_title {
-  padding-left: 300px;
+  padding-left: 100px;
   margin-right: 100px;
   padding-top: 20px;
   font-family: Garamond;
@@ -197,8 +198,8 @@ h1 {
 }
 
 .page_text {
-  padding-left: 300px;
-  margin-right: 100px;
+  padding-left: 30px;
+  padding-right: 50px;
   padding-top: 20px;
   font-family: Garamond;
   font-size: 20px;
@@ -214,13 +215,9 @@ h1 {
 }
 
 #sidebar-wrapper {
-  margin-left: -80px;
-  margin-top: 160px;
   left: 300px;
-  width: 280px;
-  background: #eee;
-  position: fixed;
-  height: 70%;
+  width: 380px;
+  height: 800px;
   overflow-y: auto;
   z-index: 1000;
   transition: all 0.4s ease 0s;
@@ -231,12 +228,13 @@ h1 {
 }
 
 .sidebar-nav {
-  position: absolute;
+  background: #eee;
   top: 0;
-  width: 250px;
+  width: 300px;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 20px;
+  height: 800px;
 }
 
 .sidebar-nav li {
@@ -299,6 +297,24 @@ h1 {
 
 .inset {
   padding: 20px;
+}
+
+.float-container {
+  border: 3px solid #fff;
+
+}
+
+.float-child-left {
+  width: 30%;
+  float: left;
+}
+.float-child-right {
+  width: 70%;
+  float: left;
+}
+
+.empty {
+  margin-top: 130px;
 }
 
 @media (max-width:767px) {

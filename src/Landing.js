@@ -89,7 +89,7 @@ class Landing extends Component {
         this.axios_get_page();
     }
 
-    axios_get_page(){
+    axios_get_page() {
         const ppData = {
             page_number: this.state.pageNumber,
             chapter_number: this.state.chapterNumber,
@@ -232,7 +232,8 @@ class Landing extends Component {
                                 }}> del
                         </button> : ''}
                 </div>)
-            default: return null
+            default:
+                return null
         }
     }
 
@@ -279,78 +280,85 @@ class Landing extends Component {
 
         return (
             <div>
-                <div id="sidebar-wrapper">
-                    <ul className="sidebar-nav">
+                <div className="float-container">
+                    <div className="float-child-left">
+                        <div className="empty"></div>
+                        <div id="sidebar-wrapper">
+                            <ul className="sidebar-nav">
 
-                        <li className="sidebar-brand"></li>
-                        <div id='linkContainer' className='ml-3' alt="">
-                            {references}
+                                <li className="sidebar-brand"></li>
+                                <div id='linkContainer' className='ml-3' alt="">
+                                    {references}
+                                </div>
+                                <div className='sidebar-picture'>
+                                    <img src={picture_url} width="200" alt=""/>
+                                </div>
+                                <div>
+                                    {
+                                        AuthenticationService.isAdmin() === "true" ?
+                                            <div>
+                                                <button type="button"
+                                                        className='btn btn-link mt-5 pl-3'
+                                                        onClick={add_reference}>
+                                                    Add reference
+                                                </button>
+                                                <button type="button"
+                                                        className='btn btn-link mt-5'
+                                                        onClick={edit_picture}>
+                                                    edit picture
+                                                </button>
+                                            </div> : null
+                                    }
+                                </div>
+                            </ul>
                         </div>
-                        <div className='sidebar-picture'>
-                            <img src={picture_url} width="200" alt=""/>
-                        </div>
+                    </div>
+
+                    <div className="float-child-right">
                         <div>
-                            {
-                                AuthenticationService.isAdmin() === "true" ?
-                                    <div>
-                                        <button type="button"
-                                                className='btn btn-link mt-5 pl-3'
-                                                onClick={add_reference}>
-                                            Add reference
-                                        </button>
-                                        <button type="button"
-                                                className='btn btn-link mt-5'
-                                                onClick={edit_picture}>
-                                            edit picture
-                                        </button>
-                                    </div> : null
+                            {this.state.showPictureUrlEdit ? (
+
+                                <EditPictureUrlEditForm
+                                    page={this.state.page}
+                                    setPage={this.setPage}
+                                    togglePictureDone={this.togglePictureDone}
+                                />
+
+                            ) : null
+                            }
+
+                            {this.state.showLinkEdit ? (
+                                    <EditReferenceForm
+                                        pageNumber={this.state.pageNumber}
+                                        chapterNumber={this.state.chapterNumber}
+                                        key=''
+                                        reference_description=''
+                                        reference_type=''
+                                        setPage={this.setPage}
+                                        toggleEditDone={this.toggleEditDone}
+                                    />
+                                )
+                                :
+                                <p className='page_text'> {this.state.text}  </p>
                             }
                         </div>
-                    </ul>
-                </div>
 
-                <div>
-                    {this.state.showPictureUrlEdit ? (
+                        <div className='container'>
+                            <div className='photo'>
+                                <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"
+                                     width="500px"/>
+                            </div>
+                            <div className='textpage'>
+                                {/* TODO: this needs to change when others than myself get access to data entry */}
 
-                        <EditPictureUrlEditForm
-                            page={this.state.page}
-                            setPage={this.setPage}
-                            togglePictureDone={this.togglePictureDone}
-                        />
-
-                    ) : null
-                    }
-
-                    {this.state.showLinkEdit ? (
-                            <EditReferenceForm
-                                pageNumber={this.state.pageNumber}
-                                chapterNumber={this.state.chapterNumber}
-                                key=''
-                                reference_description=''
-                                reference_type=''
-                                setPage={this.setPage}
-                                toggleEditDone={this.toggleEditDone}
-                            />
-                        )
-                        :
-                        <p className='page_text'> {this.state.text}  </p>
-                    }
-                </div>
-
-                <div className='container'>
-                    <div className='photo'>
-                        <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"
-                             width="500px"/>
-                    </div>
-                    <div className='textpage mt-5'>
-                        {/* TODO: this needs to change when others than myself get access to data entry */}
-
-                        <div dangerouslySetInnerHTML={{__html: home_text}}/>
-                    </div>
-                    <div className='textpage mt-5 '>
-                        <div>
-                            {/* TODO: this needs to change when others than myself get access to data entry */}
-                            <div dangerouslySetInnerHTML={{__html: blog_text}}/>
+                                <div dangerouslySetInnerHTML={{__html: home_text}}/>
+                            </div>
+                            <div className='textpage mt-5 '>
+                                <div>
+                                    {/* TODO: this needs to change when others than myself get access to data entry */}
+                                    <div dangerouslySetInnerHTML={{__html: blog_text}}/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

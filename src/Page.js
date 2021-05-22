@@ -277,7 +277,8 @@ class Page extends Component {
                                 }}> del
                         </button> : ''}
                 </div>)
-            default: return null
+            default:
+                return null
         }
     }
 
@@ -320,44 +321,6 @@ class Page extends Component {
 
         return (
             <div>
-                <div>
-                    <div className="row align-items-start">
-                        <div id="sidebar-wrapper" className='container'>
-                            <ul className="sidebar-nav">
-                                <li className="sidebar-brand"></li>
-                                <div id='linkContainer' className='ml-3'>
-                                    {references}
-                                </div>
-                                <div className='ml-3 mt-5'>
-                                    <Link to='/get_content/'>{strings.content}</Link>
-                                </div>
-                                <div className="row align-items-end">
-                                    <div className='sidebar-picture'>
-                                        <img src={picture_url} width="200" alt=""/>
-                                    </div>
-                                    <div>
-                                        {
-                                            AuthenticationService.isAdmin() === "true" ?
-                                                <div>
-                                                    <button type="button"
-                                                            className='btn btn-link mt-5'
-                                                            onClick={add_reference}>
-                                                        Add reference
-                                                    </button>
-                                                    <button type="button"
-                                                            className='btn btn-link mt-5'
-                                                            onClick={edit_picture}>
-                                                        edit picture
-                                                    </button>
-                                                </div>
-                                                : null
-                                        }
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
                 <table width='100%'>
                     <tbody>
                     <tr>
@@ -396,51 +359,94 @@ class Page extends Component {
                     </tbody>
                 </table>
 
-                <div>
-                    {this.state.showPictureUrlEdit ? (
-
-                        <EditPictureUrlEditForm
-                            page={this.state.page}
-                            setPage={this.setPage}
-                            togglePictureDone={this.togglePictureDone}
-                        />
-
-                    ) : null
-                    }
-
-                    {this.state.showLinkEdit ? (
-                            <EditReferenceForm
-                                pageNumber={this.state.pageNumber}
-                                chapterNumber={this.state.chapterNumber}
-                                key=''
-                                reference_description=''
-                                reference_type=''
-                                setPage={this.setPage}
-                                toggleEditDone={this.toggleEditDone}
-                            />
-                        )
-                        : <div>
-
-                            <div className='chapter_title'>
-                                {this.state.pageNumber === '1' ? this.state.chapterTitle : null}
-                             </div>
-
-
-                            <div className='page_text' dangerouslySetInnerHTML={{__html: this.state.text}}/>
+                <div className="float-container">
+                    <div className="float-child-left">
+                        <div className="row align-items-start">
+                            <div id="sidebar-wrapper" className='container'>
+                                <ul className="sidebar-nav">
+                                    <li className="sidebar-brand"></li>
+                                    <div id='linkContainer' className='ml-3'>
+                                        {references}
+                                    </div>
+                                    <div className='ml-3 mt-5'>
+                                        <Link to='/get_content/'>{strings.content}</Link>
+                                    </div>
+                                    <div className="row align-items-end">
+                                        <div className='sidebar-picture'>
+                                            <img src={picture_url} width="200" alt=""/>
+                                        </div>
+                                        <div>
+                                            {
+                                                AuthenticationService.isAdmin() === "true" ?
+                                                    <div>
+                                                        <button type="button"
+                                                                className='btn btn-link mt-5'
+                                                                onClick={add_reference}>
+                                                            Add reference
+                                                        </button>
+                                                        <button type="button"
+                                                                className='btn btn-link mt-5'
+                                                                onClick={edit_picture}>
+                                                            edit picture
+                                                        </button>
+                                                    </div>
+                                                    : null
+                                            }
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
                         </div>
-                    }
+                    </div>
+                    <div className="float-child-right">
+                        <div>
+                            {this.state.showPictureUrlEdit ? (
+
+                                <EditPictureUrlEditForm
+                                    page={this.state.page}
+                                    setPage={this.setPage}
+                                    togglePictureDone={this.togglePictureDone}
+                                />
+
+                            ) : null
+                            }
+
+                            {this.state.showLinkEdit ? (
+                                    <EditReferenceForm
+                                        pageNumber={this.state.pageNumber}
+                                        chapterNumber={this.state.chapterNumber}
+                                        key=''
+                                        reference_description=''
+                                        reference_type=''
+                                        setPage={this.setPage}
+                                        toggleEditDone={this.toggleEditDone}
+                                    />
+                                )
+                                : <div>
+
+                                    <div className='chapter_title'>
+                                        {this.state.pageNumber === '1' ? this.state.chapterTitle : null}
+                                    </div>
+
+
+                                    <div className='page_text' dangerouslySetInnerHTML={{__html: this.state.text}}/>
+                                </div>
+                            }
+                        </div>
+                        <div>
+                            <p className='page_text'>
+                                <button type="button"
+                                        className='btn btn-link'
+                                        onClick={this.switch}>
+                                    {otherLanguageDisplay}
+                                </button>
+
+                            </p>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div>
-                    <p className='page_text'>
-                        <button type="button"
-                                className='btn btn-link'
-                                onClick={this.switch}>
-                            {otherLanguageDisplay}
-                        </button>
-
-                    </p>
-                </div>
 
             </div>
         )
