@@ -74,7 +74,7 @@ class Admin extends Component {
                     this.setState({
                         indexing: false
                     })
-                 }
+                }
             )
             .catch(error => {
                 console.log(error)
@@ -177,11 +177,11 @@ class Admin extends Component {
                                         </form>
                                     </td>
                                     <td>
-                                              <button
-                                                className="btn btn-outline-success mt-5"
-                                                onClick={this.index_letters}>
-                                                Index letters
-                                            </button>
+                                        <button
+                                            className="btn btn-outline-success mt-5"
+                                            onClick={this.index_letters}>
+                                            Index letters
+                                        </button>
                                     </td>
                                     <td>
                                         <form onSubmit={this.logout} className='mt-5'>

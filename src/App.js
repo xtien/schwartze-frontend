@@ -89,11 +89,6 @@ class App extends Component {
                                             <p className="navbar-nav"><Link to={'/admin/'}>Admin</Link>
                                             </p>
                                             : null}
-                                        <p className="navbar-nav"><Link to={{
-                                            pathname: '/login/',
-                                            toggle: refreshPage
-                                        }}>Login</Link>
-                                        </p>
                                     </nav>
                                 </td>
                                 <td>

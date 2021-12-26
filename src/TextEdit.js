@@ -35,7 +35,7 @@ class TextEdit extends Component {
             path: props.location.pathname,
         }
 
-        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -156,19 +156,22 @@ class TextEdit extends Component {
                                     {this.state.person != null ?
                                         <Link
                                             to={'/get_person_details/' + person.id}>
-                                            <h3> {person.nick_name} {(person.tussenvoegsel != null ? (person.tussenvoegsel + ' ') : '')} {person.last_name}</h3></Link>
+                                            <h3> {person.nick_name} {(person.tussenvoegsel != null ? (person.tussenvoegsel + ' ') : '')} {person.last_name}</h3>
+                                        </Link>
                                         : null
                                     }</div>
                                 <div>
                                     {this.state.location != null ?
-                                        <Link to={'/get_location_details/' + location.id}><h3> {location.location_name}</h3>
+                                        <Link to={'/get_location_details/' + location.id}>
+                                            <h3> {location.location_name}</h3>
                                         </Link>
                                         : null
                                     }
                                 </div>
                                 <div>
                                     {this.state.letter != null ?
-                                        <Link to={'/get_letter_details/' + letter.number + '/0'}><h3> Brief {letter.number}</h3>
+                                        <Link to={'/get_letter_details/' + letter.number + '/0'}>
+                                            <h3> Brief {letter.number}</h3>
                                         </Link>
                                         : null
                                     }
@@ -191,17 +194,17 @@ class TextEdit extends Component {
                                                     value={this.state.title_string}
                                                     onChange={this.handleTitleChange}
                                                 />
-                                                    </div>
+                                                </div>
                                                 : null
                                             }
                                         </div>
                                         <textarea
-                            type="text"
-                            className="form-control extratextarea"
-                            id="text_string"
-                            value={this.state.text_string}
-                            onChange={this.handleTextChange}
-                        />
+                                            type="text"
+                                            className="form-control extratextarea"
+                                            id="text_string"
+                                            value={this.state.text_string}
+                                            onChange={this.handleTextChange}
+                                        />
                                     </div>
                                     <table className='mt-5'>
                                         <tr>
