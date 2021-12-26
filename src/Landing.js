@@ -239,6 +239,8 @@ class Landing extends Component {
 
     render() {
 
+        const isAdmin = AuthenticationService.isAdmin();
+
         const home_text = this.state.home_text;
         const blog_text = this.state.blog_text;
 
@@ -279,6 +281,7 @@ class Landing extends Component {
         }
 
         return (
+
             <div>
                 <div className="float-container">
                     <div className="float-child-left">
@@ -286,7 +289,11 @@ class Landing extends Component {
                         <div id="sidebar-wrapper">
                             <ul className="sidebar-nav">
 
-                                <li className="sidebar-brand"></li>
+                                <div>{isAdmin === 'true' ?
+                                    <p className='nav-link'> <Link to={'/admin/'}>Admin</Link>
+                                    </p>
+                                    : null}
+                                </div>
                                 <div id='linkContainer' className='ml-3' alt="">
                                     {references}
                                 </div>

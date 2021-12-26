@@ -85,14 +85,20 @@ class Admin extends Component {
     }
 
     logout() {
+
+        AuthenticationService.logout()
+
+        this.setState({
+            logout: true
+        })
+
         let postData = {
-            requestCode: 0
+            request_code: 0
         };
 
         let axiosConfig = AuthenticationService.getAxiosConfig();
-        const self = this;
 
-        const url = process.env.REACT_APP_API_URL + '/user/signout/';
+        const url = process.env.REACT_APP_API_URL + '/user/signout';
 
         axios.post(url,
             postData,
@@ -102,8 +108,6 @@ class Admin extends Component {
                     this.setState({
                         logout: true
                     })
-                    AuthenticationService.logout()
-                    self.state.refreshMe()
                 }
             )
             .catch(error => {

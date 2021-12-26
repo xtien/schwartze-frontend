@@ -43,7 +43,6 @@ class Login extends React.Component {
                     auth: true
                 })
 
-                this.props.location.state.toggle()
 
             })
             .catch(error => {
@@ -63,7 +62,6 @@ class Login extends React.Component {
 
         if (this.state.auth === true) {
             /*  toggle is used to render App.js to make the Admin menu option show  */
-            this.props.location.toggle()
 
             return (
                 <Redirect to={"/get_letters/0"}/>

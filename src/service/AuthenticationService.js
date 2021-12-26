@@ -15,7 +15,7 @@ class AuthenticationService {
     }
 
     executeLogin(username, password) {
-        return axios.get(`${API_URL}/login/`,
+        return axios.get(`${API_URL}/user/login`,
             {
                 headers: {
                     authorization: this.createBasicAuthToken(username, password)
@@ -79,7 +79,7 @@ class AuthenticationService {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
         sessionStorage.removeItem(AUTH1);
         sessionStorage.removeItem(AUTH2);
-        sessionStorage.removeItem(ADMIN);
+        sessionStorage.setItem(ADMIN, false);
     }
 
     isUserLoggedIn() {
