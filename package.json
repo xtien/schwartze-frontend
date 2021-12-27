@@ -17,9 +17,11 @@
     "react-localization": "^1.0.15",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.1",
     "react-table": "^6.8.6",
     "reactstrap": "^8.9.0"
+  },
+  "devDependencies": {
+    "react-scripts": "2.1.1"
   },
   "scripts": {
     "start": "set HTTPS=true&&HOST='pengo.christine.nl' react-scripts start",
