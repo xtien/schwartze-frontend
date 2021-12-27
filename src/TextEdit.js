@@ -11,7 +11,7 @@ import {Link, Redirect} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
-import detectBrowserLanguage from "detect-browser-language";
+import language from "./language";
 
 class TextEdit extends Component {
 
@@ -35,7 +35,7 @@ class TextEdit extends Component {
             path: props.location.pathname,
         }
 
-        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
+        language()
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancel = this.handleCancel.bind(this);

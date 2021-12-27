@@ -15,8 +15,8 @@ import Util from "./service/Util";
 import {Redirect} from "react-router";
 import arrow_left from "./images/arrow_left.png";
 import arrow_right from "./images/arrow_right.png";
-import detectBrowserLanguage from 'detect-browser-language'
 import strings from './strings.js'
+import language from "./language";
 
 class Letter extends Component {
 
@@ -38,7 +38,7 @@ class Letter extends Component {
             delete_letter: false,
             pageNumber: props.match.params.pagenumber
         }
-        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
+        language()
 
         this.editLetter = this.editLetter.bind(this);
         this.deleteLetter = this.deleteLetter.bind(this);

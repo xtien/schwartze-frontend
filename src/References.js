@@ -8,8 +8,8 @@
 import React, {Component} from 'react'
 import axios from "axios";
 import AuthenticationService from "./service/AuthenticationService";
-import detectBrowserLanguage from 'detect-browser-language'
 import strings from './strings.js'
+import language from "./language";
 
 class References extends Component {
 
@@ -21,7 +21,7 @@ class References extends Component {
             references: {},
             linkEditDone: false
         }
-        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+       language()
 
         this.edit_link = this.edit_link.bind(this);
         this.delete_link = this.delete_link.bind(this);

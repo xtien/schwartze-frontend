@@ -5,24 +5,19 @@
  * http://www.apache.org/licenses/LICENSE-2.0.
  */
 import React, {Component} from 'react'
-import detectBrowserLanguage from "detect-browser-language";
 import strings from "./strings";
 import axios from "axios";
 import AuthenticationService from "./service/AuthenticationService";
 import {Link} from "react-router-dom";
 import Cookies from "universal-cookie";
+import language from "./language";
 
 class Content extends Component {
 
     constructor(props) {
         super(props)
 
-        const languages = ['nl', 'en'];
-        let lang = detectBrowserLanguage().substring(0, 2);
-        if (!languages.includes(lang)) {
-            lang = 'nl'
-        }
-        strings.setLanguage(lang);
+        const lang = language()
 
         this.state = {
             contentList: [],

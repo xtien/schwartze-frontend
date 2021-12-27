@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
-import detectBrowserLanguage from "detect-browser-language";
+import language from "./language";
 
 class Text extends Component {
 
@@ -27,7 +27,7 @@ class Text extends Component {
             subject: {}
         }
 
-        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+        language()
 
         let postData = {
             location_id: this.state.entity === 'location' ? this.state.id : null,

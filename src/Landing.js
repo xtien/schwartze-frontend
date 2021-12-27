@@ -10,8 +10,7 @@ import './css/bootstrap.css'
 import axios from "axios";
 import AuthenticationService from "./service/AuthenticationService";
 import {Link} from "react-router-dom";
-import detectBrowserLanguage from 'detect-browser-language'
-import strings from './strings.js'
+import language from "./language";
 
 class Landing extends Component {
 
@@ -20,12 +19,7 @@ class Landing extends Component {
     constructor() {
         super()
 
-        const languages = ['nl', 'en'];
-        let lang = detectBrowserLanguage().substring(0, 2);
-        // if (!languages.includes(lang)) {
-        //     lang = 'nl'
-        // }
-        strings.setLanguage(lang);
+        const lang = language()
 
         this.state = {
             home_text: '',

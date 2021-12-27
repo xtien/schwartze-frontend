@@ -12,8 +12,8 @@ import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 import AuthenticationService from "./service/AuthenticationService";
 import {Redirect} from "react-router";
-import detectBrowserLanguage from 'detect-browser-language'
 import strings from './strings.js'
+import language from "./language";
 
 class Letters extends Component {
 
@@ -32,7 +32,7 @@ class Letters extends Component {
             number: 0,
             gotoletter: false
         }
-        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
+       language()
 
         this.sort = this.sort.bind(this);
         this.handleSearchTermChange = this.handleSearchTermChange.bind(this);

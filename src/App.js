@@ -36,11 +36,10 @@ import People from "./People"
 import Subjects from "./Subjects"
 import References from "./References";
 import twitli from './images/logo.png'
-import AuthenticationService from "./service/AuthenticationService";
 import SearchLetters from "./SearchLetters";
-import detectBrowserLanguage from 'detect-browser-language'
 import strings from './strings.js'
 import Content from './Content.js'
+import language from "./language";
 
 class App extends Component {
 
@@ -51,7 +50,7 @@ class App extends Component {
             refreshPage: this.refreshPage,
             refresh: false,
          }
-        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+       language()
     }
 
     refreshPage = () => {
@@ -62,8 +61,6 @@ class App extends Component {
 
 
     render() {
-
-        const refreshPage = this.refreshPage;
 
         return (
 

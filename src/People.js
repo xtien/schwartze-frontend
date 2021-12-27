@@ -10,8 +10,8 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import ReactTable from "react-table";
 import AuthenticationService from "./service/AuthenticationService";
-import detectBrowserLanguage from 'detect-browser-language'
 import strings from './strings.js'
+import language from "./language";
 
 class People extends Component {
 
@@ -24,7 +24,7 @@ class People extends Component {
             order_by: 'firstname',
             search_term: ''
         }
-        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
+        language()
 
         this.sort = this.sort.bind(this);
 

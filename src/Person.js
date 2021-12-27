@@ -12,8 +12,8 @@ import axios from "axios";
 import {Link, Redirect} from "react-router-dom";
 import AuthenticationService from './service/AuthenticationService';
 import Util from './service/Util';
-import detectBrowserLanguage from 'detect-browser-language'
 import strings from './strings.js'
+import language from "./language";
 
 // https://medium.com/better-programming/building-basic-react-authentication-e20a574d5e71
 
@@ -31,7 +31,7 @@ class Person extends Component {
             person: {},
             textString: '',
         }
-        strings.setLanguage(detectBrowserLanguage().substring(0, 2));
+        language()
 
         if (this.state.person != null && this.state.person.text != null) {
             this.setState({

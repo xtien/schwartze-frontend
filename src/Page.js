@@ -15,21 +15,16 @@ import three_arrow_right from "./images/three_arrow_right.png";
 import three_arrow_left from "./images/three_arrow_left.png";
 import arrow_left from "./images/arrow_left.png";
 import {Link} from "react-router-dom";
-import detectBrowserLanguage from 'detect-browser-language'
 import strings from "./strings";
 import Cookies from 'universal-cookie';
+import language from './language'
 
 class Page extends Component {
 
     constructor(props) {
         super(props)
 
-        const languages = ['nl', 'en'];
-        let lang = detectBrowserLanguage().substring(0, 2);
-        // if (!languages.includes(lang)) {
-        //     lang = 'nl'
-        // }
-        strings.setLanguage(lang);
+        const lang = language()
 
         this.state = {
             text: '',

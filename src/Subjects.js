@@ -9,8 +9,8 @@ import React, {Component} from 'react'
 import axios from "axios";
 import {Redirect, Link} from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
-import detectBrowserLanguage from 'detect-browser-language'
 import strings from './strings.js'
+import language from "./language";
 
 class Subjects extends Component {
 
@@ -22,7 +22,7 @@ class Subjects extends Component {
             subjects: [{}],
             linkEditDone: false
         }
-        strings.setLanguage(detectBrowserLanguage().substring(0,2));
+        language()
 
         this.edit_link = this.edit_link.bind(this);
         this.delete_link = this.delete_link.bind(this);
