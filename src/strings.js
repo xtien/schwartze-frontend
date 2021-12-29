@@ -14,7 +14,7 @@ let strings = new LocalizedStrings({
         people:"Personen",
         locations:"Locaties",
         references:"Referenties",
-        subjects:"Topics",
+        topics:"Topics",
         admin:"Admin",
         login:"Login",
         pages:"Bladzijden",
@@ -41,7 +41,9 @@ let strings = new LocalizedStrings({
         sender:"Afzender",
         recipient:"Ontvanger",
         location:"Plaats",
-        remarks:"Opmerkingen"
+        remarks:"Opmerkingen",
+        help_title: "Navigatie",
+        help:"Op de brieven pagina, klik op een briefnummer of naam voor meer info. Verder kun je meestal op een naam klikken voor meer info."
     },
     en:{
         titel:"Aunt Thérèse's niece",
@@ -50,7 +52,7 @@ let strings = new LocalizedStrings({
         people:"People",
         locations:"Locations",
         references:"References",
-        subjects:"Topics",
+        topics:"Topics",
         admin:"Admin",
         login:"Login",
         pages:"Pages",
@@ -77,7 +79,9 @@ let strings = new LocalizedStrings({
         sender:"Sender",
         recipient:"Recipient",
         location:"Location",
-        remarks:"Remarks"
+        remarks:"Remarks",
+        help_title:"Navigation",
+        help:"On the letters page, click on a letter number or a name for info. In the letter pages, you can click on any name to navigate."
     },
     fr: {
         titel:"La nièce de tante Thérèse",
@@ -86,7 +90,7 @@ let strings = new LocalizedStrings({
         people:"Personnes",
         locations:"Villes",
         references:"Références",
-        subjects:"Topics",
+        topics:"Topics",
         admin:"Admin",
         login:"Login",
         pages:"Pages",
@@ -113,7 +117,9 @@ let strings = new LocalizedStrings({
         sender:"Expéditrice",
         recipient:"Destinataire",
         location:"Ville",
-        remarks:"Remarques"
+        remarks:"Remarques",
+        help_title:"Naviguer:",
+        help:"Sur la page des lettres, cliquez sur un numéro de lettre ou un nom pour plus d'informations. Dans les pages de lettres, vous pouvez cliquer sur un nom pour naviguer."
     },
     de: {
         titel:"Tante Thérèses Nichte",
@@ -122,7 +128,7 @@ let strings = new LocalizedStrings({
         people:"Personen",
         locations:"Orte",
         references:"Referenzen",
-        subjects:"Topics",
+        topics:"Topics",
         admin:"Admin",
         login:"Login",
         pages:"Seite",
@@ -149,7 +155,9 @@ let strings = new LocalizedStrings({
         sender:"Absender",
         recipient:"Empfanger",
         location:"Ort",
-        remarks:"Bemerkungen"
+        remarks:"Bemerkungen",
+        help_title:"Navigieren",
+        help:"Klicken Sie auf der Briefe Liste auf eine Briefnummer oder einen Namen, um Informationen zu erhalten. Auf den Briefseiten können Sie auf einen beliebigen Namen klicken, um zu navigieren."
     }
 });
 export default strings;

@@ -263,9 +263,6 @@ class Letter extends Component {
                         </table>
                     </div>
                 )}
-                <div className='remark'>
-                    {remarks}
-                </div>
 
                 <div>
                     {this.state.showEdit ?
@@ -347,6 +344,10 @@ class Letter extends Component {
                                 </p>
                                 : null}
                         </div> : null}
+                    <div className='remark'>
+                        {remarks}
+                    </div>
+
                 </div>
 
                 {AuthenticationService.isAdmin() === "true" ?

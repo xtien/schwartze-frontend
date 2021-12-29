@@ -138,7 +138,7 @@ class TextEdit extends Component {
             (letter != null) ? ('/get_letter_details/' + letter.number + '/0') : (
                 (location != null && location.text != null) ? '/get_location_details/' + location.id : (
                     (person != null) ? '/get_person_details/' + person.id : (
-                        '/subjects/')));
+                        '/topics/')));
 
         if (this.state.editDone === true) {
             return <Redirect to={redirectTo}/>

@@ -54,7 +54,7 @@ class PersonFromLetters extends Component {
             accessor: data => {
                 const nr = data.number;
                 const linkto = '/get_letter_details/' + nr + '/0';
-                let result = <Link to={linkto}>{nr}</Link>
+                let result = <Link to={linkto}><div className='number'>{nr}</div></Link>
                 return result;
             },
             width: 50,

@@ -33,7 +33,7 @@ import Signup from "./Signup";
 import Admin from "./Admin";
 import Locations from "./Locations"
 import People from "./People"
-import Subjects from "./Subjects"
+import Topics from "./Topics"
 import References from "./References";
 import twitli from './images/logo.png'
 import SearchLetters from "./SearchLetters";
@@ -78,7 +78,7 @@ class App extends Component {
                                         <p className="navbar-nav"><Link to='/get_people/'>{strings.people}</Link></p>
                                         <p className="navbar-nav"><Link to='/get_locations/'>{strings.locations}</Link></p>
                                         <p className="navbar-nav"><Link to='/references/'>{strings.references}</Link></p>
-                                        <p className="navbar-nav"><Link to='/subjects/'>{strings.subjects}</Link></p>
+                                        <p className="navbar-nav"><Link to='/topics/'>{strings.topics}</Link></p>
                                         <p className="navbar-nav"><Link to='/get_page/1/1'>{strings.pages}</Link></p>
                                         {/* Admin should only be visible after login. toggle enables Login.js
                                                to render App.js by setting its state  */}
@@ -117,7 +117,7 @@ class App extends Component {
                         <Route path="/get_locations/" component={Locations}/>
                         <Route path="/get_people/" component={People}/>
                         <Route path="/references/" component={References}/>
-                        <Route path="/subjects/" component={Subjects}/>
+                        <Route path="/topics/" component={Topics}/>
                         <Route path="/search_letters/:search_term" component={SearchLetters}/>
                         <Route path="/get_content/" component={Content}/>
                     </div>

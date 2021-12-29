@@ -217,7 +217,7 @@ h1 {
 #sidebar-wrapper {
   left: 300px;
   width: 380px;
-  height: 800px;
+  height: 1000px;
   overflow-y: auto;
   z-index: 1000;
   transition: all 0.4s ease 0s;
@@ -234,7 +234,7 @@ h1 {
   list-style: none;
   margin: 0;
   padding: 20px;
-  height: 800px;
+  height: 950px;
 }
 
 .sidebar-nav li {
@@ -301,7 +301,6 @@ h1 {
 
 .float-container {
   border: 3px solid #fff;
-
 }
 
 .float-child-left {
@@ -315,6 +314,13 @@ h1 {
 
 .empty {
   margin-top: 130px;
+}
+
+.help {
+  font-style: italic;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
 }
 
 @media (max-width:767px) {

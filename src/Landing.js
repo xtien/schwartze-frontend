@@ -11,6 +11,7 @@ import axios from "axios";
 import AuthenticationService from "./service/AuthenticationService";
 import {Link} from "react-router-dom";
 import language from "./language";
+import strings from "./strings";
 
 class Landing extends Component {
 
@@ -279,10 +280,8 @@ class Landing extends Component {
             <div>
                 <div className="float-container">
                     <div className="float-child-left">
-                        <div className="empty"></div>
-                        <div id="sidebar-wrapper">
-                            <ul className="sidebar-nav">
-
+                         <div id="sidebar-wrapper">
+                            <ul className="sidebar-nav mt-5">
                                 <div>{isAdmin === 'true' ?
                                     <p className='nav-link'> <Link to={'/admin/'}>Admin</Link>
                                     </p>
@@ -310,6 +309,10 @@ class Landing extends Component {
                                                 </button>
                                             </div> : null
                                     }
+                                </div>
+                                <div className='border border-dark mt-5'>
+                                <div className='help'>{strings.help_title}</div>
+                                    <div className='help'>{strings.help}</div>
                                 </div>
                             </ul>
                         </div>

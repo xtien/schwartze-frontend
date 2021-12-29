@@ -12,7 +12,7 @@ import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
 import language from "./language";
 
-class Subjects extends Component {
+class Topics extends Component {
 
     constructor() {
 
@@ -96,7 +96,7 @@ class Subjects extends Component {
 
     render() {
 
-        const sujectsText = strings.subjects;
+        const sujectsText = strings.topics;
         const subjectId = this.state.subject_id;
 
         if (this.state.editLink) {
@@ -262,4 +262,4 @@ class EditLinkForm extends React.Component {
     }
 }
 
-export default Subjects
+export default Topics
