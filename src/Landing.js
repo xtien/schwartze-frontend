@@ -518,7 +518,6 @@ class EditReferenceForm extends React.Component {
             this.props.toggleEditDone();
         }
 
-
         return (
             <div className='add_reference'>
                 <h5 className='mb-5'> Add page reference</h5>
@@ -596,6 +595,5 @@ class EditReferenceForm extends React.Component {
         )
     }
 }
-
 
 export default Landing
