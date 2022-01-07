@@ -245,6 +245,7 @@ class Landing extends Component {
         const add_reference = this.add_reference;
         const edit_picture = this.edit_picture;
 
+        const picture_caption = this.state.page.picture_caption;
         let picture_url = null;
         if (this.state.page != null) {
             picture_url = this.state.page.picture_url;
@@ -291,7 +292,8 @@ class Landing extends Component {
                                     {references}
                                 </div>
                                 <div className='sidebar-picture'>
-                                    <img src={picture_url} width="200" alt=""/>
+                                    <div><img src={picture_url} width="200" alt=""/></div>
+                                    <div className='picture-caption'>{picture_caption}</div>
                                 </div>
                                 <div>
                                     {
@@ -378,14 +380,26 @@ class EditPictureUrlEditForm extends React.Component {
 
         this.state = {
             page: this.props.page,
-            picture_url: this.props.page.picture_url
+            picture_url: this.props.page.picture_url,
+            picture_caption: this.props.page.picture_caption
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUrlChange = this.handleUrlChange.bind(this);
+        this.handleCaptionChange = this.handleCaptionChange.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     handleUrlChange(event) {
         this.setState({picture_url: event.target.value});
+    }
+
+    handleCaptionChange(event) {
+        this.setState({picture_caption: event.target.value});
+    }
+
+    handleCancel(event) {
+        event.preventDefault();
+        this.props.togglePictureDone()
     }
 
     handleSubmit(event) {
@@ -393,6 +407,7 @@ class EditPictureUrlEditForm extends React.Component {
 
         const p = this.state.page;
         p.picture_url = this.state.picture_url;
+        p.picture_caption = this.state.picture_caption;
         p.page_number = 0;
         p.chapter_number = 0;
 
@@ -421,14 +436,40 @@ class EditPictureUrlEditForm extends React.Component {
                         <table width="100%" className='mt-2'>
                             <tbody>
                             <tr>
-                                <td width="150px"><label htmlFor="status">URL:</label></td>
-                                <td><input
+                                <td>url: <input
                                     type="text"
                                     className="form-control text"
                                     id="picture"
+                                    placeholder="url"
                                     value={this.state.picture_url}
                                     onChange={this.handleUrlChange}
                                 /></td>
+                            </tr>
+                            <tr>
+                                <td>caption: <input
+                                    type="text"
+                                    className="form-control text"
+                                    id="picture"
+                                    placeholder="caption"
+                                    value={this.state.picture_caption}
+                                    onChange={this.handleCaptionChange}
+                                /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input
+                                        type="button"
+                                        onClick={this.handleSubmit}
+                                        className="btn btn-outline-success mybutton mt-3 mr-3"
+                                        value="Submit"
+                                    />
+                                    <input
+                                        type="button"
+                                        onClick={this.handleCancel}
+                                        className="btn btn-outline-danger mybutton mt-3"
+                                        value="Cancel"
+                                    />
+                                </td>
                             </tr>
                             </tbody>
                         </table>

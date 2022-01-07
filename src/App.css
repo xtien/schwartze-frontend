@@ -291,6 +291,10 @@ h1 {
   margin-left: 25px;
 }
 
+.picture-caption {
+  font-size: small;
+}
+
 #menu-toggle {
   display: none;
 }
