@@ -5,7 +5,7 @@
   "license": "Apache 2.0",
   "dependencies": {
     "auth0-js": "^9.12.0",
-    "axios": "^0.24.0",
+    "axios": "^0.25.0",
     "bootstrap": "^4.2.1",
     "detect-browser-language": "^0.0.2",
     "jquery": "^3.4.1",
