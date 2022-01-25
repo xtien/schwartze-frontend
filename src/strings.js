@@ -43,7 +43,7 @@ let strings = new LocalizedStrings({
         location:"Plaats",
         remarks:"Opmerkingen",
         help_title: "Navigatie",
-        help:"Op de brieven pagina, klik op een briefnummer of naam voor meer info. Verder kun je meestal op een naam klikken voor meer info."
+        help:"Op de brieven pagina, klik op een briefnummer of naam voor meer info. Verder kun je meestal op een naam klikken voor meer info.Op de verhaal pagina, blader met de pijltjes bovenaan."
     },
     en:{
         titel:"Aunt Thérèse's niece",
@@ -81,7 +81,7 @@ let strings = new LocalizedStrings({
         location:"Location",
         remarks:"Remarks",
         help_title:"Navigation",
-        help:"On the letters page, click on a letter number or a name for info. In the letter pages, you can click on any name to navigate."
+        help:"On the letters page, click on a letter number or a name for info. In the letter pages, you can click on any name to navigate. On the story page, browse with the arrows at the top of the page."
     },
     fr: {
         titel:"La nièce de tante Thérèse",
