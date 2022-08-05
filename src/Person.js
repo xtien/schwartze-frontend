@@ -56,7 +56,7 @@ class Person extends Component {
         this.post(id)
     }
 
-    toggleEditDone = (person) => {
+    toggleEditDoneParam = (person) => {
         this.setState({
             showEdit: false,
         })
@@ -368,6 +368,7 @@ class Person extends Component {
                             image_url={this.state.person.image_url}
                             image_caption={this.state.person.image_caption}
                             person={this.state.person}
+                            toggleEditDoneParam={this.toggleEditDone}
                             toggleEditDone={this.toggleEditDone}
                         />
                     ) : null
@@ -579,7 +580,7 @@ class EditPersonForm extends React.Component {
             this.setState({
                 editDone: false
             })
-            this.props.toggleEditDone(this.state.person);
+            this.props.toggleEditDoneParam(this.state.person);
         }
         if (this.state.cancel === true) {
             this.setState({

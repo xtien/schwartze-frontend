@@ -144,7 +144,7 @@ class Landing extends Component {
         })
     }
 
-    toggleEditDone = (page) => {
+    toggleEditDoneParam = (page) => {
         this.setState({
             showLinkEdit: false,
         })
@@ -232,6 +232,7 @@ class Landing extends Component {
         }
     }
 
+
     render() {
 
         const isAdmin = AuthenticationService.isAdmin();
@@ -291,6 +292,7 @@ class Landing extends Component {
                                 <div id='linkContainer' className='ml-3' alt="">
                                     {references}
                                 </div>
+
                                 <div className='sidebar-picture'>
                                     <div><img src={picture_url} width="200" alt=""/></div>
                                     <div className='picture-caption'>{picture_caption}</div>
@@ -342,6 +344,7 @@ class Landing extends Component {
                                         reference_type=''
                                         setPage={this.setPage}
                                         toggleEditDone={this.toggleEditDone}
+                                        toggleEditDoneParam={this.toggleEditDoneParam}
                                     />
                                 )
                                 :
@@ -550,7 +553,7 @@ class EditReferenceForm extends React.Component {
             this.setState({
                 editDone: false
             })
-            this.props.toggleEditDone(this.state.page);
+            this.props.toggleEditDoneParam(this.state.page);
         }
         if (this.state.cancel === true) {
             this.setState({

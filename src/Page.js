@@ -189,7 +189,7 @@ class Page extends Component {
 
     }
 
-    toggleEditDone = (page) => {
+    toggleEditDoneParam = (page) => {
         this.setState({
             showLinkEdit: false,
         })
@@ -417,6 +417,7 @@ class Page extends Component {
                                         reference_type=''
                                         setPage={this.setPage}
                                         toggleEditDone={this.toggleEditDone}
+                                        toggleEditDoneParam={this.toggleEditDoneParam}
                                     />
                                 )
                                 : <div>
@@ -625,7 +626,7 @@ class EditReferenceForm extends React.Component {
             this.setState({
                 editDone: false
             })
-            this.props.toggleEditDone(this.state.page);
+            this.props.toggleEditDoneParam(this.state.page);
         }
         if (this.state.cancel === true) {
             this.setState({
