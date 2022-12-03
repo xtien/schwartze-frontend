@@ -9,7 +9,7 @@ import React, {Component} from 'react'
 import './App.css'
 import axios from "axios";
 import './css/bootstrap.css'
-import {Redirect} from "react-router-dom";
+import {Navigate}  from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
 
 class AddPerson extends Component {
@@ -98,7 +98,7 @@ class AddPerson extends Component {
 
         if (this.state.editDone === true) {
             return (
-                <Redirect to={"/get_person_details/" + this.state.id}/>
+                <Navigate to={"/get_person_details/" + this.state.id}/>
             )
         }
 

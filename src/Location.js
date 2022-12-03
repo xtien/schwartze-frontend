@@ -7,7 +7,7 @@
 
 import React, {Component} from 'react'
 import axios from "axios";
-import {Link, Redirect} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import Util from './service/Util';
@@ -183,11 +183,11 @@ class Location extends Component {
         }
 
         if (this.state.combine === true) {
-            return <Redirect to={'/combine_location/' + location.id}/>
+            return <Navigate to={'/combine_location/' + location.id}/>
         }
 
         if (this.state.deleted === true) {
-            return <Redirect to={'/get_locations/'}/>
+            return <Navigate to={'/get_locations/'}/>
         }
 
         let links = []
@@ -474,7 +474,7 @@ class EditLinkForm extends React.Component {
         const redirectTo = '/get_location_details/' + this.state.location_id;
 
         if (this.state.linkEditDone === true) {
-            return <Redirect to={redirectTo}/>
+            return <Navigate to={redirectTo}/>
         }
 
         return (

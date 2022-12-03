@@ -9,7 +9,7 @@ import React from 'react'
 import './App.css'
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
-import {Redirect} from "react-router";
+import {Navigate}  from "react-router";
 
 class Login extends React.Component {
 
@@ -64,7 +64,7 @@ class Login extends React.Component {
             /*  toggle is used to render App.js to make the Admin menu option show  */
 
             return (
-                <Redirect to={"/get_letters/0"}/>
+                <Navigate to={"/get_letters/0"}/>
             )
         }
 

@@ -7,9 +7,8 @@
 
 import React, {Component} from 'react'
 import './App.css'
-import 'react-table/react-table.css'
 import './css/bootstrap.css'
-import {BrowserRouter as Router, Link, Route} from "react-router-dom";
+import {BrowserRouter as Router, Link, Route, Routes} from "react-router-dom";
 import Person from './Person'
 import AddPerson from './AddPerson'
 import AddLetter from './AddLetter'
@@ -50,8 +49,8 @@ class App extends Component {
         this.state = {
             refreshPage: this.refreshPage,
             refresh: false,
-         }
-       language()
+        }
+        language()
     }
 
     refreshPage = () => {
@@ -77,8 +76,10 @@ class App extends Component {
                                         <p className="navbar-nav"><Link to='/'>{strings.home}</Link></p>
                                         <p className="navbar-nav"><Link to='/get_letters/0'>{strings.letters}</Link></p>
                                         <p className="navbar-nav"><Link to='/get_people/'>{strings.people}</Link></p>
-                                        <p className="navbar-nav"><Link to='/get_locations/'>{strings.locations}</Link></p>
-                                        <p className="navbar-nav"><Link to='/references/'>{strings.references}</Link></p>
+                                        <p className="navbar-nav"><Link to='/get_locations/'>{strings.locations}</Link>
+                                        </p>
+                                        <p className="navbar-nav"><Link to='/references/'>{strings.references}</Link>
+                                        </p>
                                         <p className="navbar-nav"><Link to='/topics/'>{strings.topics}</Link></p>
                                         <p className="navbar-nav"><Link to='/get_page/1/1'>{strings.pages}</Link></p>
                                         {/* Admin should only be visible after login. toggle enables Login.js
@@ -91,39 +92,41 @@ class App extends Component {
                                 </td>
                                 <td>
                                     <img src={twitli} className="logo" alt="logo"/>
-                                 </td>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div>
-                        <Route exact path="/" component={Landing}/>
-                        <Route path="/admin/" component={Admin}/>
-                        <Route path="/login/" component={Login}/>
-                        <Route path="/signup/" component={Signup}/>
-                        <Route path="/get_letters/:page" component={Letters}/>
-                        <Route path="/add_person/" component={AddPerson}/>
-                        <Route path="/add_letter/" component={AddLetter}/>
-                        <Route path="/edit_letter/:number" component={EditLetter}/>
-                        <Route path="/delete_letter/:number" component={DeleteLetter}/>
-                        <Route path="/add_location/" component={AddLocation}/>
-                        <Route path="/combine_person/:id" component={CombinePerson}/>
-                        <Route path="/combine_location/:id" component={CombineLocation}/>
-                        <Route path="/get_location_details/:id" component={Location}/>
-                        <Route path="/get_letters_for_location/:id" component={LettersForLocation}/>
-                        <Route path="/get_person_details/:id" component={Person}/>
-                        <Route path="/get_letter_details/:number/:pagenumber" component={Letter}/>
-                        <Route path="/get_letters_from_person/:id" component={PersonFromLetters}/>
-                        <Route path="/get_letters_to_person/:id" component={PersonToLetters}/>
-                        <Route path="/get_text/:entity/:id" component={Text}/>
-                        <Route path="/get_page/:chapterNumber/:pageNumber" component={Page}/>
-                        <Route path="/edit_text/" component={TextEdit}/>
-                        <Route path="/get_locations/" component={Locations}/>
-                        <Route path="/get_people/" component={People}/>
-                        <Route path="/references/" component={References}/>
-                        <Route path="/topics/" component={Topics}/>
-                        <Route path="/search_letters/:search_term" component={SearchLetters}/>
-                        <Route path="/get_content/" component={Content}/>
+                        <Routes>
+                            <Route exact path="/" element={ <Landing/> } />
+                            <Route path="/admin/" element={ <Admin/> } />
+                            <Route path="/login/" element={ <Login/> } />
+                            <Route path="/signup/" element={ <Signup/> } />
+                            <Route path="/get_letters/:page" element={ <Letters/> } />
+                            <Route path="/add_person/" element={ <AddPerson/> } />
+                            <Route path="/add_letter/" element={ <AddLetter/> } />
+                            <Route path="/edit_letter/:number" element={ <EditLetter/> } />
+                            <Route path="/delete_letter/:number" element={ <DeleteLetter/> } />
+                            <Route path="/add_location/" element={ <AddLocation/> } />
+                            <Route path="/combine_person/:id" element={ <CombinePerson/> } />
+                            <Route path="/combine_location/:id" element={ <CombineLocation/> } />
+                            <Route path="/get_location_details/:id" element={ <Location/> } />
+                            <Route path="/get_letters_for_location/:id" element={ <LettersForLocation/> } />
+                            <Route path="/get_person_details/:id" element={ <Person/> } />
+                            <Route path="/get_letter_details/:number/:pagenumber" element={ <Letter/> } />
+                            <Route path="/get_letters_from_person/:id" element={ <PersonFromLetters/> } />
+                            <Route path="/get_letters_to_person/:id" element={ <PersonToLetters/> } />
+                            <Route path="/get_text/:entity/:id" element={ <Text/> } />
+                            <Route path="/get_page/:chapterNumber/:pageNumber" element={ <Page/> } />
+                            <Route path="/edit_text/" element={ <TextEdit/> } />
+                            <Route path="/get_locations/" element={ <Locations/> } />
+                            <Route path="/get_people/" element={ <People/> } />
+                            <Route path="/references/" element={ <References/> } />
+                            <Route path="/topics/" element={ <Topics/> } />
+                            <Route path="/search_letters/:search_term" element={ <SearchLetters/> } />
+                            <Route path="/get_content/" element={ <Content/> } />
+                        </Routes>
                     </div>
                 </div>
             </Router>

@@ -10,7 +10,7 @@ import './App.css'
 import axios from "axios";
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
-import {Redirect} from "react-router";
+import {Navigate} from "react-router-dom";
 
 class DeleteLetter extends Component {
 
@@ -119,12 +119,12 @@ class DeleteLetter extends Component {
     render() {
 
         if (this.state.cancel === true && this.state.letter != null) {
-            return <Redirect to={'/get_letter_details/' + this.state.letter.number + '/0'}></Redirect>
+            return <Navigate to={'/get_letter_details/' + this.state.letter.number + '/0'}></Navigate>
         }
 
         let pagenumber = Math.max(0,(this.state.letter.number/20) -1);
         if (this.state.deleted === true) {
-            return <Redirect to={'/get_letters/' + [pagenumber]}></Redirect>
+            return <Navigate to={'/get_letters/' + [pagenumber]}></Navigate>
         }
 
         const date = this.state.letter != null ? this.state.letter.date : '';

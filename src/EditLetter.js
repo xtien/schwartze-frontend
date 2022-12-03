@@ -10,7 +10,7 @@ import './App.css'
 import axios from "axios";
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
-import {Redirect} from "react-router";
+import {Navigate}  from "react-router";
 
 class EditLetter extends Component {
 
@@ -191,7 +191,7 @@ class EditLetter extends Component {
     render() {
 
         if (this.state.editDone === true && this.state.letter != null) {
-            return <Redirect to={'/get_letter_details/' + this.state.letter.number + '/0'}></Redirect>
+            return <Navigate to={'/get_letter_details/' + this.state.letter.number + '/0'}></Navigate>
         }
 
         const date = this.state.letter != null ? this.state.letter.date : '';

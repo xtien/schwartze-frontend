@@ -12,7 +12,7 @@ import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
 import {Link} from "react-router-dom";
 import _ from "lodash";
-import ReactTable from "react-table";
+import ReactTable from "react-table-6";
 
 class SearchLetters extends Component {
 

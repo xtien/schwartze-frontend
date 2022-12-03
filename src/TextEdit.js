@@ -7,7 +7,7 @@
 
 import React, {Component} from 'react'
 import axios from "axios";
-import {Link, Redirect} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
@@ -141,7 +141,7 @@ class TextEdit extends Component {
                         '/topics/')));
 
         if (this.state.editDone === true) {
-            return <Redirect to={redirectTo}/>
+            return <Navigate to={redirectTo}/>
         }
 
         return (
@@ -149,7 +149,7 @@ class TextEdit extends Component {
                 <div>
                     {
                         this.state.cancel ?
-                            <Redirect to={redirectTo}/> :
+                            <Navigate to={redirectTo}/> :
                             <div>
 
                                 <div>

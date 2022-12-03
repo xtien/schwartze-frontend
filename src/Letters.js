@@ -8,10 +8,11 @@
 import React, {Component} from 'react'
 import axios from "axios";
 import _ from "lodash";
-import {Link} from "react-router-dom";
-import ReactTable from "react-table";
+import {Link, useParams} from "react-router-dom";
+import ReactTable from "react-table-6";
+import 'react-table-6/react-table.css';
 import AuthenticationService from "./service/AuthenticationService";
-import {Redirect} from "react-router";
+import {Navigate}  from "react-router";
 import strings from './strings.js'
 import language from "./language";
 
@@ -27,7 +28,7 @@ class Letters extends Component {
             order_by: 'number',
             search_term: '',
             go_search: false,
-            page: props.match.params.page,
+            page: useParams.page,
             back_to_letters: false,
             number: 0,
             gotoletter: false
@@ -127,7 +128,7 @@ class Letters extends Component {
         const remarksheader = strings.remarks;
 
         if (this.state.backButtonPressed === true) {
-            return <Redirect to={'/'}/>
+            return <Navigate to={'/'}/>
         }
 
         const search_term = this.state.search_term;
@@ -139,11 +140,11 @@ class Letters extends Component {
             this.setState({
                 go_search: false
             })
-            return <Redirect to={search_letters}/>
+            return <Navigate to={search_letters}/>
         }
 
         if (this.state.gotoletter === true) {
-            return <Redirect to={gotoletter}/>
+            return <Navigate to={gotoletter}/>
         }
 
         const columns = [{

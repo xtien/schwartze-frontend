@@ -9,7 +9,7 @@ import React, {Component} from 'react'
 import './App.css'
 import './css/bootstrap.css'
 import axios from "axios";
-import {Redirect} from "react-router-dom";
+import {Navigate}  from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
 
 class CombineLocation extends Component {
@@ -156,7 +156,7 @@ class CombineLocationForm
 
         if (this.state.redirect) {
             return (
-                <Redirect to={"/get_location_details/" + this.state.location1.id}/>
+                <Navigate to={"/get_location_details/" + this.state.location1.id}/>
             )
         }
 

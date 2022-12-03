@@ -8,7 +8,7 @@
 import React, {Component} from 'react'
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
-import {Redirect} from "react-router-dom";
+import {Navigate}  from "react-router-dom";
 import axios from "axios";
 
 class Admin extends Component {
@@ -121,24 +121,24 @@ class Admin extends Component {
 
         if (this.state.logout === true) {
             return (
-                <Redirect to={"/"}/>
+                <Navigate to={"/"}/>
             )
         }
         if (this.state.addPerson === true) {
             return (
-                <Redirect to={"/add_person/" + this.state.id}/>
+                <Navigate to={"/add_person/" + this.state.id}/>
             )
         }
 
         if (this.state.addLocation === true) {
             return (
-                <Redirect to={"/add_location/" + this.state.id}/>
+                <Navigate to={"/add_location/" + this.state.id}/>
             )
         }
 
         if (this.state.addLetter === true) {
             return (
-                <Redirect to={"/add_letter/" + this.state.id}/>
+                <Navigate to={"/add_letter/" + this.state.id}/>
             )
         }
 

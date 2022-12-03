@@ -8,7 +8,7 @@
 import React, {Component} from 'react'
 import axios from "axios";
 import {Link} from "react-router-dom";
-import ReactTable from "react-table";
+import ReactTable from "react-table-6";
 import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
 import language from "./language";

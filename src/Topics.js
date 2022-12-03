@@ -7,7 +7,7 @@
 
 import React, {Component} from 'react'
 import axios from "axios";
-import {Redirect, Link} from "react-router-dom";
+import {Navigate, Link} from "react-router-dom";
 import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
 import language from "./language";
@@ -100,7 +100,7 @@ class Topics extends Component {
         const subjectId = this.state.subject_id;
 
         if (this.state.editLink) {
-            return <Redirect to={{
+            return <Navigate to={{
                 pathname: '/edit_text/',
                 subject_id: subjectId
             }}/>

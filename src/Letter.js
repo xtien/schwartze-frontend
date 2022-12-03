@@ -12,7 +12,7 @@ import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
 import {Link} from "react-router-dom";
 import Util from "./service/Util";
-import {Redirect} from "react-router";
+import {Navigate}  from "react-router";
 import arrow_left from "./images/arrow_left.png";
 import arrow_right from "./images/arrow_right.png";
 import strings from './strings.js'
@@ -166,7 +166,7 @@ class Letter extends Component {
         }
 
         if (this.state.go_search === true) {
-            return <Redirect to={search_letters}/>
+            return <Navigate to={search_letters}/>
         }
 
         let linkTo = '';
@@ -197,10 +197,10 @@ class Letter extends Component {
         }
 
         if (this.state.edit_letter === true) {
-            return <Redirect to={'/edit_letter/' + letter.number}/>
+            return <Navigate to={'/edit_letter/' + letter.number}/>
         }
         if (this.state.delete_letter === true) {
-            return <Redirect to={'/delete_letter/' + letter.number}/>
+            return <Navigate to={'/delete_letter/' + letter.number}/>
         }
 
         return (
