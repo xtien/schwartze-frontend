@@ -14,7 +14,7 @@ import arrow_right from "./images/arrow_right.png";
 import three_arrow_right from "./images/three_arrow_right.png";
 import three_arrow_left from "./images/three_arrow_left.png";
 import arrow_left from "./images/arrow_left.png";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import strings from "./strings";
 import Cookies from 'universal-cookie';
 import language from './language'
@@ -26,13 +26,15 @@ class Page extends Component {
 
         const lang = language()
 
-       let chapterNumber = 0;
+        const params = window.location.href.split('/')
+        const chapterNumber = params[4]
+        const pageNumber = params[5]
 
         this.state = {
             text: '',
             page: {},
-            chapterNumber: useParams.chapterNumber,
-            pageNumber: useParams.pageNumber,
+            chapterNumber: chapterNumber,
+            pageNumber: pageNumber,
             refMap: {
                 person: '/get_person_details/',
                 location: '/get_location/',
@@ -56,7 +58,7 @@ class Page extends Component {
         this.post = this.post.bind(this);
         this.edit_picture = this.edit_picture.bind(this);
 
-        this.get_page(useParams.chapterNumber, useParams.pageNumber)
+        this.get_page(chapterNumber, pageNumber)
     }
 
     setPage = (page) => {

@@ -8,7 +8,7 @@
 import React, {Component} from 'react'
 import axios from "axios";
 import _ from "lodash";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import ReactTable from "react-table-6";
 import 'react-table-6/react-table.css';
 import AuthenticationService from "./service/AuthenticationService";
@@ -21,6 +21,9 @@ class Letters extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const page = params[4]
+
         this.state = {
             resultCode: -1,
             data: ['a', 'b'],
@@ -28,7 +31,7 @@ class Letters extends Component {
             order_by: 'number',
             search_term: '',
             go_search: false,
-            page: useParams.page,
+            page: page,
             back_to_letters: false,
             number: 0,
             gotoletter: false

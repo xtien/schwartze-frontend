@@ -7,7 +7,7 @@
 
 import React, {Component} from 'react'
 import axios from "axios";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
@@ -18,9 +18,13 @@ class Text extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const entity = params[4]
+        const id = params[5]
+
         this.state = {
-            entity: useParams.entity,
-            id: useParams.id,
+            entity: entity,
+            id: id,
             person: {},
             location: {},
             text: {},
