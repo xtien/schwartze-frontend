@@ -9,7 +9,7 @@ import React from 'react'
 import './App.css'
 import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
-import {Navigate}  from "react-router";
+import {Navigate} from "react-router";
 
 class Login extends React.Component {
 
@@ -20,7 +20,7 @@ class Login extends React.Component {
             username: '',
             password: '',
             auth: false,
-         }
+        }
 
         this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
         this.handleUserNameChange = this.handleUserNameChange.bind(this);
@@ -71,52 +71,39 @@ class Login extends React.Component {
         return (
             <div>
                 <form onSubmit={this.handleLinkSubmit}>
-                    <div className="form-group">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div className="field">
-                                        <label htmlFor="status">User name</label>
-                                    </div>
-                                </td>
-                                <td>
-                        <input
-                            type="text"
-                            className="form-control textarea ml-5"
-                            id="username"
-                            value={this.state.username}
-                            onChange={this.handleUserNameChange}
-                        />
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div className="row">
+                        <div className='col-sm-2 mb-2'>
+                            <label htmlFor="status">User name</label>
+                        </div>
+
+                        <div className='col-sm-3 mb-2'>
+
+                            <input
+                                type="text"
+                                className="form-control  ml-5"
+                                id="username"
+                                value={this.state.username}
+                                onChange={this.handleUserNameChange}
+                            />
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div className="field">
-                                        <label htmlFor="status">Password</label></div>
-                                </td>
-                                <td>
-                       <input
-                           type="password"
-                           className="form-control textarea ml-5"
-                           id="password"
-                           value={this.state.password}
-                           onChange={this.handlePwChange}
-                       />
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div className="row">
+                        <div className='col-sm-2 mb-2'>
+                            <label htmlFor="status">Password</label></div>
+
+                        <div className='col-sm-3 mb-2'>
+                            <input
+                                type="password"
+                                className="form-control  ml-5"
+                                id="password"
+                                value={this.state.password}
+                                onChange={this.handlePwChange}
+                            />
+                        </div>
                     </div>
                     <input
                         type="submit"
-                        className="btn btn-outline-success mybutton"
+                        className="btn btn-outline-success mybutton mt-5"
                         value="Submit"
                     />
                 </form>

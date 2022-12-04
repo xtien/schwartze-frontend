@@ -12,7 +12,7 @@ import './css/bootstrap.css'
 import AuthenticationService from './service/AuthenticationService';
 import {Link} from "react-router-dom";
 import Util from "./service/Util";
-import {Navigate}  from "react-router";
+import {Navigate} from "react-router";
 import arrow_left from "./images/arrow_left.png";
 import arrow_right from "./images/arrow_right.png";
 import strings from './strings.js'
@@ -212,59 +212,56 @@ class Letter extends Component {
                 {this.state.showEdit ? null : (
 
                     <div>
-                        <table border="0" width="100%">
-                            <tbody>
-                            <tr>
-                                <td align='left' width="30">
-                                    <button type="button"
-                                            className='btn btn-link'
-                                            onClick={this.back}>
-                                        <img src={arrow_left} alt="back"/>
-                                    </button>
-                                </td>
-                                <td width="10">
-                                    <div>
-                                        {
-                                            AuthenticationService.isAdmin() === "true" ?
-                                                <button
-                                                    className="btn btn-outline-success mybutton"
-                                                    onClick={this.editComment}>
-                                                    Edit commentaarregel
-                                                </button> : null}
-                                    </div>
-                                </td>
-                                <td width="1000">
-                                    <div>
-                                        {
-                                            AuthenticationService.isAdmin() === "true" ?
-                                                <button
-                                                    className="btn btn-outline-warning mybutton ml-2"
-                                                    onClick={this.editLetter}>
-                                                    Edit afzender/ontvanger
-                                                </button> : null}
-                                    </div>
-                                </td>
-                                <td width="1000">
-                                    <div>
-                                        {
-                                            AuthenticationService.isAdmin() === "true" ?
-                                                <button
-                                                    className="btn btn-outline-warning mybutton ml-2"
-                                                    onClick={this.deleteLetter}>
-                                                    Delete brief
-                                                </button> : null}
-                                    </div>
-                                </td>
-                                <td align="right" width="30">
-                                    <button
-                                        className="btn btn-link"
-                                        onClick={this.forward}>
-                                        <img src={arrow_right} alt="forward"/>
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div className="row">
+                            <div className='col-sm-1'>
+                                <button type="button"
+                                        className='btn btn-link'
+                                        onClick={this.back}>
+                                    <img src={arrow_left} alt="back"/>
+                                </button>
+                            </div>
+                            <div className='col-sm-3'>
+                                <div>
+                                    {
+                                        AuthenticationService.isAdmin() === "true" ?
+                                            <button
+                                                className="btn btn-outline-success mybutton"
+                                                onClick={this.editComment}>
+                                                Edit commentaarregel
+                                            </button> : null}
+                                </div>
+                            </div>
+                            <div className='col-sm-3'>
+                                <div>
+                                    {
+                                        AuthenticationService.isAdmin() === "true" ?
+                                            <button
+                                                className="btn btn-outline-warning mybutton ml-2"
+                                                onClick={this.editLetter}>
+                                                Edit afzender/ontvanger
+                                            </button> : null}
+                                </div>
+                            </div>
+                            <div className='col-sm-4'>
+                                <div>
+                                    {
+                                        AuthenticationService.isAdmin() === "true" ?
+                                            <button
+                                                className="btn btn-outline-warning mybutton ml-2"
+                                                onClick={this.deleteLetter}>
+                                                Delete brief
+                                            </button> : null}
+                                </div>
+                            </div>
+                            <div className='col-sm-1'>
+                                <button
+                                    className="btn btn-link"
+                                    onClick={this.forward}>
+                                    <img src={arrow_right} alt="forward"/>
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                 )}
 
