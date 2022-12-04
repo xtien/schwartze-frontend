@@ -66,13 +66,13 @@ class App extends Component {
 
             <Router>
                 <div className='container '>
-                    <div className='jumbotron'>
+                    <div className='jumbotron pb-2 pt-2'>
                         <table width="100%">
                             <tbody>
                             <tr>
                                 <td>
-                                    <h1>{strings.titel}</h1>
-                                    <nav className="navbar navbar-expand-lg navbar-light">
+                                    <h1 className='px-5'>{strings.titel}</h1>
+                                    <nav className="navbar navbar-expand-lg navbar-light px-5">
                                         <p className="navbar-nav"><Link to='/'>{strings.home}</Link></p>
                                         <p className="navbar-nav"><Link to='/get_letters/0'>{strings.letters}</Link></p>
                                         <p className="navbar-nav"><Link to='/get_people/'>{strings.people}</Link></p>
