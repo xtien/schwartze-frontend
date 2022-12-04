@@ -120,37 +120,30 @@ class People extends Component {
         return (
 
             <div>
-                <table width="90%">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <form onSubmit={this.sort} className='mt-2 ml-5 mb-2'>
+                <div className="row">
+                    <div className='col-sm-3'>
+                        <form onSubmit={this.sort} className='mt-3  mb-3'>
+                            <input
+                                type="submit"
+                                className="btn btn-outline-secondary mybutton"
+                                value={this.state.order_by === 'lastname' ? op_voornaam : op_achternaam}
+                            />
+                        </form>
+                    </div>
+                    <div className='col-sm-3'>
+                            <form onSubmit={this.handleSearchSubmit} className='mt-3  mb-3'>
                                 <input
-                                    type="submit"
-                                    className="btn btn-outline-secondary mybutton"
-                                    value={this.state.order_by === 'lastname' ? op_voornaam : op_achternaam}
+                                    type="input"
+                                    id="text"
+                                    placeholder={strings.search}
+                                    onChange={this.handleSearchTermChange}
+                                    className="form-control "
                                 />
-                            </form>
-                        </td>
-                        <td align="right">
-                            <div className='form-group searchfield mt-2 mb-2 mr-2'>
-                                <form onSubmit={this.handleSearchSubmit}>
-                                    <div className='form-group searchfield mb-2 mr-2'>
-                                        <input
-                                            type="input"
-                                            id="text"
-                                            placeholder={strings.search}
-                                            onChange={this.handleSearchTermChange}
-                                            className="form-control textarea"
-                                        />
-                                    </div>
 
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                            </form>
+                    </div>
+                </div>
+
                 <div className='container'>
                     <ReactTable
                         data={this.state.people}
