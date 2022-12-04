@@ -12,7 +12,7 @@ import {Link} from "react-router-dom";
 import ReactTable from "react-table-6";
 import 'react-table-6/react-table.css';
 import AuthenticationService from "./service/AuthenticationService";
-import {Navigate}  from "react-router";
+import {Navigate} from "react-router";
 import strings from './strings.js'
 import language from "./language";
 
@@ -36,7 +36,7 @@ class Letters extends Component {
             number: 0,
             gotoletter: false
         }
-       language()
+        language()
 
         this.sort = this.sort.bind(this);
         this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
@@ -235,59 +235,42 @@ class Letters extends Component {
         return (
 
             <div>
-                <table width="100%">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <form onSubmit={this.sort} className='ml-5 mb-2'>
+                <div className="row">
+                    <div className='col-sm-3'>
+                        <form onSubmit={this.sort} className='mb-3 mt-3'>
                                 <input
                                     type="submit"
                                     className="btn btn-outline-secondary mybutton"
                                     value={this.state.order_by === 'date' ? op_nummer : op_datum}
                                 />
+                         </form>
+                    </div>
 
-                            </form>
-                        </td>
-                        <td align="right">
-                            <form onSubmit={this.letterbynumber}>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <div className='form-group searchfield mb-2 mr-2'>
-                                                <input
-                                                    type="input"
-                                                    id="nr"
-                                                    placeholder={strings.naar_nummer}
-                                                    onChange={this.handleletternumber}
-                                                    className="form-control textarea"
-                                                />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                    <div className='col-sm-3'>
+                        <form onSubmit={this.letterbynumber} className='mb-3 mt-3'>
+                                 <input
+                                    type="input"
+                                    id="nr"
+                                    placeholder={strings.naar_nummer}
+                                    onChange={this.handleletternumber}
+                                    className="form-control w-50"
+                                />
+                        </form>
+                    </div>
 
-                            </form>
-                        </td>
-                        <td align="right">
-                            <form onSubmit={this.handleSearchSubmit}>
-                                <div className='form-group searchfield mb-2 mr-2'>
-                                    <input
-                                        type="input"
-                                        id="text"
-                                        placeholder={strings.search}
-                                        onChange={this.handleSearchTermChange}
-                                        className="form-control textarea"
-                                    />
-                                </div>
+                    <div className='col-sm-6'>
+                        <form onSubmit={this.handleSearchSubmit} className='mb-3 mt-3'>
+                                <input
+                                    type="input"
+                                    id="text"
+                                    placeholder={strings.search}
+                                    onChange={this.handleSearchTermChange}
+                                    className="form-control w-75"
+                                />
+                        </form>
+                    </div>
 
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
+                </div>
                 <div className='container'>
                     <ReactTable
                         data={this.state.letters}
