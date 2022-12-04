@@ -19,12 +19,15 @@ class SearchLetters extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const search_term = params[4]
+
         this.state ={
             letters: [{}]
         }
 
         let postData = {
-            search_term: props.match.params.search_term,
+            search_term: search_term,
          };
 
         axios.post(process.env.REACT_APP_API_URL + '/search_letters/',

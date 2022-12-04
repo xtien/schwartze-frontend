@@ -17,11 +17,14 @@ class CombinePerson extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const id = params[4]
+
         this.state = {
             resultCode: -1,
             data: {},
             showConfirm: false,
-            first_id: props.match.params.id,
+            first_id: id,
             second_id: 0
         }
 

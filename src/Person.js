@@ -22,6 +22,9 @@ class Person extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const number = params[4]
+
         this.state = {
             data: {},
             showEdit: false,
@@ -49,8 +52,8 @@ class Person extends Component {
 
         let id;
 
-        if (props.match.params.id != null) {
-            id = props.match.params.id;
+        if (number != null) {
+            id = number;
         }
 
         this.post(id)

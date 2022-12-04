@@ -11,11 +11,16 @@ import {Link, Navigate} from "react-router-dom";
 import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import Util from './service/Util';
+import language from "./language";
+import strings from "./strings";
 
 class Location extends Component {
 
     constructor(props) {
         super(props)
+
+        const params = window.location.href.split('/')
+        const number = params[4]
 
         this.state = {
             resultCode: -1,
@@ -29,6 +34,8 @@ class Location extends Component {
             link_url: '',
         }
 
+        language()
+
         this.add_link = this.add_link.bind(this);
         this.edit_link = this.edit_link.bind(this);
         this.edit_name = this.edit_name.bind(this);
@@ -38,8 +45,8 @@ class Location extends Component {
 
         let id;
 
-        if (props.match.params.id != null) {
-            id = props.match.params.id;
+        if (number != null) {
+            id = number;
         }
 
         let postData = {
@@ -231,8 +238,8 @@ class Location extends Component {
             <div>
                 <div className='container letter'>
                     <h3>{location.id} {location.location_name}</h3>
-                    <h4><Link to={`/get_letters_for_location/${location.id}`}>Letters</Link></h4>
-                    <p>{location.comment}</p>
+                    <h4 className='mt-5'><Link to={`/get_letters_for_location/${location.id}`}>{strings.letters}</Link></h4>
+                    <p className='mt-5'>{location.comment}</p>
 
                     <div className='textpage mt-5 ml-5'>
                         {location.text != null && Util.isNotEmpty(location.text.text_string) ?
@@ -243,7 +250,7 @@ class Location extends Component {
                                 </p>
                                 {location.text.text_string.length > 300 ?
                                     <p>
-                                        <Link to={linkTo} className='mt-5 mb-5'> Meer </Link>
+                                        <Link to={linkTo} className='mt-5 mb-5'> {strings.meer} </Link>
                                     </p>
                                     : null}
                             </div> : null}

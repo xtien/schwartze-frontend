@@ -23,6 +23,10 @@ class Letter extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const number = params[4]
+        const page = params[5]
+
         this.state = {
             resultCode: -1,
             data: {},
@@ -36,7 +40,7 @@ class Letter extends Component {
             recipient_locations: [],
             edit_letter: false,
             delete_letter: false,
-            pageNumber: props.match.params.pagenumber
+            pageNumber: page
         }
         language()
 
@@ -50,7 +54,7 @@ class Letter extends Component {
         this.next = this.next.bind(this);
         this.post = this.post.bind(this);
 
-        this.letter(props.match.params.number)
+        this.letter(number)
     }
 
     toggleEditDone = (letter) => {

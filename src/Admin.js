@@ -22,7 +22,6 @@ class Admin extends Component {
             addLocation: false,
             logout: false,
             indexing: false,
-            refreshMe: props.match.params.refreshMe
         }
 
         this.add_location = this.add_location.bind(this);

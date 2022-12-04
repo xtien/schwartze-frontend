@@ -17,16 +17,18 @@ class PersonToLetters extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const number = params[4]
+
         let id;
+        if (number != null) {
+            id = number;
+        }
 
         this.state = {
             resultCode: -1,
             data: ['a', 'b'],
             letters: [{}]
-        }
-
-        if (props.match.params.id != null) {
-            id = props.match.params.id;
         }
 
         let postData = {

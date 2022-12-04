@@ -17,6 +17,9 @@ class EditLetter extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const number = params[4]
+
         this.state = {
             letter: {},
             editDone: false,
@@ -37,7 +40,7 @@ class EditLetter extends Component {
         this.handleDate = this.handleDate.bind(this);
 
         let postData = {
-            number: props.match.params.number
+            number: number
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_letter_details/',

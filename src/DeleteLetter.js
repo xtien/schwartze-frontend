@@ -17,6 +17,9 @@ class DeleteLetter extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const number = params[4]
+
         this.state = {
             letter: {},
             senders: [],
@@ -34,7 +37,7 @@ class DeleteLetter extends Component {
         this.cancel = this.cancel.bind(this);
 
         let postData = {
-            number: props.match.params.number
+            number: number
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_letter_details/',

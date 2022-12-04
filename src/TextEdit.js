@@ -18,12 +18,15 @@ class TextEdit extends Component {
     constructor(props) {
         super(props)
 
+        const params = window.location.href.split('/')
+        const id = params[4]
+
         this.state = {
             person_id: props.location.person_id,
             location_id: props.location.location_id,
             letter_id: props.location.letter_id,
             subject_id: props.location.subject_id,
-            id: props.match.params.id,
+            id: id,
             person: {},
             location: {},
             letter: {},
