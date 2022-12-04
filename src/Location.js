@@ -289,10 +289,7 @@ class Location extends Component {
 
                                 <div>
                                     <div className='mb-5 mt-5 ml-5'>
-                                        <Link to={{
-                                            pathname: '/edit_text/',
-                                            location_id: location.id
-                                        }}>
+                                        <Link to={"/edit_text/location/" + location.id} >
                                             Edit tekst
                                         </Link>
                                     </div>
