@@ -19,14 +19,30 @@ class TextEdit extends Component {
         super(props)
 
         const params = window.location.href.split('/')
-        const id = params[4]
+        const type = params[4]
+        const id = params[5]
+        let subject_id, location_id, person_id, letter_id
+
+        switch (type) {
+            case "subject":
+                subject_id = id
+                break;
+            case "location":
+                location_id = id
+                break;
+            case "person":
+                person_id = id
+                break;
+            case "letter":
+                letter_id = id
+                break;
+        }
 
         this.state = {
-            person_id: props.location.person_id,
-            location_id: props.location.location_id,
-            letter_id: props.location.letter_id,
-            subject_id: props.location.subject_id,
-            id: id,
+            person_id: person_id,
+            location_id: location_id,
+            letter_id: letter_id,
+            subject_id: subject_id,
             person: {},
             location: {},
             letter: {},
@@ -35,7 +51,6 @@ class TextEdit extends Component {
             text_string: '',
             title_string: '',
             cancel: false,
-            path: props.location.pathname,
         }
 
         language()
@@ -46,7 +61,6 @@ class TextEdit extends Component {
         this.handleTitleChange = this.handleTitleChange.bind(this);
 
         let postData = {
-            id: this.state.id,
             location_id: this.state.location_id,
             person_id: this.state.person_id,
             letter_id: this.state.letter_id,

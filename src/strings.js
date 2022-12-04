@@ -44,7 +44,8 @@ let strings = new LocalizedStrings({
         location:"Plaats",
         remarks:"Opmerkingen",
         help_title: "Navigatie",
-        help:"Op de brieven pagina, klik op een briefnummer of naam voor meer info. Verder kun je meestal op een naam klikken voor meer info.Op de verhaal pagina, blader met de pijltjes bovenaan."
+        help:"Op de brieven pagina, klik op een briefnummer of naam voor meer info. Verder kun je meestal op een naam klikken voor meer info.Op de verhaal pagina, blader met de pijltjes bovenaan.",
+        location_name: "Locatie name"
     },
     en:{
         titel:"Aunt Thérèse's niece",
@@ -83,7 +84,8 @@ let strings = new LocalizedStrings({
         location:"Location",
         remarks:"Remarks",
         help_title:"Navigation",
-        help:"On the letters page, click on a letter number or a name for info. In the letter pages, you can click on any name to navigate. On the story page, browse with the arrows at the top of the page."
+        help:"On the letters page, click on a letter number or a name for info. In the letter pages, you can click on any name to navigate. On the story page, browse with the arrows at the top of the page.",
+        location_name: "Location name"
     },
     fr: {
         titel:"La nièce de tante Thérèse",
@@ -122,7 +124,8 @@ let strings = new LocalizedStrings({
         location:"Ville",
         remarks:"Remarques",
         help_title:"Naviguer:",
-        help:"Sur la page des lettres, cliquez sur un numéro de lettre ou un nom pour plus d'informations. Dans les pages de lettres, vous pouvez cliquer sur un nom pour naviguer."
+        help:"Sur la page des lettres, cliquez sur un numéro de lettre ou un nom pour plus d'informations. Dans les pages de lettres, vous pouvez cliquer sur un nom pour naviguer.",
+        location_name: "Location name"
     },
     de: {
         titel:"Tante Thérèses Nichte",
@@ -161,7 +164,8 @@ let strings = new LocalizedStrings({
         location:"Ort",
         remarks:"Bemerkungen",
         help_title:"Navigieren",
-        help:"Klicken Sie auf der Briefe Liste auf eine Briefnummer oder einen Namen, um Informationen zu erhalten. Auf den Briefseiten können Sie auf einen beliebigen Namen klicken, um zu navigieren."
+        help:"Klicken Sie auf der Briefe Liste auf eine Briefnummer oder einen Namen, um Informationen zu erhalten. Auf den Briefseiten können Sie auf einen beliebigen Namen klicken, um zu navigieren.",
+        location_name: "Location name"
     }
 });
 export default strings;

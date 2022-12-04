@@ -251,7 +251,7 @@ class EditLinkForm extends React.Component {
                     <label htmlFor="status">Link naam</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="link_name"
                         value={this.state.link_name}
                         onChange={this.handleNameChange}
@@ -261,7 +261,7 @@ class EditLinkForm extends React.Component {
                     <label htmlFor="status">Link url</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="link_url"
                         value={this.state.link_url}
                         onChange={this.handleUrlChange}

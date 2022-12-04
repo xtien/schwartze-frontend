@@ -372,10 +372,10 @@ class EditNameForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="status">Locatie naam</label>
+                    <label htmlFor="status">{strings.location_name}</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control mb-3"
                         id="location_name"
                         value={this.state.location_name}
                         onChange={this.handleNameChange}
@@ -383,15 +383,15 @@ class EditNameForm extends React.Component {
                     <label htmlFor="status">Comment</label>
                     <input
                         type="text"
-                        className="form-control textarea"
-                        id="location_name"
+                        className="form-control extratextarea"
+                        id="location_description"
                         value={this.state.location_comment}
                         onChange={this.handleCommentChange}
                     />
                 </div>
                 <input
                     type="submit"
-                    className="btn btn-outline-success mybutton"
+                    className="btn btn-outline-success mybutton mt-3"
                     value="Submit"
                 />
             </form>
@@ -490,7 +490,7 @@ class EditLinkForm extends React.Component {
                     <label htmlFor="status">Link naam</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="link_name"
                         value={this.state.link_name}
                         onChange={this.handleNameChange}
@@ -500,7 +500,7 @@ class EditLinkForm extends React.Component {
                     <label htmlFor="status">Link url</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="link_url"
                         value={this.state.link_url}
                         onChange={this.handleUrlChange}

@@ -71,7 +71,7 @@ class Login extends React.Component {
         return (
             <div>
                 <form onSubmit={this.handleLinkSubmit}>
-                    <div className="row">
+                    <div className="row mt-5">
                         <div className='col-sm-2 mb-2'>
                             <label htmlFor="status">User name</label>
                         </div>

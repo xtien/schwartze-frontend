@@ -126,6 +126,7 @@ text {
 .textarea {
   width: 800px;
   height: 800px;
+  vertical-align: top;
 }
 
 .textpage {
@@ -143,6 +144,7 @@ text {
 .extratextarea {
   width: 800px;
   min-height: 800px;
+  vertical-align: top;
 }
 
 .photo img{

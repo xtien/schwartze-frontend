@@ -29,7 +29,7 @@ class Topics extends Component {
         this.add_link = this.add_link.bind(this);
 
         let postData = {
-             language: strings.getLanguage()
+            language: strings.getLanguage()
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/get_subjects/',
@@ -96,14 +96,11 @@ class Topics extends Component {
 
     render() {
 
-        const sujectsText = strings.topics;
+        const subjectsText = strings.topics;
         const subjectId = this.state.subject_id;
 
         if (this.state.editLink) {
-            return <Navigate to={{
-                pathname: '/edit_text/',
-                subject_id: subjectId
-            }}/>
+            return <Navigate to={'/edit_text/subject/' + subjectId}/>
         }
 
         const subjects = this.state.subjects;
@@ -150,7 +147,7 @@ class Topics extends Component {
         return (
 
             <div className='container letter'>
-                <h3>{sujectsText}</h3>
+                <h3>{subjectsText}</h3>
 
                 <div className='mt-5'>
                     <div id='linkContainer'>

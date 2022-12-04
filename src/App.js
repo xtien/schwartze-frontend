@@ -119,7 +119,7 @@ class App extends Component {
                             <Route path="/get_letters_to_person/:id" element={ <PersonToLetters/> } />
                             <Route path="/get_text/:entity/:id" element={ <Text/> } />
                             <Route path="/get_page/:chapterNumber/:pageNumber" element={ <Page/> } />
-                            <Route path="/edit_text/" element={ <TextEdit/> } />
+                            <Route path="/edit_text/:type/:id" element={ <TextEdit/> } />
                             <Route path="/get_locations/" element={ <Locations/> } />
                             <Route path="/get_people/" element={ <People/> } />
                             <Route path="/references/" element={ <References/> } />
