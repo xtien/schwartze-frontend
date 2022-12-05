@@ -15,7 +15,7 @@ import AddLetter from './AddLetter'
 import DeleteLetter from "./DeleteLetter";
 import EditLetter from './EditLetter'
 import AddLocation from './AddLocation'
-import Letters from './Letters'
+import Letters from './Letters.tsx'
 import Letter from './Letter'
 import Landing from './Landing'
 import Location from './Location'

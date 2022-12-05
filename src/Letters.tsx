@@ -5,18 +5,23 @@
  * http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-import React, {Component} from 'react'
+import * as React from 'react'
+import {ChangeEvent, Component} from 'react'
 import axios from "axios";
 import _ from "lodash";
 import {Link} from "react-router-dom";
-import ReactTable from "react-table-6";
+import ReactTable, {Column} from "react-table-6";
 import 'react-table-6/react-table.css';
 import AuthenticationService from "./service/AuthenticationService";
 import {Navigate} from "react-router";
 import strings from './strings.js'
 import language from "./language";
 
-class Letters extends Component {
+type  MyState = { resultCode: number; data: string[]; letters: {}[]; order_by: string; search_term: string; go_search: boolean; page: string; back_to_letters: boolean; number: number; gotoletter: boolean; };
+
+class Letters extends Component<any, any> {
+
+    state: MyState
 
     constructor(props) {
         super(props)
@@ -46,6 +51,7 @@ class Letters extends Component {
 
         const axiosConfig = AuthenticationService.getAxiosConfig();
         const pData = this.getPostData();
+
         const url = process.env.REACT_APP_API_URL + (this.state.order_by === 'number' ? '/get_letters/' : '/get_letters_by_date/');
 
         axios.post(url,
@@ -108,7 +114,7 @@ class Letters extends Component {
         event.preventDefault();
 
         this.setState({
-            go_search: true
+             go_search: true
         })
 
     }
@@ -130,17 +136,13 @@ class Letters extends Component {
         const dateheader = strings.date;
         const remarksheader = strings.remarks;
 
-        if (this.state.backButtonPressed === true) {
-            return <Navigate to={'/'}/>
-        }
-
         const search_term = this.state.search_term;
         const search_letters = '/search_letters/' + search_term;
         const pagenumber = this.state.page;
         const gotoletter = '/get_letter_details/' + this.state.number + '/0/';
 
         if (this.state.go_search === true) {
-            this.setState({
+             this.setState({
                 go_search: false
             })
             return <Navigate to={search_letters}/>
@@ -150,7 +152,7 @@ class Letters extends Component {
             return <Navigate to={gotoletter}/>
         }
 
-        const columns = [{
+        const columns: Column<any>[] = [{
             id: 'number',
             Header: '',
             accessor: data => {
@@ -171,8 +173,6 @@ class Letters extends Component {
                 if (data != null && data.senders != null) {
                     senderList = data.senders.map(r => <span key={r.id}><Link
                         to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
-                } else {
-                    senderList = '';
                 }
                 return senderList;
             },
@@ -201,8 +201,6 @@ class Letters extends Component {
                 if (data != null && data.recipients != null) {
                     recipientList = data.recipients.map(r => <span key={r.id}><Link
                         to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
-                } else {
-                    recipientList = '';
                 }
                 return recipientList;
             },
@@ -238,35 +236,35 @@ class Letters extends Component {
                 <div className="row">
                     <div className='col-sm-3'>
                         <form onSubmit={this.sort} className='mb-3 mt-3'>
-                                <input
-                                    type="submit"
-                                    className="btn btn-outline-secondary mybutton"
-                                    value={this.state.order_by === 'date' ? op_nummer : op_datum}
-                                />
-                         </form>
+                            <input
+                                type="submit"
+                                className="btn btn-outline-secondary mybutton"
+                                value={this.state.order_by === 'date' ? op_nummer : op_datum}
+                            />
+                        </form>
                     </div>
 
                     <div className='col-sm-3'>
                         <form onSubmit={this.letterbynumber} className='mb-3 mt-3'>
-                                 <input
-                                    type="input"
-                                    id="nr"
-                                    placeholder={strings.naar_nummer}
-                                    onChange={this.handleletternumber}
-                                    className="form-control w-50"
-                                />
+                            <input
+                                type="input"
+                                id="nr"
+                                placeholder={strings.naar_nummer}
+                                onChange={this.handleletternumber}
+                                className="form-control w-50"
+                            />
                         </form>
                     </div>
 
                     <div className='col-sm-6'>
                         <form onSubmit={this.handleSearchSubmit} className='mb-3 mt-3'>
-                                <input
-                                    type="input"
-                                    id="text"
-                                    placeholder={strings.search}
-                                    onChange={this.handleSearchTermChange}
-                                    className="form-control w-75"
-                                />
+                            <input
+                                type="input"
+                                id="text"
+                                placeholder={strings.search}
+                                onChange={this.handleSearchTermChange}
+                                className="form-control w-75"
+                            />
                         </form>
                     </div>
 
@@ -275,6 +273,7 @@ class Letters extends Component {
                     <ReactTable
                         data={this.state.letters}
                         columns={columns}
+                        // @ts-ignore
                         page={this.state.page}
                         onPageChange={page => this.setState({'page': page})}
                     />
