@@ -574,7 +574,7 @@ class EditReferenceForm extends React.Component {
                                 <td width="150px"><label htmlFor="status">Description</label></td>
                                 <td><input
                                     type="text"
-                                    className="form-control textarea"
+                                    className="form-control "
                                     id="description"
                                     value={this.state.description}
                                     onChange={this.handleDescriptionChange}
@@ -589,7 +589,7 @@ class EditReferenceForm extends React.Component {
                                 <td width="150px"><label htmlFor="status">Type</label></td>
                                 <td><input
                                     type="text"
-                                    className="form-control textarea"
+                                    className="form-control "
                                     id="description"
                                     value={this.state.type}
                                     onChange={this.handleTypeChange}
@@ -604,7 +604,7 @@ class EditReferenceForm extends React.Component {
                                 <td width="150px"><label htmlFor="status">Key</label></td>
                                 <td><input
                                     type="text"
-                                    className="form-control textarea"
+                                    className="form-control "
                                     id="description"
                                     value={this.state.key}
                                     onChange={this.handleKeyChange}

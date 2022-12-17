@@ -73,7 +73,7 @@ class Text extends Component {
             );
 
         return (
-            <div className='textpage ml-5'>
+            <div className='textpage wide mt-5 ml-5'>
                 <div>
                     {this.state.person != null ?
                         <h3><Link className='mb-5'

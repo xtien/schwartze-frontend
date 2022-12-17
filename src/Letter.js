@@ -208,7 +208,7 @@ class Letter extends Component {
         }
 
         return (
-            <div className='container'>
+            <div className='container mt-3'>
                 {this.state.showEdit ? null : (
 
                     <div>
@@ -436,14 +436,14 @@ class CommentForm extends React.Component {
                         type="text"
                         id="text"
                         value={this.state.text}
-                        className="form-control textarea mb-5"
+                        className="form-control  mb-5"
                         onChange={this.handleChange}/>
                     <label htmlFor="status">Datum</label>
                     <input
                         type="text"
                         id="date"
                         value={this.state.date}
-                        className="form-control textarea"
+                        className="form-control "
                         onChange={this.handleDateChange}/>
                 </div>
                 <input

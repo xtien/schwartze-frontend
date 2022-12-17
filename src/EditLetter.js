@@ -254,7 +254,7 @@ class EditLetter extends Component {
                                         <td>
                                             <input
                                                 type="text"
-                                                className='form-control textarea mt-1 w-25 mb-5'
+                                                className='form-control  mt-1 w-25 mb-5'
                                                 id="sender.id"
                                                 value={date}
                                                 onChange={this.handleDate}
@@ -276,7 +276,7 @@ class EditLetter extends Component {
                                         <td>
                                             <input
                                                 type="text"
-                                                className='form-control textarea mt-1 w-25'
+                                                className='form-control  mt-1 w-25'
                                                 id="senderId"
                                                 value={this.state.sendersString}
                                                 onChange={this.handleSenderId}
@@ -288,7 +288,7 @@ class EditLetter extends Component {
                                         <td>
                                             <input
                                                 type="text"
-                                                className='form-control textarea mt-1 w-25'
+                                                className='form-control  mt-1 w-25'
                                                 id="sender_location.id"
                                                 value={sender_location.id}
                                                 onChange={this.handleSenderLocation}
@@ -315,7 +315,7 @@ class EditLetter extends Component {
                                         <td>
                                             <input
                                                 type="text"
-                                                className='form-control textarea mt-1 w-25'
+                                                className='form-control  mt-1 w-25'
                                                 id="recipientid"
                                                 value={this.state.recipientsString}
                                                 onChange={this.handleRecipientId}
@@ -327,7 +327,7 @@ class EditLetter extends Component {
                                         <td>
                                             <input
                                                 type="text"
-                                                className='form-control textarea mt-1 w-25'
+                                                className='form-control  mt-1 w-25'
                                                 id="recipient_location.id"
                                                 value={recipient_location.id}
                                                 onChange={this.handleRecipientLocation}

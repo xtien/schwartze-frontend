@@ -142,10 +142,10 @@ class References extends Component {
 
         return (
 
-            <div className='container letter'>
-                <h3>{reftext}</h3>
+            <div className='container'>
 
-                <div className='mt-5'>
+                <div className='mt-5 topics'>
+                    <h3>{reftext}</h3>
                     {this.state.showLinkEdit ? null :
                         <div id='linkContainer'>
                             {links}
@@ -247,7 +247,7 @@ class EditLinkForm extends React.Component {
 
         return (
             <form onSubmit={this.handleLinkSubmit}>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Link naam</label>
                     <input
                         type="text"
@@ -257,11 +257,11 @@ class EditLinkForm extends React.Component {
                         onChange={this.handleNameChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Link url</label>
                     <input
                         type="text"
-                        className="form-control "
+                        className="form-control"
                         id="link_url"
                         value={this.state.link_url}
                         onChange={this.handleUrlChange}
@@ -269,7 +269,7 @@ class EditLinkForm extends React.Component {
                 </div>
                 <input
                     type="submit"
-                    className="btn btn-outline-success mybutton"
+                    className="btn btn-outline-success mybutton mt-5"
                     value="Submit"
                 />
             </form>

@@ -65,7 +65,7 @@ class App extends Component {
         return (
 
             <Router>
-                <div className='container '>
+                <div className='container ml-5 mr-5'>
                     <div className='jumbotron pb-2 pt-2'>
                         <table width="100%">
                             <tbody>
@@ -97,7 +97,7 @@ class App extends Component {
                             </tbody>
                         </table>
                     </div>
-                    <div>
+                    <div className='content-container'>
                         <Routes>
                             <Route exact path="/" element={ <Landing/> } />
                             <Route path="/admin/" element={ <Admin/> } />

@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react'
-import {ChangeEvent, Component} from 'react'
+import {Component} from 'react'
 import axios from "axios";
 import _ from "lodash";
 import {Link} from "react-router-dom";
@@ -17,11 +17,9 @@ import {Navigate} from "react-router";
 import strings from './strings.js'
 import language from "./language";
 
-type  MyState = { resultCode: number; data: string[]; letters: {}[]; order_by: string; search_term: string; go_search: boolean; page: string; back_to_letters: boolean; number: number; gotoletter: boolean; };
-
 class Letters extends Component<any, any> {
 
-    state: MyState
+    state: { resultCode: number; data: string[]; letters: {}[]; order_by: string; search_term: string; go_search: boolean; page: string; back_to_letters: boolean; number: number; gotoletter: boolean; };
 
     constructor(props) {
         super(props)
@@ -114,7 +112,7 @@ class Letters extends Component<any, any> {
         event.preventDefault();
 
         this.setState({
-             go_search: true
+            go_search: true
         })
 
     }
@@ -142,7 +140,7 @@ class Letters extends Component<any, any> {
         const gotoletter = '/get_letter_details/' + this.state.number + '/0/';
 
         if (this.state.go_search === true) {
-             this.setState({
+            this.setState({
                 go_search: false
             })
             return <Navigate to={search_letters}/>
@@ -232,7 +230,7 @@ class Letters extends Component<any, any> {
 
         return (
 
-            <div>
+            <div className='container'>
                 <div className="row">
                     <div className='col-sm-3'>
                         <form onSubmit={this.sort} className='mb-3 mt-3'>

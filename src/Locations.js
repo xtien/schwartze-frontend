@@ -10,6 +10,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import ReactTable from "react-table-6";
 import AuthenticationService from "./service/AuthenticationService";
+import strings from "./strings";
 
 class Locations extends Component {
 
@@ -59,12 +60,13 @@ class Locations extends Component {
         }]
 
         return (
-            <div className='container'>
-                <ReactTable
+            <div className='container mt5'>
+                <div className= 'locations-container'>
+               <ReactTable
                     data={this.state.locations}
                     columns={columns}
                 />
-            </div>
+            </div></div>
         )
 
 

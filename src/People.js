@@ -119,7 +119,7 @@ class People extends Component {
 
         return (
 
-            <div>
+            <div className='container'>
                 <div className="row">
                     <div className='col-sm-3'>
                         <form onSubmit={this.sort} className='mt-3  mb-3'>
@@ -131,16 +131,16 @@ class People extends Component {
                         </form>
                     </div>
                     <div className='col-sm-3'>
-                            <form onSubmit={this.handleSearchSubmit} className='mt-3  mb-3'>
-                                <input
-                                    type="input"
-                                    id="text"
-                                    placeholder={strings.search}
-                                    onChange={this.handleSearchTermChange}
-                                    className="form-control "
-                                />
+                        <form onSubmit={this.handleSearchSubmit} className='mt-3  mb-3'>
+                            <input
+                                type="input"
+                                id="text"
+                                placeholder={strings.search}
+                                onChange={this.handleSearchTermChange}
+                                className="form-control "
+                            />
 
-                            </form>
+                        </form>
                     </div>
                 </div>
 

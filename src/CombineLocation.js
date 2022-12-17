@@ -75,7 +75,7 @@ class CombineLocation extends Component {
                                 <div className="col-sm-2"><input
                                     type="text"
                                     pattern="[0-9]*"
-                                    className="form-control textarea"
+                                    className="form-control "
                                     id="first_person"
                                     value={this.state.first_id}
                                     onChange={this.handleFirstLocationChange}
@@ -86,7 +86,7 @@ class CombineLocation extends Component {
                                 <div className="col-sm-2"><input
                                     type="text"
                                     pattern="[0-9]*"
-                                    className="form-control textarea"
+                                    className="form-control "
                                     id="first_person"
                                     value={this.state.second_id}
                                     onChange={this.handleSecondLocationChange}

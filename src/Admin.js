@@ -125,19 +125,19 @@ class Admin extends Component {
         }
         if (this.state.addPerson === true) {
             return (
-                <Navigate to={"/add_person/" + this.state.id}/>
+                <Navigate to={"/add_person/"}/>
             )
         }
 
         if (this.state.addLocation === true) {
             return (
-                <Navigate to={"/add_location/" + this.state.id}/>
+                <Navigate to={"/add_location/" }/>
             )
         }
 
         if (this.state.addLetter === true) {
             return (
-                <Navigate to={"/add_letter/" + this.state.id}/>
+                <Navigate to={"/add_letter/" }/>
             )
         }
 

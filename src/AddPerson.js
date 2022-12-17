@@ -109,7 +109,7 @@ class AddPerson extends Component {
                     <label htmlFor="status">Nick name</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="nick_name"
                         value={this.state.nick_name}
                         onChange={this.handleFirstNameChange}
@@ -119,7 +119,7 @@ class AddPerson extends Component {
                     <label htmlFor="status">Full first name</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="full_name"
                         value={this.state.full_name}
                         onChange={this.handleMiddleNameChange}
@@ -129,7 +129,7 @@ class AddPerson extends Component {
                     <label htmlFor="status">Tussenvoegsel</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="full_name"
                         value={this.state.tussenvoegsel}
                         onChange={this.handleTussenvoegselChange}
@@ -139,7 +139,7 @@ class AddPerson extends Component {
                     <label htmlFor="status">Last name</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="last_name"
                         value={this.state.last_name}
                         onChange={this.handleLastNameChange}
@@ -149,7 +149,7 @@ class AddPerson extends Component {
                     <label htmlFor="status">Text</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="comments"
                         value={this.state.comment}
                         onChange={this.handleCommentChange}
@@ -159,7 +159,7 @@ class AddPerson extends Component {
                     <label htmlFor="header">Links</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="links"
                         value={this.state.links}
                         onChange={this.handleLinksChange}

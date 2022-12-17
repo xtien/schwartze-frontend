@@ -60,7 +60,8 @@ class Topics extends Component {
     delete_link(id) {
 
         let postData = {
-            subject_id: id
+            subject_id: id,
+            language: language()
         };
 
         axios.post(process.env.REACT_APP_API_URL + '/admin/remove_subject/',
@@ -146,10 +147,10 @@ class Topics extends Component {
 
         return (
 
-            <div className='container letter'>
-                <h3>{subjectsText}</h3>
+            <div className='container'>
 
-                <div className='mt-5'>
+                <div className='mt-5 topics'>
+                    <h3>{subjectsText}</h3>
                     <div id='linkContainer'>
                         {links}
                     </div>
@@ -243,7 +244,7 @@ class EditLinkForm extends React.Component {
                     <label htmlFor="status">Link naam</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control textarea mt-3"
                         id="subject_name"
                         value={this.state.subject_name}
                         onChange={this.handleNameChange}

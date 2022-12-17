@@ -83,31 +83,31 @@ class AddLetter extends Component {
 
         return (
             <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Nummer</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control"
                         id="number"
                         value={this.state.number}
                         onChange={this.handleNumberChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Collectie</label>
                     <input
                         type="number"
-                        className="form-control textarea"
+                        className="form-control"
                         id="collectie"
                         value={this.state.collectie}
                         onChange={this.handleCollectieChange}
                     />
                 </div>
-                 <div className="form-group">
+                 <div className="form-group mt-3">
                     <label htmlFor="header">Datum</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control"
                         id="links"
                         value={this.state.date}
                         onChange={this.handleDateChange}

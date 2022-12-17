@@ -83,7 +83,7 @@ class AddLocation extends Component {
                     <label htmlFor="status">Location</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="nick_name"
                         value={this.state.location_name}
                         onChange={this.handleLocationNameChange}
@@ -93,7 +93,7 @@ class AddLocation extends Component {
                     <label htmlFor="status">Text</label>
                     <textarea
                         type="text"
-                        className="form-control textarea"
+                        className="form-control "
                         id="comments"
                         value={this.state.comment}
                         onChange={this.handleCommentChange}
