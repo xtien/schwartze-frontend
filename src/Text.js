@@ -12,7 +12,7 @@ import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
 import language from "./language";
-
+import ReactJsAlert from "reactjs-alert"
 class Text extends Component {
 
     constructor(props) {
@@ -28,7 +28,9 @@ class Text extends Component {
             person: {},
             location: {},
             text: {},
-            subject: {}
+            subject: {},
+            showError: false,
+            error_message: ''
         }
 
         language()
@@ -51,9 +53,17 @@ class Text extends Component {
                     location: response.data.location,
                     person: response.data.person,
                     letter: response.data.letter,
-                    subject: response.data.subject
+                    subject: response.data.subject,
+                    error_message: response.data.error_text
                 })
             )
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    showError: true,
+                    error_message: 'text not found'
+                })
+            });
     }
 
     render() {
@@ -63,6 +73,11 @@ class Text extends Component {
         const letter = this.state.letter;
         const subject = this.state.subject;
         const back = strings.back;
+
+        let showError = false;
+        if(this.state.error_message != null && this.state.error_message != ''){
+            showError = true;
+        }
 
         let text =
             (location != null) ? location.text : (
@@ -126,6 +141,14 @@ class Text extends Component {
                 </div>
                 <div className='mt-5'>{link !=null ? <Link className='mb-5' to={link}><h3>{back}</h3></Link> : null}</div>
                 <div className='mt-5'>{subjectLink !=null ? <Link className='mb-5' to={subjectLink}><h3>{back}</h3></Link> : null}</div>
+                <ReactJsAlert
+                    status={showError}   // true or false
+                    type="success"   // success, warning, error, info
+                    title={this.state.error_message}
+                    button= {strings.ok}// title you want to display
+                    Close={() => this.setState({ status: false })}   // callback method for hide
+                />
+
             </div>
         )
     }

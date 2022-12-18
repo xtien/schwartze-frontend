@@ -12,6 +12,7 @@ import AuthenticationService from "./service/AuthenticationService";
 import {Link} from "react-router-dom";
 import language from "./language";
 import strings from "./strings";
+import ReactJsAlert from "reactjs-alert"
 
 class Landing extends Component {
 
@@ -35,7 +36,9 @@ class Landing extends Component {
                 subject: '/get_text/subject/'
             },
             language: lang,
-            showPictureUrlEdit: false
+            showPictureUrlEdit: false,
+            showError: false,
+            error_message: ''
         }
         this.add_reference = this.add_reference.bind(this);
         this.renderReference = this.renderReference.bind(this);
@@ -100,7 +103,11 @@ class Landing extends Component {
                 })
             )
             .catch(error => {
-                console.log(error)
+                console.log(error);
+                this.setState({
+                    showError: true,
+                    error_message: 'link not found'
+                })
             });
 
     }
@@ -371,6 +378,12 @@ class Landing extends Component {
                         </div>
                     </div>
                 </div>
+                <ReactJsAlert
+                    status={this.state.showError}   // true or false
+                    type="success"   // success, warning, error, info
+                    title={this.state.error_message}   // title you want to display
+                    Close={() => this.setState({ status: false })}   // callback method for hide
+                />
             </div>
         )
     }
