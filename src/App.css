@@ -140,6 +140,12 @@ text {
   vertical-align: top;
 }
 
+.textarea200 {
+  width: 800px;
+  height: 200px;
+  vertical-align: top;
+}
+
 .textpage {
   font-family: Garamond;
   font-size: 20px;

@@ -210,8 +210,10 @@ class Person extends Component {
         const edit_link = this.edit_link;
         const delete_link = this.delete_link;
         let linkTo = '';
+        let linkToEditTextPerson = '';
         if (person != null) {
             linkTo = '/get_text/person/' + person.id;
+            linkToEditTextPerson = '/edit_text/person/' + person.id;
         }
 
         let brievenVan = '';
@@ -426,10 +428,7 @@ class Person extends Component {
                                         </td>
                                         <td>
                                             <div className="ml-5 mb-5">
-                                                <Link to={{
-                                                    pathname: '/edit_text/',
-                                                    person_id: person.id,
-                                                }}>
+                                                <Link to= {linkToEditTextPerson}>
                                                     Edit text
                                                 </Link>
                                             </div>
@@ -598,111 +597,111 @@ class EditPersonForm extends React.Component {
                     <div>
                         <p>{this.state.person.nick_name} {this.state.person.tussenvoegsel} {this.state.person.last_name}</p>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Nick name</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="nick_name"
                             value={this.state.nick_name}
                             onChange={this.handleNickNameChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Full name</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="full_name"
                             value={this.state.full_name}
                             onChange={this.handleFullNameChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Tussenvoegsel</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="tussenvoegsel"
                             value={this.state.tussenvoegsel}
                             onChange={this.handleTussenvoegselChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Last name</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="last_name"
                             value={this.state.last_name}
                             onChange={this.handleLastNameChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Geboren</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="last_name"
                             value={this.state.date_of_birth}
                             onChange={this.handleDoBChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Plaats</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="last_name"
                             value={this.state.place_of_birth}
                             onChange={this.handlePoBChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Overleden</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="last_name"
                             value={this.state.date_of_death}
                             onChange={this.handleDoDChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Plaats</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="last_name"
                             value={this.state.place_of_death}
                             onChange={this.handlePoDChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Opmerkingen</label>
-                        <input
+                        <textarea
                             type="text"
-                            className="form-control textarea"
+                            className="form-control textarea200"
                             id="comments"
                             value={this.state.comment}
                             onChange={this.handlecommentChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Image URL</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="image_url"
                             value={this.state.image_url}
                             onChange={this.handleImageUrlChange}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label htmlFor="status">Image caption</label>
                         <input
                             type="text"
-                            className="form-control textarea"
+                            className="form-control "
                             id="image_caption"
                             value={this.state.image_caption}
                             onChange={this.handleImageCaptionChange}
@@ -714,14 +713,14 @@ class EditPersonForm extends React.Component {
                             <td></td>
                             <input
                                 type="submit"
-                                className="btn btn-outline-success mybutton"
+                                className="btn btn-outline-success mybutton mt-3"
                                 value="Submit"
                             />
                             <td>
                                 <input
                                     type="button"
                                     onClick={this.handleCancel}
-                                    className="btn btn-outline-danger mybutton"
+                                    className="btn btn-outline-danger mybutton mt-3"
                                     value="Cancel"
                                 />
                             </td>
@@ -790,7 +789,7 @@ class EditLinkForm extends React.Component {
 
         return (
             <form onSubmit={this.handleLinkSubmit}>
-                <div className="form-group mt-5">
+                <div className="form-group mt-3 mt-5">
                     <label htmlFor="status">Link naam</label>
                     <input
                         type="text"
@@ -800,7 +799,7 @@ class EditLinkForm extends React.Component {
                         onChange={this.handleNameChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Link url</label>
                     <input
                         type="text"
