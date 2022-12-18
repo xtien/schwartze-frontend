@@ -428,7 +428,7 @@ class Person extends Component {
                                         </td>
                                         <td>
                                             <div className="ml-5 mb-5">
-                                                <Link to= {linkToEditTextPerson}>
+                                                <Link to={linkToEditTextPerson}>
                                                     Edit text
                                                 </Link>
                                             </div>
@@ -781,7 +781,7 @@ class EditLinkForm extends React.Component {
 
     render() {
 
-        const redirectTo = '/get_person/' + this.state.person_id;
+        const redirectTo = '/get_person_details/' + this.state.person_id;
 
         if (this.state.linkEditDone === true) {
             return <Navigate to={redirectTo}/>
@@ -793,7 +793,7 @@ class EditLinkForm extends React.Component {
                     <label htmlFor="status">Link naam</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control"
                         id="link_name"
                         value={this.state.link_name}
                         onChange={this.handleNameChange}
@@ -803,7 +803,7 @@ class EditLinkForm extends React.Component {
                     <label htmlFor="status">Link url</label>
                     <input
                         type="text"
-                        className="form-control textarea"
+                        className="form-control"
                         id="link_url"
                         value={this.state.link_url}
                         onChange={this.handleUrlChange}
@@ -820,14 +820,10 @@ class EditLinkForm extends React.Component {
                             />
                         </td>
                         <td>
-                            <button
-                                type="button"
-                                className="btn btn-outline-danger mybutton ml-5"
-                                onClick={() => {
-                                    this.props.history.push(redirectTo)
-                                }}>
+                            <Navigate to={redirectTo}
+                                      className="btn btn-outline-danger mybutton ml-5">
                                 Cancel
-                            </button>
+                            </Navigate>
                         </td>
                     </tr>
                     </tbody>
