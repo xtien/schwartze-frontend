@@ -75,14 +75,18 @@ class Text extends Component {
             );
 
         let link = null;
-        if (person != null) {
+        let subjectLink = null;
+        if (person !== null && person !== {}) {
             link = '/get_person_details/' + person.id;
         }
-        if (location != null) {
+        if (location != null && location !== {}) {
             link = '/get_location_details/' + location.id;
         }
-        if (letter != null) {
+        if (letter != null && letter !== {}) {
             link = '/get_letter_details/' + letter.number + '/0';
+        }
+        if(subject !== null && subject !== {}){
+            subjectLink = '/topics/';
         }
 
         return (
@@ -121,7 +125,8 @@ class Text extends Component {
                         : null
                     }
                 </div>
-                <div className='mt-5'><Link className='mb-5' to={link}><h3>{back}</h3></Link></div>
+                <div className='mt-5'>{link !=null ? <Link className='mb-5' to={link}><h3>{back}</h3></Link> : null}</div>
+                <div className='mt-5'>{subjectLink !=null ? <Link className='mb-5' to={subjectLink}><h3>{back}</h3></Link> : null}</div>
             </div>
         )
     }
