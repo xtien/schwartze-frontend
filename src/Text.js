@@ -12,6 +12,7 @@ import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
 import language from "./language";
+import arrow_left from "./images/arrow_left.png";
 
 class Text extends Component {
 
@@ -62,6 +63,7 @@ class Text extends Component {
         const person = this.state.person;
         const letter = this.state.letter;
         const subject = this.state.subject;
+        const back = strings.back;
 
         let text =
             (location != null) ? location.text : (
@@ -72,24 +74,35 @@ class Text extends Component {
                         )))))
             );
 
+        let link = null;
+        if (person != null) {
+            link = '/get_person_details/' + person.id;
+        }
+        if (location != null) {
+            link = '/get_location_details/' + location.id;
+        }
+        if (letter != null) {
+            link = '/get_letter_details/' + letter.number + '/0';
+        }
+
         return (
             <div className='textpage wide mt-5 ml-5'>
                 <div>
                     {this.state.person != null ?
                         <h3><Link className='mb-5'
-                                  to={'/get_person_details/' + person.id}> {person.nick_name} {(person.tussenvoegsel != null ? (person.tussenvoegsel + ' ') : '')} {person.last_name}</Link>
+                                  to={link}> {person.nick_name} {(person.tussenvoegsel != null ? (person.tussenvoegsel + ' ') : '')} {person.last_name}</Link>
                         </h3>
                         : null
                     }</div>
                 <div>
                     {this.state.location != null ?
-                        <h3><Link to={'/get_location_details/' + location.id}> {location.location_name}</Link></h3>
+                        <h3><Link to={link}> {location.location_name}</Link></h3>
                         : null
                     }
                 </div>
                 <div>
                     {this.state.letter != null ?
-                        <h3><Link to={'/get_letter_details/' + letter.number + '/0'}> Brief {letter.number}</Link></h3>
+                        <h3><Link to={link}> Brief {letter.number}</Link></h3>
                         : null
                     }
                 </div>
@@ -108,6 +121,7 @@ class Text extends Component {
                         : null
                     }
                 </div>
+                <div className='mt-5'><Link className='mb-5' to={link}><h3>{back}</h3></Link></div>
             </div>
         )
     }
