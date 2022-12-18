@@ -36,6 +36,8 @@ class TextEdit extends Component {
             case "letter":
                 letter_id = id
                 break;
+            default:
+
         }
 
         this.state = {

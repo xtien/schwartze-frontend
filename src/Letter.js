@@ -181,7 +181,7 @@ class Letter extends Component {
         const letter = this.state.letter;
         const images = this.state.imageData;
         const remarks = this.state.letter.comment;
-        const letterId = this.state.letter.id;
+
         const listItems = images.map((d) => (
             <div className='letter_image ml-4 mt-5'><img alt="original letter" src={`data:image/jpeg;base64,${d}`}/>
             </div>));

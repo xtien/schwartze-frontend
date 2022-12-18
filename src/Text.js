@@ -12,7 +12,6 @@ import './css/bootstrap.css'
 import AuthenticationService from "./service/AuthenticationService";
 import strings from './strings.js'
 import language from "./language";
-import arrow_left from "./images/arrow_left.png";
 
 class Text extends Component {
 
