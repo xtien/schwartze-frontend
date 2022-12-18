@@ -174,6 +174,7 @@ class Letter extends Component {
         }
 
         let linkTo = '';
+        let linkToEditText = '';
 
         const letter = this.state.letter;
         const images = this.state.imageData;
@@ -196,8 +197,9 @@ class Letter extends Component {
         const recipientLocationList = recipient_locations.map((s) => <span><Link
             to={`/get_location_details/${s.id}`}>{s.location_name} </Link> </span>);
 
-        if (letter != null) {
+        if (letter != null && letter !== {}) {
             linkTo = '/get_text/letter/' + letter.id;
+            linkToEditText = '/edit_text/letter/' + letter.id;
         }
 
         if (this.state.edit_letter === true) {
@@ -353,10 +355,7 @@ class Letter extends Component {
 
                 {AuthenticationService.isAdmin() === "true" ?
                     <div className='mb-5 mt-5 ml-5'>
-                        <Link to={{
-                            pathname: '/edit_text/',
-                            letter_id: letterId
-                        }}>
+                        <Link to={linkToEditText}>
                             Edit tekst
                         </Link>
                     </div>

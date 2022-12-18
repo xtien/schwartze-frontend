@@ -122,7 +122,7 @@ class References extends Component {
                                                 onClick={edit_link.bind(this, link.id)}
                                             >
                                                 Edit
-                                            </button>
+                                            </button>&nbsp;&nbsp;
                                             <button
                                                 className="btn btn-outline-danger mybutton ml-2 mt-2"
                                                 onClick={delete_link.bind(this, link.id)}

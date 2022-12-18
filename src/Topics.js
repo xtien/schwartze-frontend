@@ -127,7 +127,7 @@ class Topics extends Component {
                                                 onClick={edit_link.bind(this, link.id)}
                                             >
                                                 Edit
-                                            </button>
+                                            </button>&nbsp;&nbsp;
                                             <button
                                                 className="btn btn-outline-danger mybutton ml-2 mt-2"
                                                 onClick={delete_link.bind(this, link.id)}
@@ -244,7 +244,7 @@ class EditLinkForm extends React.Component {
                     <label htmlFor="status">Link naam</label>
                     <input
                         type="text"
-                        className="form-control textarea mt-3"
+                        className="form-control mt-3"
                         id="subject_name"
                         value={this.state.subject_name}
                         onChange={this.handleNameChange}
@@ -252,7 +252,7 @@ class EditLinkForm extends React.Component {
                 </div>
                 <input
                     type="submit"
-                    className="btn btn-outline-success mybutton"
+                    className="btn btn-outline-success mybutton mt-3"
                     value="Submit"
                 />
             </form>

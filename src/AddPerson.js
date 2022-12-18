@@ -115,7 +115,7 @@ class AddPerson extends Component {
                         onChange={this.handleFirstNameChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Full first name</label>
                     <input
                         type="text"
@@ -125,7 +125,7 @@ class AddPerson extends Component {
                         onChange={this.handleMiddleNameChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Tussenvoegsel</label>
                     <input
                         type="text"
@@ -135,7 +135,7 @@ class AddPerson extends Component {
                         onChange={this.handleTussenvoegselChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Last name</label>
                     <input
                         type="text"
@@ -145,7 +145,7 @@ class AddPerson extends Component {
                         onChange={this.handleLastNameChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Text</label>
                     <input
                         type="text"
@@ -155,7 +155,7 @@ class AddPerson extends Component {
                         onChange={this.handleCommentChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="header">Links</label>
                     <input
                         type="text"
@@ -167,7 +167,7 @@ class AddPerson extends Component {
                 </div>
                 <input
                     type="submit"
-                    className="btn btn-outline-success mybutton"
+                    className="btn btn-outline-success mybutton mt-3"
                     value="Submit"
                 />
             </form>

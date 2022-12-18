@@ -115,7 +115,7 @@ class AddLetter extends Component {
                 </div>
                 <input
                     type="submit"
-                    className="btn btn-outline-success mybutton"
+                    className="btn btn-outline-success mybutton mt-3"
                     value="Submit"
                 />
             </form>

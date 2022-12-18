@@ -79,7 +79,7 @@ class AddLocation extends Component {
 
         return (
             <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Location</label>
                     <input
                         type="text"
@@ -89,7 +89,7 @@ class AddLocation extends Component {
                         onChange={this.handleLocationNameChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="status">Text</label>
                     <textarea
                         type="text"
@@ -101,7 +101,7 @@ class AddLocation extends Component {
                 </div>
                 <input
                     type="submit"
-                    className="btn btn-outline-success mybutton"
+                    className="btn btn-outline-success mybutton mt-3"
                     value="Submit"
                 />
             </form>
