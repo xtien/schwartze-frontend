@@ -153,7 +153,9 @@ class Letter extends Component {
                     resultCode: response.data.resultCode,
                     imageData: response.data.images
                 })
-            )
+            ).catch(error => {
+            console.log(error)
+        });
     }
 
     render() {

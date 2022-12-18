@@ -63,6 +63,9 @@ class Location extends Component {
                     location: response.data.location
                 })
             )
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     setLocation = (location) => {
@@ -109,6 +112,9 @@ class Location extends Component {
                     deleted: true
                 })
             )
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     delete_link(id) {
@@ -128,6 +134,9 @@ class Location extends Component {
                     location: response.data.location
                 })
             )
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     add_link(event) {
@@ -238,7 +247,9 @@ class Location extends Component {
             <div>
                 <div className='container letter'>
                     <h3>{location.id} {location.location_name}</h3>
-                    <h4 className='mt-5'><Link to={`/get_letters_for_location/${location.id}`}>{strings.letters}</Link></h4>
+                    <h4 className='mt-5'><Link
+                        to={`/get_letters_for_location/${location.id}`}>{strings.letters}</Link>
+                    </h4>
                     <p className='mt-5'>{location.comment}</p>
 
                     <div className='textpage mt-5 ml-5'>
@@ -246,7 +257,8 @@ class Location extends Component {
                             <div>
                                 {/* TODO: this needs to change when others than myself get access to data entry */}
                                 <p>
-                                    <div dangerouslySetInnerHTML={{__html: location.text.text_string.substr(0, 300)}}/>
+                                    <div
+                                        dangerouslySetInnerHTML={{__html: location.text.text_string.substr(0, 300)}}/>
                                 </p>
                                 {location.text.text_string.length > 300 ?
                                     <p>
@@ -289,7 +301,7 @@ class Location extends Component {
 
                                 <div>
                                     <div className='mb-5 mt-5 ml-5'>
-                                        <Link to={"/edit_text/location/" + location.id} >
+                                        <Link to={"/edit_text/location/" + location.id}>
                                             Edit tekst
                                         </Link>
                                     </div>
@@ -348,7 +360,9 @@ class Location extends Component {
     }
 }
 
-class EditNameForm extends React.Component {
+class EditNameForm
+    extends React
+        .Component {
 
     constructor(props) {
         super(props);
