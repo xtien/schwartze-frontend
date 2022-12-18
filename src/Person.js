@@ -280,8 +280,7 @@ class Person extends Component {
         }
 
         return (
-            <div>
-                <div className='container letter'>
+                 <div className='content-container letter mt-5'>
                     {this.state.showEdit ? null : (
                         <div>
                             <div>
@@ -442,8 +441,6 @@ class Person extends Component {
                         : null
                     }
                 </div>
-            </div>
-
         )
     }
 }
