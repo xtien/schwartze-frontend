@@ -75,7 +75,7 @@ class Text extends Component {
         const back = strings.back;
 
         let showError = false;
-        if(this.state.error_message != null && this.state.error_message != ''){
+        if(this.state.error_message !== null && this.state.error_message !== ''){
             showError = true;
         }
 

@@ -219,11 +219,11 @@ class Person extends Component {
         let brievenVan = '';
         if (person.brieven_van === true) {
             brievenVan = <Link
-                to={`/get_letters_from_person/${person.id}`}> {brieven_van} {person.nick_name} </Link>
+                to={`/get_letters_from_person/${person.id}`} className='linkStyle'> {brieven_van} {person.nick_name} </Link>
         }
         let brievenAan = '';
         if (person.brieven_aan === true) {
-            brievenAan = <Link to={`/get_letters_to_person/${person.id}`}> {brieven_aan} {person.nick_name} </Link>
+            brievenAan = <Link to={`/get_letters_to_person/${person.id}`} className='linkStyle'> {brieven_aan} {person.nick_name} </Link>
         }
 
         if (this.state.combine === true) {
@@ -244,7 +244,7 @@ class Person extends Component {
                             <tr>
                                 <td>
                                     <a href={link.link_url} target="_blank"
-                                       rel="noopener noreferrer">{link.link_name}</a>
+                                       rel="noopener noreferrer" className='linkStyle'>{link.link_name}</a>
                                 </td>
                                 <td width="20%">
                                     {

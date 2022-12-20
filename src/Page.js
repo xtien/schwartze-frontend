@@ -228,7 +228,7 @@ class Page extends Component {
                 </div>
             case 'PERSON':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.person + reference.key}>{reference.description}</Link>
+                    <Link to={this.state.refMap.person + reference.key} className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -238,7 +238,7 @@ class Page extends Component {
                 </div>)
             case 'LOCATION':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.location + reference.key}>{reference.description}</Link>
+                    <Link to={this.state.refMap.location + reference.key} className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -248,7 +248,7 @@ class Page extends Component {
                 </div>)
             case 'LETTER':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.letter + reference.key + '/0'}>{reference.description}</Link>
+                    <Link to={this.state.refMap.letter + reference.key + '/0'} className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -258,7 +258,7 @@ class Page extends Component {
                 </div>)
             case 'SUBJECT':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.subject + reference.key}>{reference.description}</Link>
+                    <Link to={this.state.refMap.subject + reference.key} className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -362,16 +362,16 @@ class Page extends Component {
                 <div className="float-container">
                     <div className="float-child-left">
                         <div className="row align-items-start">
-                            <div id="sidebar-wrapper" className='container'>
+                            <div id="sidebar-wrapper" >
                                 <ul className="sidebar-nav">
                                     <li className="sidebar-brand"></li>
                                     <div id='linkContainer' className='ml-3'>
                                         {references}
                                     </div>
                                     <div className='ml-3 mt-5'>
-                                        <Link to='/get_content/'>{strings.content}</Link>
+                                        <Link to='/get_content/' className='linkStyle'>{strings.content}</Link>
                                     </div>
-                                    <div className="row align-items-end">
+                                    <div className="row align-items-end mt-5">
                                         <div className='sidebar-picture'>
                                             <div><img src={picture_url} width="200" alt=""/></div>
                                             <div className='picture-caption'>{picture_caption}</div>

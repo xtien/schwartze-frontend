@@ -186,7 +186,7 @@ class Landing extends Component {
                 </div>
             case 'PERSON':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.person + reference.key}>{reference.description}</Link>
+                    <Link to={this.state.refMap.person + reference.key} className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -196,7 +196,7 @@ class Landing extends Component {
                 </div>)
             case 'LOCATION':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.location + reference.key}>{reference.description}</Link>
+                    <Link to={this.state.refMap.location + reference.key} className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -206,7 +206,7 @@ class Landing extends Component {
                 </div>)
             case 'LETTER':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.letter + reference.key + '/0'}>{reference.description}</Link>
+                    <Link to={this.state.refMap.letter + reference.key + '/0'} className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -216,7 +216,7 @@ class Landing extends Component {
                 </div>)
             case 'SUBJECT':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.subject + reference.key}>{reference.description}</Link>
+                    <Link to={this.state.refMap.subject + reference.key} className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {

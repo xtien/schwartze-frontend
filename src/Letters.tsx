@@ -156,7 +156,7 @@ class Letters extends Component<any, any> {
             accessor: data => {
                 const nr = data.number;
                 const linkto = '/get_letter_details/' + nr + '/' + pagenumber;
-                let result = <Link to={linkto}>
+                let result = <Link to={linkto} className='linkStyle'>
                     <div className='number'>{nr}</div>
                 </Link>
                 return result;
@@ -170,7 +170,7 @@ class Letters extends Component<any, any> {
                 let senderList = []
                 if (data != null && data.senders != null) {
                     senderList = data.senders.map(r => <span key={r.id}><Link
-                        to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
+                        to={`/get_person_details/${r.id}`} className='linkStyle'>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
                 }
                 return senderList;
             },
@@ -188,7 +188,7 @@ class Letters extends Component<any, any> {
                 const location_content = locations[0];
                 const id_content = ids[0];
                 const linkTo = '/get_location_details/' + id_content;
-                let result = <Link to={linkTo}>{location_content}</Link>
+                let result = <Link to={linkTo} className='linkStyle'>{location_content}</Link>
                 return result;
             },
         }, {
@@ -198,7 +198,7 @@ class Letters extends Component<any, any> {
                 let recipientList = []
                 if (data != null && data.recipients != null) {
                     recipientList = data.recipients.map(r => <span key={r.id}><Link
-                        to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
+                        to={`/get_person_details/${r.id}`} className='linkStyle'>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
                 }
                 return recipientList;
             },
@@ -216,7 +216,7 @@ class Letters extends Component<any, any> {
                 const location_content = locations[0];
                 const id_content = ids[0];
                 const linkTo = '/get_location_details/' + id_content;
-                let result = <Link to={linkTo}>{location_content}</Link>
+                let result = <Link to={linkTo} className='linkStyle'>{location_content}</Link>
                 return result;
             },
         }, {

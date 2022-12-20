@@ -49,7 +49,7 @@ class Locations extends Component {
                 const id = data.id;
                 const name = data.location_name;
                 const linkto = '/get_location_details/' + id;
-                let result = <Link to={linkto}>{name}</Link>
+                let result = <Link to={linkto} className='linkStyle'>{name}</Link>
                 return result;
             },
             width: 300,

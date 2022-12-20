@@ -101,6 +101,13 @@
   padding-right: 10px;
 }
 
+textStyle {
+}
+
+.linkStyle {
+  text-decoration: none;
+}
+
 .space {
   margin-bottom: 60px;
 }
@@ -174,15 +181,15 @@ text {
 }
 
 a {
-  color: #6c757d !important;
+  color: #7c859d !important;
 }
 
  a:active {
-  color: #005cbf !important;
+  color: #106ccf !important;
 }
 
 a:visited {
-  color: #4e555b !important;
+  color: #6e656b !important;
 }
 
 .jumbotron {
@@ -267,10 +274,8 @@ h3 {
   top: 0;
   width: 300px;
   list-style: none;
-  margin: 0;
-  margin-left: 55px;
   padding: 20px;
-  height: 950px;
+  height: 900px;
 }
 
 .sidebar-nav li {

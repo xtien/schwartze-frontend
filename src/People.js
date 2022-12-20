@@ -107,7 +107,7 @@ class People extends Component {
                     + (data.tussenvoegsel != null ? data.tussenvoegsel : '') + " "
                     + (data.last_name != null ? data.last_name : '');
                 const linkto = '/get_person_details/' + id;
-                let result = <Link to={linkto}>{name}</Link>
+                let result = <Link to={linkto} className='linkStyle'>{name}</Link>
                 return result;
             },
             width: 300,

@@ -188,16 +188,16 @@ class Letter extends Component {
         const senders = this.state.senders;
         const recipients = this.state.recipients;
         const senderList = senders.map((s) => <span><Link
-            to={`/get_person_details/${s.id}`}>{s.nick_name} {s.tussenvoegsel} {s.last_name} </Link> </span>);
+            to={`/get_person_details/${s.id}`} className='linkStyle'>{s.nick_name} {s.tussenvoegsel} {s.last_name} </Link> </span>);
         const recipientList = recipients.map((r) => <span><Link
-            to={`/get_person_details/${r.id}`}>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
+            to={`/get_person_details/${r.id}`} className='linkStyle'>{r.nick_name} {r.tussenvoegsel} {r.last_name} </Link> </span>);
 
         const sender_locations = this.state.sender_locations;
         const senderLocationList = sender_locations.map((s) => <span><Link
-            to={`/get_location_details/${s.id}`}>{s.location_name} </Link> </span>);
+            to={`/get_location_details/${s.id}`} className='linkStyle'>{s.location_name} </Link> </span>);
         const recipient_locations = this.state.recipient_locations;
         const recipientLocationList = recipient_locations.map((s) => <span><Link
-            to={`/get_location_details/${s.id}`}>{s.location_name} </Link> </span>);
+            to={`/get_location_details/${s.id}`} className='linkStyle'>{s.location_name} </Link> </span>);
 
         if (letter != null && letter !== {}) {
             linkTo = '/get_text/letter/' + letter.id;

@@ -65,7 +65,7 @@ class App extends Component {
         return (
 
             <Router>
-                <div className='container ml-5 mr-5'>
+                <div className='container'>
                     <div className='jumbotron pb-2 pt-2'>
                         <table width="100%">
                             <tbody>
@@ -73,19 +73,19 @@ class App extends Component {
                                 <td>
                                     <h1 className='px-5'>{strings.titel}</h1>
                                     <nav className="navbar navbar-expand-lg navbar-light px-5">
-                                        <p className="navbar-nav"><Link to='/'>{strings.home}</Link></p>
-                                        <p className="navbar-nav"><Link to='/get_letters/0'>{strings.letters}</Link></p>
-                                        <p className="navbar-nav"><Link to='/get_people/'>{strings.people}</Link></p>
-                                        <p className="navbar-nav"><Link to='/get_locations/'>{strings.locations}</Link>
+                                        <p className='navbar-nav'><Link to='/' className='linkStyle'>{strings.home}</Link></p>
+                                        <p className='navbar-nav textStyle'><Link to='/get_letters/0' className='linkStyle'>{strings.letters}</Link></p>
+                                        <p className='navbar-nav textStyle'><Link to='/get_people/' className='linkStyle'>{strings.people}</Link></p>
+                                        <p className='navbar-nav textStyle'><Link to='/get_locations/' className='linkStyle'>{strings.locations}</Link>
                                         </p>
-                                        <p className="navbar-nav"><Link to='/references/'>{strings.references}</Link>
+                                        <p className='navbar-nav textStyle'><Link to='/references/' className='linkStyle'>{strings.references}</Link>
                                         </p>
-                                        <p className="navbar-nav"><Link to='/topics/'>{strings.topics}</Link></p>
-                                        <p className="navbar-nav"><Link to='/get_page/1/1'>{strings.pages}</Link></p>
+                                        <p className='navbar-nav textStyle'><Link to='/topics/' className='linkStyle'>{strings.topics}</Link></p>
+                                        <p className='navbar-nav textStyle'><Link to='/get_page/1/1' className='linkStyle'>{strings.pages}</Link></p>
                                         {/* Admin should only be visible after login. toggle enables Login.js
                                                to render App.js by setting its state  */}
                                         {AuthenticationService.isAdmin() === 'true' ?
-                                            <p className="navbar-nav"><Link to={'/admin/'}>{strings.admin}</Link>
+                                            <p className='navbar-nav textStyle'><Link to={'/admin/'} className='linkStyle'>{strings.admin}</Link>
                                             </p>
                                             : null}
                                     </nav>
