@@ -47,7 +47,8 @@ let strings = new LocalizedStrings({
         help:"Op de brieven pagina, klik op een briefnummer of naam voor meer info. Verder kun je meestal op een naam klikken voor meer info.Op de verhaal pagina, blader met de pijltjes bovenaan.",
         location_name: "Locatie name",
         back: "Terug",
-        ok: "OK"
+        ok: "OK",
+        uit: "uit"
     },
     en:{
         titel:"Aunt Thérèse's niece",
@@ -89,7 +90,8 @@ let strings = new LocalizedStrings({
         help:"On the letters page, click on a letter number or a name for info. In the letter pages, you can click on any name to navigate. On the story page, browse with the arrows at the top of the page.",
         location_name: "Location name",
         back: "Back",
-        ok: "OK"
+        ok: "OK",
+        uit: "from"
     },
     fr: {
         titel:"La nièce de tante Thérèse",
@@ -131,7 +133,8 @@ let strings = new LocalizedStrings({
         help:"Sur la page des lettres, cliquez sur un numéro de lettre ou un nom pour plus d'informations. Dans les pages de lettres, vous pouvez cliquer sur un nom pour naviguer.",
         location_name: "Location name",
         back: "Arrière",
-        ok: "OK"
+        ok: "OK",
+        uit: "de"
     },
     de: {
         titel:"Tante Thérèses Nichte",
@@ -173,7 +176,8 @@ let strings = new LocalizedStrings({
         help:"Klicken Sie auf der Briefe Liste auf eine Briefnummer oder einen Namen, um Informationen zu erhalten. Auf den Briefseiten können Sie auf einen beliebigen Namen klicken, um zu navigieren.",
         location_name: "Location name",
         back: "Zurück",
-        ok: "OK"
+        ok: "OK",
+        uit: "aus"
     }
 });
 export default strings;

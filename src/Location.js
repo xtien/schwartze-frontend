@@ -247,9 +247,9 @@ class Location extends Component {
             <div>
                 <div className='container letter'>
                     <h3>{location.id} {location.location_name}</h3>
-                    <h4 className='mt-5'><Link
-                        to={`/get_letters_for_location/${location.id}`}>{strings.letters}</Link>
-                    </h4>
+                    <p className='mt-5'><Link
+                        to={`/get_letters_for_location/${location.id}`}>{strings.letters} {strings.uit} {location.location_name}</Link>
+                    </p>
                     <p className='mt-5'>{location.comment}</p>
 
                     <div className='textpage mt-5 ml-5'>
