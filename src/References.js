@@ -21,7 +21,7 @@ class References extends Component {
             references: {},
             linkEditDone: false
         }
-       language()
+        language()
 
         this.edit_link = this.edit_link.bind(this);
         this.delete_link = this.delete_link.bind(this);
@@ -112,7 +112,10 @@ class References extends Component {
                             <tbody>
                             <tr>
                                 <td>
-                                    <a href={link.link_url} target="blank" className='linkStyle'>{link.link_name}</a>
+                                    <div className='mt-3'>
+                                        <a href={link.link_url} target="blank"
+                                           className='linkStyle'>{link.link_name}</a>
+                                    </div>
                                 </td>
                                 <td width="20%">
                                     {AuthenticationService.isAdmin() === "true" ?
@@ -122,7 +125,8 @@ class References extends Component {
                                                 onClick={edit_link.bind(this, link.id)}
                                             >
                                                 Edit
-                                            </button>&nbsp;&nbsp;
+                                            </button>
+                                            &nbsp;&nbsp;
                                             <button
                                                 className="btn btn-outline-danger mybutton ml-2 mt-2"
                                                 onClick={delete_link.bind(this, link.id)}

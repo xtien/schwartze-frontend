@@ -78,7 +78,7 @@
 .number {
   background: #e8e8e8;
   text-align: center;
-  color: #1190b0;
+  color: #0372c6;
 }
 
 .remark {
@@ -248,6 +248,17 @@ h3 {
   column-count: 1;
   column-gap: 0px;
 }
+
+#text::placeholder {
+  color: #aaaaaa;
+  opacity: 1;
+}
+
+#nr::placeholder {
+   color: #aaaaaa;
+   opacity: 1;
+ }
+
 
 /* https://stackoverflow.com/questions/23669330/bootstrap-sidebar-menu-and-sidebar-navigation/23669555  */
 

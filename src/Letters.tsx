@@ -261,7 +261,7 @@ class Letters extends Component<any, any> {
                                 id="text"
                                 placeholder={strings.search}
                                 onChange={this.handleSearchTermChange}
-                                className="form-control w-75"
+                                className='form-control w-75'
                             />
                         </form>
                     </div>

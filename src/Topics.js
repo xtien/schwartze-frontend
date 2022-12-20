@@ -116,8 +116,9 @@ class Topics extends Component {
                         <table width="100%">
                             <tbody>
                             <tr>
-                                <td>
+                                <td><div className='mt-3'>
                                     <Link to={'/get_text/subject/' + link.id} className='linkStyle'>  {link.name}</Link>
+                                </div>
                                 </td>
                                 <td width="20%">
                                     {AuthenticationService.isAdmin() === "true" ?
