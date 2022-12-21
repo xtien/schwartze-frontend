@@ -249,7 +249,7 @@ class Letters extends Component<any, any> {
                                 id="nr"
                                 placeholder={strings.naar_nummer}
                                 onChange={this.handleletternumber}
-                                className="form-control w-50"
+                                className="form-control w-75"
                             />
                         </form>
                     </div>
