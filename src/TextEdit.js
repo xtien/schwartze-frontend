@@ -168,9 +168,9 @@ class TextEdit extends Component {
                 <div>
                     {
                         this.state.cancel ?
-                            <Navigate to={redirectTo}/> :
+                            <Navigate to={redirectTo}/>
+                            :
                             <div>
-
                                 <div>
                                     {this.state.person != null ?
                                         <Link
