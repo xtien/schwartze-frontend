@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 - 2021, Zaphod Consulting BV, Christine Karman
+ * Copyright (c) 2018 - 2024, Zaphod Consulting BV, Christine Karman
  * This project is free software: you can redistribute it and/or modify it under the terms of
  * the Apache License, Version 2.0. You can find a copy of the license at
  * http://www.apache.org/licenses/LICENSE-2.0.
@@ -15,8 +15,6 @@ import strings from "./strings";
 import ReactJsAlert from "reactjs-alert"
 
 class Landing extends Component {
-
-    // https://medium.com/@thejasonfile/basic-intro-to-react-router-v4-a08ae1ba5c42
 
     constructor() {
         super()

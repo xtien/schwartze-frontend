@@ -1,6 +1,6 @@
 {
   "name": "schwartze-react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "license": "Apache 2.0",
   "dependencies": {
@@ -15,8 +15,8 @@
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-localization": "^1.0.19",
-    "react-router": "^6.4.4",
-    "react-router-dom": "^6.4.4",
+    "react-router": "^6.8.2",
+    "react-router-dom": "^6.8.2",
     "react-table-6": "^6.11.0",
     "reactjs-alert": "^2.2.0",
     "reactstrap": "^9.1.5",
