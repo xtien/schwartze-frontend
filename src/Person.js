@@ -17,6 +17,8 @@ import language from "./language";
 
 // https://medium.com/better-programming/building-basic-react-authentication-e20a574d5e71
 
+const url = process.env.REACT_APP_API_URL + '/get_person_details/';
+
 class Person extends Component {
 
     constructor(props) {
@@ -71,7 +73,7 @@ class Person extends Component {
             id: id
         };
 
-        axios.post(process.env.REACT_APP_API_URL + '/get_person_details/',
+        axios.post(url,
             postData,
             AuthenticationService.getAxiosConfig()
         )
@@ -80,6 +82,9 @@ class Person extends Component {
                     person: response.data.person
                 })
             )
+            .catch(error => {
+                console.log(error);
+            })
 
     }
 

@@ -14,6 +14,9 @@ import language from "./language";
 import strings from "./strings";
 import ReactJsAlert from "reactjs-alert"
 
+const homeUrl = process.env.REACT_APP_API_URL + '/get_page_text/'
+const pagesUrl = process.env.REACT_APP_API_URL + '/get_page_references/'
+
 class Landing extends Component {
 
     constructor() {
@@ -91,7 +94,7 @@ class Landing extends Component {
             chapter_number: this.state.chapterNumber,
             language: this.state.language
         };
-        axios.post(process.env.REACT_APP_API_URL + '/get_page_references/',
+        axios.post(pagesUrl,
             ppData,
             AuthenticationService.getAxiosConfig()
         )
