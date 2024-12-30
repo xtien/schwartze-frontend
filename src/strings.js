@@ -8,6 +8,7 @@ import LocalizedStrings from 'react-localization';
 
 let strings = new LocalizedStrings({
     nl:{
+        about: "About",
         titel:"Het nichtje van tante Thérèse",
         home:"Home",
         letters:"Brieven",
@@ -48,9 +49,13 @@ let strings = new LocalizedStrings({
         location_name: "Locatie name",
         back: "Terug",
         ok: "OK",
-        uit: "uit"
+        uit: "uit",
+        aboutText: "Deze website is een project van Zaphod Consulting BV, Christine Karman. De content is licensed volgens de Apache License, Versie 2.0.",
+        more: "Meer",
+        siteVersion: "Site Versie",
     },
     en:{
+        about: "About",
         titel:"Aunt Thérèse's niece",
         home:"Home",
         letters:"Letters",
@@ -91,9 +96,13 @@ let strings = new LocalizedStrings({
         location_name: "Location name",
         back: "Back",
         ok: "OK",
-        uit: "from"
+        uit: "from",
+        aboutText: "This website is a project of Zaphod Consulting BV, Christine Karman. The content is licensed under the Apache License, Version 2.0.",
+        more: "More",
+        siteVersion: "Site Version",
     },
     fr: {
+        about: "À propos",
         titel:"La nièce de tante Thérèse",
         home:"Accueil",
         letters:"Lettres",
@@ -134,12 +143,16 @@ let strings = new LocalizedStrings({
         location_name: "Location name",
         back: "Arrière",
         ok: "OK",
-        uit: "de"
+        uit: "de",
+        aboutText: "This website is a project of Zaphod Consulting BV, Christine Karman. The content is licensed under the Apache License, Version 2.0.",
+        more: "Plus",
+        siteVersion: "Version Site",
     },
     de: {
         titel:"Tante Thérèses Nichte",
         home:"Startsite",
         letters:"Briefe",
+        about: "Uber uns",
         people:"Personen",
         locations:"Orte",
         references:"Referenzen",
@@ -177,7 +190,10 @@ let strings = new LocalizedStrings({
         location_name: "Location name",
         back: "Zurück",
         ok: "OK",
-        uit: "aus"
+        uit: "aus",
+        aboutText: "This website is a project of Zaphod Consulting BV, Christine Karman. The content is licensed under the Apache License, Version 2.0.",
+        more: "Mehr",
+        siteVersion: "Site-Version",
     }
 });
 export default strings;

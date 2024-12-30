@@ -40,6 +40,7 @@ import strings from './strings.js'
 import Content from './Content.js'
 import language from "./language";
 import AuthenticationService from "./service/AuthenticationService";
+import {About} from "./About";
 
 class App extends Component {
 
@@ -73,21 +74,37 @@ class App extends Component {
                                 <td>
                                     <h1 className='px-5'>{strings.titel}</h1>
                                     <nav className="navbar navbar-expand-lg navbar-light px-5">
-                                        <p className='navbar-nav'><Link to='/' className='linkStyle'>{strings.home}</Link></p>
-                                        <p className='navbar-nav textStyle'><Link to='/get_letters/0' className='linkStyle'>{strings.letters}</Link></p>
-                                        <p className='navbar-nav textStyle'><Link to='/get_people/' className='linkStyle'>{strings.people}</Link></p>
-                                        <p className='navbar-nav textStyle'><Link to='/get_locations/' className='linkStyle'>{strings.locations}</Link>
+                                        <p className='navbar-nav'><Link to='/'
+                                                                        className='linkStyle'>{strings.home}</Link></p>
+                                        <p className='navbar-nav textStyle'><Link to='/get_letters/0'
+                                                                                  className='linkStyle'>{strings.letters}</Link>
                                         </p>
-                                        <p className='navbar-nav textStyle'><Link to='/references/' className='linkStyle'>{strings.references}</Link>
+                                        <p className='navbar-nav textStyle'><Link to='/get_people/'
+                                                                                  className='linkStyle'>{strings.people}</Link>
                                         </p>
-                                        <p className='navbar-nav textStyle'><Link to='/topics/' className='linkStyle'>{strings.topics}</Link></p>
-                                        <p className='navbar-nav textStyle'><Link to='/get_page/1/1' className='linkStyle'>{strings.pages}</Link></p>
+                                        <p className='navbar-nav textStyle'><Link to='/get_locations/'
+                                                                                  className='linkStyle'>{strings.locations}</Link>
+                                        </p>
+                                        <p className='navbar-nav textStyle'><Link to='/references/'
+                                                                                  className='linkStyle'>{strings.references}</Link>
+                                        </p>
+                                        <p className='navbar-nav textStyle'><Link to='/topics/'
+                                                                                  className='linkStyle'>{strings.topics}</Link>
+                                        </p>
+                                        <p className='navbar-nav textStyle'><Link to='/get_page/1/1'
+                                                                                  className='linkStyle'>{strings.pages}</Link>
+                                        </p>
                                         {/* Admin should only be visible after login. toggle enables Login.js
                                                to render App.js by setting its state  */}
                                         {AuthenticationService.isAdmin() === 'true' ?
-                                            <p className='navbar-nav textStyle'><Link to={'/admin/'} className='linkStyle'>{strings.admin}</Link>
+                                            <p className='navbar-nav textStyle'><Link to={'/admin/'}
+                                                                                      className='linkStyle'>{strings.admin}</Link>
                                             </p>
                                             : null}
+                                        <p className='navbar-nav textStyle'><Link to='/about/'
+                                                                                  className='linkStyle'>{strings.about}</Link>
+                                        </p>
+
                                     </nav>
                                 </td>
                                 <td>
@@ -126,6 +143,7 @@ class App extends Component {
                             <Route path="/topics/" element={ <Topics/> } />
                             <Route path="/search_letters/:search_term" element={ <SearchLetters/> } />
                             <Route path="/get_content/" element={ <Content/> } />
+                            <Route path="/about/" element={ <About/> } />
                         </Routes>
                     </div>
                 </div>
