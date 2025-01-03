@@ -320,7 +320,7 @@ class Page extends Component {
         }
 
         return (
-            <div className='container'>
+            <div className=''>
                 <table width='100%'>
                     <tbody>
                     <tr>
@@ -339,7 +339,7 @@ class Page extends Component {
                             </button>
                         </td>
                         <td>
-                            <p className='page_header'>{strings.chapter} {this.state.chapterNumber} &nbsp; &nbsp; &nbsp; {strings.page} {this.state.pageNumber} </p>
+                            <p className='page_header'>{strings.chapter} {this.state.chapterNumber} {strings.page} {this.state.pageNumber} </p>
                         </td>
                         <td>
                             <button type="button"

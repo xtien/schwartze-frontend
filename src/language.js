@@ -3,7 +3,7 @@ import detectBrowserLanguage from "detect-browser-language";
 
 let language = function (){
 
-    const languages = ['nl', 'en', 'fr', 'de'];
+    const languages = ['nl', 'en', 'fr', 'de', 'es'];
     let lang = detectBrowserLanguage().substring(0, 2);
     if (!languages.includes(lang)) {
         lang = 'nl'

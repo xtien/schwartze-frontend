@@ -187,7 +187,8 @@ class Landing extends Component {
                 </div>
             case 'PERSON':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.person + reference.key} className='linkStyle'>{reference.description}</Link>
+                    <Link to={this.state.refMap.person + reference.key}
+                          className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -197,7 +198,8 @@ class Landing extends Component {
                 </div>)
             case 'LOCATION':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.location + reference.key} className='linkStyle'>{reference.description}</Link>
+                    <Link to={this.state.refMap.location + reference.key}
+                          className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -207,7 +209,8 @@ class Landing extends Component {
                 </div>)
             case 'LETTER':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.letter + reference.key + '/0'} className='linkStyle'>{reference.description}</Link>
+                    <Link to={this.state.refMap.letter + reference.key + '/0'}
+                          className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -217,7 +220,8 @@ class Landing extends Component {
                 </div>)
             case 'SUBJECT':
                 return (<div className='mb-2'>
-                    <Link to={this.state.refMap.subject + reference.key} className='linkStyle'>{reference.description}</Link>
+                    <Link to={this.state.refMap.subject + reference.key}
+                          className='linkStyle'>{reference.description}</Link>
                     {AuthenticationService.isAdmin() === "true" ?
                         <button type="button" className='btn btn-link mb-1'
                                 onClick={() => {
@@ -290,10 +294,10 @@ class Landing extends Component {
             <div>
                 <div className="float-container">
                     <div className="float-child-left">
-                         <div id="sidebar-wrapper">
+                        <div id="sidebar-wrapper">
                             <ul className="sidebar-nav mt-5">
                                 <div>{isAdmin === 'true' ?
-                                    <p className='nav-link'> <Link to={'/admin/'}>Admin</Link>
+                                    <p className='nav-link'><Link to={'/admin/'}>Admin</Link>
                                     </p>
                                     : null}
                                 </div>
@@ -323,57 +327,59 @@ class Landing extends Component {
                                     }
                                 </div>
                                 <div className='border border-dark mt-5'>
-                                <div className='help'>{strings.help_title}</div>
+                                    <div className='help'>{strings.help_title}</div>
                                     <div className='help'>{strings.help}</div>
                                 </div>
                             </ul>
                         </div>
                     </div>
+                    <div className="d-none d-xl-block">
 
-                    <div className="float-child-right">
-                        <div>
-                            {this.state.showPictureUrlEdit ? (
+                        <div className="float-child-right">
+                            <div>
+                                {this.state.showPictureUrlEdit ? (
 
-                                <EditPictureUrlEditForm
-                                    page={this.state.page}
-                                    setPage={this.setPage}
-                                    togglePictureDone={this.togglePictureDone}
-                                />
-
-                            ) : null
-                            }
-
-                            {this.state.showLinkEdit ? (
-                                    <EditReferenceForm
-                                        pageNumber={this.state.pageNumber}
-                                        chapterNumber={this.state.chapterNumber}
-                                        key=''
-                                        reference_description=''
-                                        reference_type=''
+                                    <EditPictureUrlEditForm
+                                        page={this.state.page}
                                         setPage={this.setPage}
-                                        toggleEditDone={this.toggleEditDone}
-                                        toggleEditDoneParam={this.toggleEditDoneParam}
+                                        togglePictureDone={this.togglePictureDone}
                                     />
-                                )
-                                :
-                                <p className='page_text'> {this.state.text}  </p>
-                            }
-                        </div>
 
-                        <div className='container'>
-                            <div className='photo'>
-                                <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"
-                                     width="500px"/>
-                            </div>
-                            <div className='textpage'>
-                                {/* TODO: this needs to change when others than myself get access to data entry */}
+                                ) : null
+                                }
 
-                                <div dangerouslySetInnerHTML={{__html: home_text}}/>
+                                {this.state.showLinkEdit ? (
+                                        <EditReferenceForm
+                                            pageNumber={this.state.pageNumber}
+                                            chapterNumber={this.state.chapterNumber}
+                                            key=''
+                                            reference_description=''
+                                            reference_type=''
+                                            setPage={this.setPage}
+                                            toggleEditDone={this.toggleEditDone}
+                                            toggleEditDoneParam={this.toggleEditDoneParam}
+                                        />
+                                    )
+                                    :
+                                    <p className='page_text'> {this.state.text}  </p>
+                                }
                             </div>
-                            <div className='textpage mt-5 '>
-                                <div>
+
+                            <div className='container'>
+                                <div className='photo'>
+                                    <img alt="briefkaart lizzy" src="https://www.lizzyansingh.nl/pics/32-1.jpg"
+                                         width="500px"/>
+                                </div>
+                                <div className='textpage'>
                                     {/* TODO: this needs to change when others than myself get access to data entry */}
-                                    <div dangerouslySetInnerHTML={{__html: blog_text}}/>
+
+                                    <div dangerouslySetInnerHTML={{__html: home_text}}/>
+                                </div>
+                                <div className='textpage mt-5 '>
+                                    <div>
+                                        {/* TODO: this needs to change when others than myself get access to data entry */}
+                                        <div dangerouslySetInnerHTML={{__html: blog_text}}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -383,7 +389,7 @@ class Landing extends Component {
                     status={this.state.showError}   // true or false
                     type="success"   // success, warning, error, info
                     title={this.state.error_message}   // title you want to display
-                    Close={() => this.setState({ status: false })}   // callback method for hide
+                    Close={() => this.setState({status: false})}   // callback method for hide
                 />
             </div>
         )

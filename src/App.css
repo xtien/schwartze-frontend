@@ -68,7 +68,7 @@
 }
 
 .content-container {
-  margin: 0px 55px 100px 55px;
+  margin: 0px 6px 6px 6px;
 }
 
 .locations-container {
@@ -156,7 +156,6 @@ text {
 .textpage {
   font-family: Garamond;
   font-size: 20px;
-  width: 700px;
   padding-left: 50px;
   padding-right: 50px;
 }
@@ -222,8 +221,8 @@ h3 {
 }
 
 .page_header {
-  padding: 40px;
-  padding-left: 80px;
+  padding: 0px;
+  padding-left: 0px;
   color: #6c757d;
   font-family: Garamond;
   font-size: x-large;
@@ -241,7 +240,7 @@ h3 {
 
 .page_text {
   padding-left: 30px;
-  padding-right: 50px;
+  padding-right: 0px;
   padding-top: 20px;
   font-family: Garamond;
   font-size: 20px;
